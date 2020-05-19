@@ -18,8 +18,8 @@ design.roi = createROI(100, 60); % width and height
 % srcpsns and detposns within design.layout must each be Nx2 matrix
 % specifying the xy coordinates of the sources (srcposns) and detectors
 % (detposns) within the module. All values in mm
-design.layout.srcposns = [-12.5,12.5; 12.5,-12.5];
-design.layout.detposns = [-12.5,4; 12.5,12.5; 12.5,-4; -12.5,-12.5];
+design.module.srcposns = [-12.5,12.5; 12.5,-12.5];
+design.module.detposns = [-12.5,4; 12.5,12.5; 12.5,-4; -12.5,-12.5];
 
 % Maximum Source Detector Separation
 % A double specifying the maximum SD separation, inclusive, that channels
@@ -31,7 +31,7 @@ design.maxsdsep = 40;
 
 %% Visualizing the design structure
 plotModule(design);
-%plotROI(design);
+plotROI(design);
 
 
 
