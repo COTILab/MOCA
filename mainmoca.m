@@ -30,7 +30,6 @@ design.layout.detposns = [-12.5,4; 12.5,12.5; 12.5,-4; -12.5,-12.5];
 design.maxsdsep = 40;
 
 %% Visualizing the design structure
-figure
 plotModule(design);
-%plotROI(design);
+plotROI(design);
 
