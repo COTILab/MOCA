@@ -12,19 +12,58 @@ perimeter_coors = [design.module.perimeter; first_xycoor];
 plot(perimeter_coors(:,1), perimeter_coors(:,2), 'k','LineWidth',2); 
 axis equal
 
-% Plot the optodes if both sources and detectors exist
-if ( isfield(design.module, 'srcposns') && isfield(design.module, 'detposns'))
+
+% Check if optodes (sources and detectors exist). Create flags.
+if (isfield(design.module, 'srcposns'))
+    srcsExist = true;
+else
+    srcsExist = false;
+end
+if (isfield(design.module, 'detposns'))
+    detsExist = true;
+else
+    detsExist = false;
+end
+
+
+% Check that all optodes are inside the perimeter of the module 
+if ( srcsExist )
+    srcsINboolean = inpolygon(design.module.srcposns(:,1),...
+            design.module.srcposns(:,2),...
+            design.module.perimeter(:,1),...
+            design.module.perimeter(:,2) );
+    if( unique(srcsINboolean)==1 )
+        srcsAreInPerimeter = true;
+    else
+        srcsAreInPerimeter = false;
+    end
+end
+if ( detsExist )
+    detsINboolean = inpolygon(design.module.detposns(:,1),...
+            design.module.detposns(:,2),...
+            design.module.perimeter(:,1),...
+            design.module.perimeter(:,2) );
+    if( unique(detsINboolean)==1 )
+        detsAreInPerimeter = true;
+    else
+        detsAreInPerimeter = false;
+    end
+end
+    
+
+% Plot the optodes if both sources and detectors exist AND are in range
+if(srcsExist && detsExist)
     plot(design.module.srcposns(:,1), design.module.srcposns(:,2), 'ro', 'MarkerSize',10);
     plot(design.module.detposns(:,1), design.module.detposns(:,2), 'bx', 'MarkerSize',10);
     legend('Geometry','Source','Detector');
     
 % Plot the sources if only sources exist
-elseif (isfield(design.module, 'srcposns'))
+elseif (srcsExist)
     plot(design.module.srcposns(:,1), design.module.srcposns(:,2), 'ro', 'MarkerSize',10);
     legend('Geometry','Source');
     
 % Plot the detectors if only detectors exist
-elseif (isfield(design.module, 'detposns'))
+elseif (detsExist)
     plot(design.module.detposns(:,1), design.module.detposns(:,2), 'bx', 'MarkerSize',10);
     legend('Geometry','Detector');
     
