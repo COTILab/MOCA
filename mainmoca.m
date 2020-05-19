@@ -2,15 +2,14 @@ addpath('lib')
 clear all
 
 %% Design Parameters (cfg)
-clear cfg
+clear all
 
 % Single Module Geometry
-nsides = 4;         % number of sides of a module. Can be 3,4, or 6
-mdimension = 35;    % length of one side of a module
-cfg.modulegeometry = createModule(nsides, mdimension);
+% design.module is an Nx2 matrix spcifying the perimeter of the module
+design.module = createModule(4, 35); % nsides, mdimension
 
 % Region-of-interest Geometry
+% design.roi is an Nx2 matrix specifying the perimeter of the ROI.
+design.roi = createROI(100, 60); % width and height
 
-% Optode Layout on a Single Module
 
-% Maximum Source Detector Separation
