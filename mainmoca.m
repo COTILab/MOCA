@@ -7,7 +7,7 @@ clear all
 % design.module is an Nx2 matrix specifying the xy coordinates of the
 % perimeter of the module. The module should be centered at [x,y]=[0,0].
 % All values in mm.
-design.module = createModule(4, 35); % nsides, mdimension
+design.module = createModule(3, 35); % nsides, mdimension
 
 % Region-of-interest Geometry
 % design.roi is an Nx2 matrix specifying the perimeter of the ROI. All
@@ -32,4 +32,6 @@ design.maxsdsep = 40;
 %% Visualizing the design structure
 plotModule(design);
 plotROI(design);
+
+
 
