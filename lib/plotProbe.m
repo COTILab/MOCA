@@ -1,8 +1,7 @@
-function [] = plotProbe(design, probe)
+function [] = plotProbe(probe)
 %PLOTPROBE Summary of this function goes here
 %   Detailed explanation goes here
 
-figure
 hold on;
 
 for i = 1:size(probe.centroids,1)
@@ -13,7 +12,7 @@ for i = 1:size(probe.centroids,1)
     text(probe.centroids(i,1), probe.centroids(i,2), num2str(i));
     
     % plot the shape over each centroid
-    peri = translateShape(design.module.perimeter, probe.centroids(i,1:2));
+    peri = translateShape(probe.module.perimeter, probe.centroids(i,1:2));
     peri_x = [peri(:,1); peri(1,1)];
     peri_y = [peri(:,2); peri(1,2)];
     plot(peri_x, peri_y, 'k-', 'LineWidth', 3);

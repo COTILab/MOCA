@@ -1,25 +1,24 @@
-function [] = plotModule(design)
+function [] = plotModule(module)
 %PLOTMODULE Plot the module in a figure
 %   Plots the perimeter of the defined module. If no optodes are defined,
 %   only the perimeter is plotted, else, the optodes are also plotted. 
 
-figure
 hold on
 
 % Plot the perimeter
-first_xycoor = design.module.perimeter(1,:);    % Add the first xy coordinate to the matrix 
-perimeter_coors = [design.module.perimeter; first_xycoor]; 
+first_xycoor = module.perimeter(1,:);    % Add the first xy coordinate to the matrix 
+perimeter_coors = [module.perimeter; first_xycoor]; 
 plot(perimeter_coors(:,1), perimeter_coors(:,2), 'k','LineWidth',2); 
 axis equal
 
 
 % Check if optodes (sources and detectors exist). Create flags.
-if (isfield(design.module, 'srcposns'))
+if (isfield(module, 'srcposns'))
     srcsExist = true;
 else
     srcsExist = false;
 end
-if (isfield(design.module, 'detposns'))
+if (isfield(module, 'detposns'))
     detsExist = true;
 else
     detsExist = false;
@@ -28,10 +27,10 @@ end
 
 % Check that all optodes are inside the perimeter of the module 
 if ( srcsExist )
-    srcsINboolean = inpolygon(design.module.srcposns(:,1),...
-            design.module.srcposns(:,2),...
-            design.module.perimeter(:,1),...
-            design.module.perimeter(:,2) );
+    srcsINboolean = inpolygon(module.srcposns(:,1),...
+            module.srcposns(:,2),...
+            module.perimeter(:,1),...
+            module.perimeter(:,2) );
     if( unique(srcsINboolean)==1 )
         srcsAreInPerimeter = true;
     else
@@ -40,10 +39,10 @@ if ( srcsExist )
     end
 end
 if ( detsExist )
-    detsINboolean = inpolygon(design.module.detposns(:,1),...
-            design.module.detposns(:,2),...
-            design.module.perimeter(:,1),...
-            design.module.perimeter(:,2) );
+    detsINboolean = inpolygon(module.detposns(:,1),...
+            module.detposns(:,2),...
+            module.perimeter(:,1),...
+            module.perimeter(:,2) );
     if( unique(detsINboolean)==1 )
         detsAreInPerimeter = true;
     else
@@ -55,25 +54,28 @@ end
 
 % Plot the optodes if both sources and detectors exist AND are in range
 if(srcsExist && detsExist)
-    plot(design.module.srcposns(:,1), design.module.srcposns(:,2), 'ro', 'MarkerSize',10);
-    plot(design.module.detposns(:,1), design.module.detposns(:,2), 'bx', 'MarkerSize',10);
+    plot(module.srcposns(:,1), module.srcposns(:,2), 'ro', 'MarkerSize',10);
+    plot(module.detposns(:,1), module.detposns(:,2), 'bx', 'MarkerSize',10);
     legend('Geometry','Source','Detector');
+    title('Module Geometry and Optodes')
 % Plot the sources if only sources exist
 elseif (srcsExist)
-    plot(design.module.srcposns(:,1), design.module.srcposns(:,2), 'ro', 'MarkerSize',10);
+    plot(module.srcposns(:,1), module.srcposns(:,2), 'ro', 'MarkerSize',10);
     legend('Geometry','Source');
+    title('Module Geometry and Sources')
 % Plot the detectors if only detectors exist
 elseif (detsExist)
-    plot(design.module.detposns(:,1), design.module.detposns(:,2), 'bx', 'MarkerSize',10);
+    plot(module.detposns(:,1), module.detposns(:,2), 'bx', 'MarkerSize',10);
     legend('Geometry','Detector');
+    title('Module Geometry and Detectors')
 % Plot just the geometry if optodes were not defined
 else
     legend('Geometry')
+    title('Module Geometry')
 end
 
 
-% Title the plot
-title('Design of Module')
+% Labels
 xlabel('Position [mm]')
 ylabel('Position [mm]')
 axis equal
