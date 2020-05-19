@@ -22,18 +22,18 @@ hold on
 first_xycoor = design.module.perimeter(1,:);  
 perimeter_coors = [design.module.perimeter; first_xycoor];
 
-% plot the perimeter. 
+% Plot the perimeter. 
 plot(perimeter_coors(:,1), perimeter_coors(:,2), 'k','LineWidth',2); 
 axis equal
 
-% plot the optodes
-% if (plot_optodes_bool)
-%     plot(srcs(:,1), srcs(:,2), 'ro', 'MarkerSize',10);
-%     plot(dets(:,1), dets(:,2), 'bx', 'MarkerSize',10);
-%     legend('Shape','Source','Detector','Location','NorthWest'); %,'Outline')
-% else
-%     legend(['Dimension=' num2str(module.dimension)], 'Location', 'NorthWest');
-% end
+% Plot the optodes if they exist
+if (isfield(design, 'layout'))
+    plot(design.layout.srcposns(:,1), design.layout.srcposns(:,2), 'ro', 'MarkerSize',10);
+    plot(design.layout.detposns(:,1), design.layout.detposns(:,2), 'bx', 'MarkerSize',10);
+    legend('Geometry','Source','Detector');
+else
+    legend('Geometry');
+end
 
 % title
 title('Design of Module')
