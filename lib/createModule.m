@@ -10,11 +10,6 @@ function [module] = createModule(nsides,mdimension)
 
 % Square shaped module
 if (nsides == 4)
-    %module.srcs = [-12.5,12.5; 12.5,-12.5];
-    %module.dets = [-12.5,4; 12.5,12.5; 12.5,-4; -12.5,-12.5];
-    %module.nss = 2;
-    %module.lss = 8.5;
-    %module.shape = 'square';
     module.dimension = mdimension;
     module.perimeter = [-module.dimension/2,    module.dimension/2;...
                         module.dimension/2,     module.dimension/2;...
@@ -23,8 +18,5 @@ if (nsides == 4)
 end
 
 
-
-
-%module = [0 0; 4 0; 4 4; 0 4];
 end
 
