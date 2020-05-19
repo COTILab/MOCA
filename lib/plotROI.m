@@ -1,6 +1,7 @@
 function [] = plotROI(design)
 %PLOTROI Plots the perimeter of the ROI
-%   
+%   Checks if the field design.roi exists. If it does, it plots the
+%   perimeter of the ROI on a new figure
 
 if( isfield(design, 'roi'))
     figure
