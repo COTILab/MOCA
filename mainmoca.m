@@ -34,7 +34,10 @@ plotModule(design);
 plotROI(design);
 
 %% Assembly Processes
-probe = createLayout(design)
+probe = createLayout(design);
+
+%% Visualize probe
+plotProbe(design, probe)
 
 
 

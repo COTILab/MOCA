@@ -9,8 +9,8 @@ if (strcmp(design.module.shape, 'square'))
     n_modules = probe.n_modules_x * probe.n_modules_y;
     centroids = zeros(n_modules, 2); % x,y coordinates of centroid
     count = 0;
-    for row=1:probe.n_modules_x
-        for col=1:probe.n_modules_y
+    for row=1:probe.n_modules_y
+        for col=1:probe.n_modules_x
             x = (design.module.dimension/2) + ((col-1)*design.module.dimension);
             y = (design.module.dimension/2) + ((row-1)*design.module.dimension);
             count=count+1;
