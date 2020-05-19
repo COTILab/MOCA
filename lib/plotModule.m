@@ -36,6 +36,7 @@ if ( srcsExist )
         srcsAreInPerimeter = true;
     else
         srcsAreInPerimeter = false;
+        disp('Some sources may be outside the module perimeter');
     end
 end
 if ( detsExist )
@@ -47,6 +48,7 @@ if ( detsExist )
         detsAreInPerimeter = true;
     else
         detsAreInPerimeter = false;
+        disp('Some detectors may be outside the module perimeter');
     end
 end
     
@@ -56,21 +58,19 @@ if(srcsExist && detsExist)
     plot(design.module.srcposns(:,1), design.module.srcposns(:,2), 'ro', 'MarkerSize',10);
     plot(design.module.detposns(:,1), design.module.detposns(:,2), 'bx', 'MarkerSize',10);
     legend('Geometry','Source','Detector');
-    
 % Plot the sources if only sources exist
 elseif (srcsExist)
     plot(design.module.srcposns(:,1), design.module.srcposns(:,2), 'ro', 'MarkerSize',10);
     legend('Geometry','Source');
-    
 % Plot the detectors if only detectors exist
 elseif (detsExist)
     plot(design.module.detposns(:,1), design.module.detposns(:,2), 'bx', 'MarkerSize',10);
     legend('Geometry','Detector');
-    
 % Plot just the geometry if optodes were not defined
 else
     legend('Geometry')
 end
+
 
 % Title the plot
 title('Design of Module')
