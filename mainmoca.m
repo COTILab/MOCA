@@ -1,0 +1,3 @@
+addpath('lib')
+clear all
+
