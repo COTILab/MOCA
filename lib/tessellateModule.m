@@ -9,8 +9,8 @@ if (strcmp(probe.module.shape, 'square'))
     n_modules = probe.n_modules_x * probe.n_modules_y;
     
     modules = zeros(n_modules, 4); % x_centroid,y_centroid, orientation, active
-    allsrcs = zeros(size(probe.module.srcposns(:,1), 1) * n_modules, 3); % x,y,moduleIdx
-    alldets = zeros(size(probe.module.detposns(:,1), 1) * n_modules, 3); % x,y,moduleIdx
+    allsrcs = zeros(size(probe.module.srcposns(:,1), 1) * n_modules, 4); % x,y,moduleIdx,globalsrcIdx
+    alldets = zeros(size(probe.module.detposns(:,1), 1) * n_modules, 4); % x,y,moduleIdx,globaldetIdx
     
     modcount = 1;
     srccount = 1;
@@ -23,29 +23,35 @@ if (strcmp(probe.module.shape, 'square'))
             
             % Save orientation of individual module (deg)
             orientation = 0;
-            
             % Save whether module is active or inactive
             active = 1;
-            
-            % translate and rotate sources. Save which module idx they
-            % belong to
-            nsrcs = size(probe.module.srcposns(:,1), 1);
-            translatedsrcs = translateCoordinates(probe.module.srcposns, [x,y]);
-            moduleidxsrcs = ones(nsrcs,1)*modcount;
-            allsrcs(srccount:srccount+nsrcs-1,:) = [translatedsrcs, moduleidxsrcs];
-            srccount = srccount+nsrcs;
-            
-            % translate and rotate detectors. Save which module idx they
-            % belong to
-            ndets = size(probe.module.detposns(:,1), 1);
-            translateddets = translateCoordinates(probe.module.detposns, [x,y]);
-            moduleidxdets = ones(ndets,1)*modcount;
-            alldets(detcount:detcount+ndets-1,:) = [translateddets, moduleidxdets];
-            detcount = detcount+ndets;
-            
             % Save the module
             modules(modcount,:) = [x,y,orientation,active]; % x, y, orientation (deg), active
+            
+            
+            % translate and rotate sources. Save which module idx they
+            % belong to. give a unique id to each source
+            nsrcs = size(probe.module.srcposns(:,1), 1);
+            translatedsrcs = translateCoordinates(probe.module.srcposns, [x,y]);
+            moduleidxsrcs = modcount; 
+            for s=1:nsrcs
+                allsrcs(srccount,:) = [translatedsrcs(s,:), moduleidxsrcs, srccount];
+                srccount = srccount+1;
+            end
+            
+            % translate and rotate detectors. Save which module idx they
+            % belong to. give a unique id to each detector
+            ndets = size(probe.module.detposns(:,1), 1);
+            translateddets = translateCoordinates(probe.module.detposns, [x,y]);
+            moduleidxdets = modcount;
+            for d=1:ndets
+                alldets(detcount,:) = [translateddets(d,:), moduleidxdets, detcount];
+                detcount = detcount+1;
+            end
+            
+            % increment module
             modcount = modcount+1;
+            
         end
     end
 end
