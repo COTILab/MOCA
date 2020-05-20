@@ -52,9 +52,9 @@ end
 
 
 % Update probe values
-probe.n_modules = n_modules;
+%probe.n_modules = n_modules;
 probe.modules = modules;
-probe.single_row_quantities = single_row_quantities;
+%probe.single_row_quantities = single_row_quantities;
 
 probe.srcposns = allsrcs;
 probe.detposns = alldets;
