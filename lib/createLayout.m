@@ -15,8 +15,18 @@ add_module = 0;     % flag to know if another module should be added to a row
 
 
 if (strcmp(probe.module.shape, 'square'))
-    probe.n_modules_x = ceil(probe.maxwidth / probe.module.dimension);
-    probe.n_modules_y = ceil(probe.maxheight/ probe.module.dimension);
+    % Find number of modules in x axis
+    probe.n_modules_x = ceil(probe.maxwidth / (probe.module.dimension + probe.spacing));
+    % if n_modules_x + spacing in between is less than width, add another
+    if(probe.n_modules_x*probe.module.dimension + (probe.n_modules_x-1)*probe.spacing < probe.maxwidth)
+        probe.n_modules_x = probe.n_modules_x + 1;
+    end
+    % Find number of modules in y axis
+    probe.n_modules_y = ceil(probe.maxheight/ (probe.module.dimension + probe.spacing));
+    if(probe.n_modules_y*probe.module.dimension + (probe.n_modules_y-1)*probe.spacing < probe.maxheight)
+        probe.n_modules_y = probe.n_modules_y + 1;
+    end
+    
     probe = tessellateModule(probe);
 end
 

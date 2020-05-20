@@ -12,7 +12,7 @@ module = createModule(4, 40); % nsides, mdimension
 % Region-of-interest Geometry
 % design.roi is an Nx2 matrix specifying the perimeter of the ROI. All
 % values in mm.
-probe.roi = createROI(150,90); % width and height
+probe.roi = createROI(91,90); % width and height
 
 % Optode layout on a single module
 % srcpsns and detposns within design.layout must each be Nx2 matrix
@@ -29,12 +29,12 @@ module.detposns = [-12.5,4; 12.5,12.5; 12.5,-4; -12.5,-12.5];
 % inclusive. Value should be in mm.
 probe.sdrange = 40;
 
-%% Visualizing the design structure
-figure; plotModule(module);
-figure; plotROI(probe);
+% Visualizing the design structure
+%figure; plotModule(module);
+%figure; plotROI(probe);
 
 %% Assembly Processes
-probe.spacing = 20;  % not necessary
+probe.spacing = 10;  % not necessary
 probe = createLayout(module, probe); %roi, SDrange, spacing);
 
 % Visualize probe
