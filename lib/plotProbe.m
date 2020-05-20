@@ -1,4 +1,4 @@
-function [] = plotProbe(probe)
+function [] = plotProbe(probe, region)
 %PLOTPROBE Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -38,6 +38,12 @@ for i = 1:size(modules,1)
     end
     
 end
+
+% Plot ROI if it was included as a second input
+if (nargin == 2)
+    plotROI(probe);
+end
+
 
 axis equal
 

@@ -9,7 +9,7 @@ first_xycoor = probe.roi(1,:);
 perimeter_coors = [probe.roi; first_xycoor];
 
 % Plot the perimeter. 
-plot(perimeter_coors(:,1), perimeter_coors(:,2), 'k','LineWidth',2); 
+plot(perimeter_coors(:,1), perimeter_coors(:,2), 'k--','LineWidth',2); 
 axis equal
 
 % Title the plot
