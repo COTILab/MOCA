@@ -1,8 +1,7 @@
-function [probe] = createLayout(module, probe) 
+function [probe] = createLayout(probe) 
 %CREATELAYOUT Create a probe composed of modules over a ROI
 %   Detailed explanation goes here
 
-probe.module = module;          % absorb the single module into the probe
 probe.maxwidth = max(probe.roi(:,1));     % probe's max width
 probe.maxheight = max(probe.roi(:,2));    % probe's max height
 if (length(probe.sdrange) == 1)       % if only a single number inputted, 

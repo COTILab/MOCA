@@ -7,19 +7,19 @@ clear all
 % design.module is an Nx2 matrix specifying the xy coordinates of the
 % perimeter of the module. The module should be centered at [x,y]=[0,0].
 % All values in mm.
-module = createModule(4, 40); % nsides, mdimension
+probe.module = createModule(4, 40); % nsides, mdimension
 
 % Region-of-interest Geometry
 % design.roi is an Nx2 matrix specifying the perimeter of the ROI. All
 % values in mm.
-probe.roi = createROI(135); % width and height
+probe.roi = createROI(120,80); % width and height
 
 % Optode layout on a single module
 % srcpsns and detposns within design.layout must each be Nx2 matrix
 % specifying the xy coordinates of the sources (srcposns) and detectors
 % (detposns) within the module. All values in mm
-module.srcposns = [-12.5,12.5; 12.5,-12.5];
-module.detposns = [-12.5,4; 12.5,12.5; 12.5,-4; -12.5,-12.5];
+probe.module.srcposns = [-12.5,12.5; 12.5,-12.5];
+probe.module.detposns = [-12.5,4; 12.5,12.5; 12.5,-4; -12.5,-12.5];
 
 % Maximum Source Detector Separation
 % A double specifying the maximum SD separation, inclusive, that channels
@@ -30,15 +30,15 @@ module.detposns = [-12.5,4; 12.5,12.5; 12.5,-4; -12.5,-12.5];
 probe.sdrange = 40;
 
 % Visualizing the design structure
-%figure; plotModule(module);
+%figure; plotModule(probe);
 %figure; plotROI(probe);
 
 %% Assembly Processes
 probe.spacing = 10;  % not necessary
-probe = createLayout(module, probe); %roi, SDrange, spacing);
+probe = createLayout(probe); %roi, SDrange, spacing);
 
-% Visualize probe
-figure; plotProbe(probe, probe.roi)
-
+% Adjustments to probe assembly
+probe = toggleModules(probe, [2 5], 'off');
+figure; plotProbe(probe, probe.roi);
 
 

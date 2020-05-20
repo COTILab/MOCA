@@ -1,8 +1,9 @@
-function [] = plotModule(module)
+function [] = plotModule(probe)
 %PLOTMODULE Plot the module in a figure
 %   Plots the perimeter of the defined module. If no optodes are defined,
 %   only the perimeter is plotted, else, the optodes are also plotted. 
 
+module = probe.module;
 hold on
 
 % Plot the perimeter
