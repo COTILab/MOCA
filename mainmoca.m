@@ -7,12 +7,12 @@ clear all
 % design.module is an Nx2 matrix specifying the xy coordinates of the
 % perimeter of the module. The module should be centered at [x,y]=[0,0].
 % All values in mm.
-module = createModule(4, 35); % nsides, mdimension
+module = createModule(4, 40); % nsides, mdimension
 
 % Region-of-interest Geometry
 % design.roi is an Nx2 matrix specifying the perimeter of the ROI. All
 % values in mm.
-probe.roi = createROI(80,60); % width and height
+probe.roi = createROI(150,90); % width and height
 
 % Optode layout on a single module
 % srcpsns and detposns within design.layout must each be Nx2 matrix
@@ -34,10 +34,10 @@ figure; plotModule(module);
 figure; plotROI(probe);
 
 %% Assembly Processes
-probe.spacing = 0;  % not necessary
+probe.spacing = 5;  % not necessary
 probe = createLayout(module, probe); %roi, SDrange, spacing);
 
-%% Visualize probe
+% Visualize probe
 figure; plotProbe(probe)
 
 

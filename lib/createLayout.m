@@ -1,4 +1,4 @@
-function [probe] = createLayout(module, probe) % roi, SDrange, spacing )
+function [probe] = createLayout(module, probe) 
 %CREATELAYOUT Create a probe composed of modules over a ROI
 %   Detailed explanation goes here
 

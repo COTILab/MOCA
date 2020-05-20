@@ -10,7 +10,7 @@ function [module] = createModule(nsides,mdimension)
 
 
 % Triangle shaped module
-if (nsides == 3)
+if (nsides == 3) % || strcmp(nsides,'triangle'))
     module.dimension = mdimension;
     module.perimeter = [0,                      module.dimension/sqrt(3);...
                         module.dimension/2,     -module.dimension*sqrt(3)/6;...
@@ -18,7 +18,7 @@ if (nsides == 3)
     module.shape = 'triangle';
 
 % Square shaped module
-elseif (nsides == 4)
+elseif (nsides == 4) % || strcmp(nsides,'square'))
     module.dimension = mdimension;
     module.perimeter = [-module.dimension/2,    module.dimension/2;...
                         module.dimension/2,     module.dimension/2;...
@@ -27,7 +27,7 @@ elseif (nsides == 4)
     module.shape = 'square'; % to demonstrate it was automatically generated
 
 % Hexagon shaped module
-elseif (nsides == 6)
+elseif (nsides == 6) % || strcmp(nsides,'hexagon'))
     module.dimension = mdimension;
     module.perimeter = [0,                          module.dimension;...
                         module.dimension*cosd(30),  module.dimension*sind(30);...
@@ -36,7 +36,10 @@ elseif (nsides == 6)
                         -module.dimension*cosd(30), -module.dimension*sind(30);...
                         -module.dimension*cosd(30), module.dimension*sind(30);];
     module.shape = 'hexagon';
-    
+
+% other shapes or number of sides
+else
+    disp('createModule can only be used with 3,4,6 sided regular polygons');
 end
 
 
