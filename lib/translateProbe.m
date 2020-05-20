@@ -22,14 +22,16 @@ if (isnumeric(translate_amount))
 
 elseif (ischar(translate_amount))
     % find center roi
-    roi_centroid(1) = round(max(probe.roi(:,1)) - min(probe.roi(:,1))) / 2;
-    roi_centroid(2) = round(max(probe.roi(:,2)) - min(probe.roi(:,2))) / 2;
+    roi_centroid(1) = round(max(probe.roi(:,1)) + min(probe.roi(:,1))) / 2;
+    roi_centroid(2) = round(max(probe.roi(:,2)) + min(probe.roi(:,2))) / 2;
 
-    % find center of probe
-    probe_centroid(1) = round( ((max(probe.modules(:,1))+(probe.module.dimension/2)) + ...
-                                (min(probe.modules(:,1))-(probe.module.dimension/2))) / 2);
-    probe_centroid(2) = round( ((max(probe.modules(:,2))+(probe.module.dimension/2)) + ...
-                                (min(probe.modules(:,2))-(probe.module.dimension/2))) / 2);
+    % find center of probe of active modules only
+    activemoduleidx = probe.modules(:,4) == 1;  % indeces of active modules
+    activemodules = probe.modules(activemoduleidx,:); % logic for sub-matrix
+    probe_centroid(1) = round( ((max(activemodules(:,1))+(probe.module.dimension/2)) + ...
+                                (min(activemodules(:,1))-(probe.module.dimension/2))) / 2);
+    probe_centroid(2) = round( ((max(activemodules(:,2))+(probe.module.dimension/2)) + ...
+                                (min(activemodules(:,2))-(probe.module.dimension/2))) / 2);
 
     % translate probe
     centroid_diff = roi_centroid - probe_centroid;
