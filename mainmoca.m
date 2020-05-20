@@ -38,7 +38,8 @@ probe.spacing = 10;  % not necessary
 probe = createLayout(probe); %roi, SDrange, spacing);
 
 % Adjustments to probe assembly
-probe = toggleModules(probe, [2 5], 'off');
+probe = toggleModules(probe, [2 5], 'on');
+probe = translateProbe(probe, 'center');
 figure; plotProbe(probe, probe.roi);
 
 
