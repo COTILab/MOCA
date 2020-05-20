@@ -2,7 +2,7 @@ function [probe] = createLayout( module, roi, SDrange, spacing )
 %CREATELAYOUT Create a probe composed of modules over a ROI
 %   Detailed explanation goes here
 
-probe.module = module;          % absorb the module into the probe
+probe.module = module;          % absorb the single module into the probe
 probe.width = max(roi(:,1));     % probe's max width
 probe.height = max(roi(:,2));    % probe's max height
 if (length(SDrange) == 1)       % if only a single number inputted, 

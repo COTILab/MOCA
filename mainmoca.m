@@ -12,7 +12,7 @@ module = createModule(4, 35); % nsides, mdimension
 % Region-of-interest Geometry
 % design.roi is an Nx2 matrix specifying the perimeter of the ROI. All
 % values in mm.
-roi = createROI(200,60); % width and height
+roi = createROI(80,60); % width and height
 
 % Optode layout on a single module
 % srcpsns and detposns within design.layout must each be Nx2 matrix
