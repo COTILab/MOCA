@@ -12,7 +12,7 @@ module = createModule(4, 35); % nsides, mdimension
 % Region-of-interest Geometry
 % design.roi is an Nx2 matrix specifying the perimeter of the ROI. All
 % values in mm.
-roi = createROI(80,60); % width and height
+probe.roi = createROI(80,60); % width and height
 
 % Optode layout on a single module
 % srcpsns and detposns within design.layout must each be Nx2 matrix
@@ -27,14 +27,15 @@ module.detposns = [-12.5,4; 12.5,12.5; 12.5,-4; -12.5,-12.5];
 % lower end of the SD range. Channels < design.maxsdsep(1) are considered
 % short-separation (SS) channels. The default SS channel threshold is 10mm,
 % inclusive. Value should be in mm.
-SDrange = 40;
+probe.sdrange = 40;
 
 %% Visualizing the design structure
 figure; plotModule(module);
-figure; plotROI(roi);
+figure; plotROI(probe);
 
 %% Assembly Processes
-probe = createLayout(module, roi, SDrange);
+probe.spacing = 0;  % not necessary
+probe = createLayout(module, probe); %roi, SDrange, spacing);
 
 %% Visualize probe
 figure; plotProbe(probe)

@@ -1,24 +1,22 @@
-function [probe] = createLayout( module, roi, SDrange, spacing )
+function [probe] = createLayout(module, probe) % roi, SDrange, spacing )
 %CREATELAYOUT Create a probe composed of modules over a ROI
 %   Detailed explanation goes here
 
 probe.module = module;          % absorb the single module into the probe
-probe.width = max(roi(:,1));     % probe's max width
-probe.height = max(roi(:,2));    % probe's max height
-if (length(SDrange) == 1)       % if only a single number inputted, 
-    probe.SDrange = [10 SDrange];   % then default to SS channels being < 10mm, inclusive
+probe.maxwidth = max(probe.roi(:,1));     % probe's max width
+probe.maxheight = max(probe.roi(:,2));    % probe's max height
+if (length(probe.sdrange) == 1)       % if only a single number inputted, 
+    probe.sdrange = [10 probe.sdrange];   % then default to SS channels being < 10mm, inclusive
 end
-if(nargin == 3)     % if not gap inputted, default to a gap of zero
-    gap = 0;
-else
-    gap = spacing;
+if(isfield(probe, 'spacing') == 0)     % if spacing not specified
+    probe.spacing = 0;
 end
 add_module = 0;     % flag to know if another module should be added to a row
 
 
 if (strcmp(probe.module.shape, 'square'))
-    probe.n_modules_x = ceil(probe.width / probe.module.dimension);
-    probe.n_modules_y = ceil(probe.height/ probe.module.dimension);
+    probe.n_modules_x = ceil(probe.maxwidth / probe.module.dimension);
+    probe.n_modules_y = ceil(probe.maxheight/ probe.module.dimension);
     probe = tessellateModule(probe);
 end
 

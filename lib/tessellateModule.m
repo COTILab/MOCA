@@ -1,4 +1,4 @@
-function [probe] = tesselateModule( probe )
+function [probe] = tessellateModule( probe )
 %TESSELATEMODULE Summary of this function goes here
 %   Detailed explanation goes here
 
