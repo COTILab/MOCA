@@ -9,12 +9,12 @@ if (strcmp(probe.module.shape, 'square'))
     n_modules = probe.n_modules_x * probe.n_modules_y;
     
     modules = zeros(n_modules, 4); % x_centroid,y_centroid, orientation, active
-    sources = zeros(size(probe.module.srcposns(:,1), 1) * n_modules, 3); % x,y,moduleIdx
-    detectors = zeros(size(probe.module.detposns(:,1), 1) * n_modules, 3); % x,y,moduleIdx
+    allsrcs = zeros(size(probe.module.srcposns(:,1), 1) * n_modules, 3); % x,y,moduleIdx
+    alldets = zeros(size(probe.module.detposns(:,1), 1) * n_modules, 3); % x,y,moduleIdx
     
-    modcount = 0;
-    srccount = 0;
-    detcount = 0;
+    modcount = 1;
+    srccount = 1;
+    detcount = 1;
     for row=1:probe.n_modules_y
         for col=1:probe.n_modules_x
             % Find dimensions of the centroid, adjusting for probe.spacing
@@ -29,13 +29,23 @@ if (strcmp(probe.module.shape, 'square'))
             
             % translate and rotate sources. Save which module idx they
             % belong to
+            nsrcs = size(probe.module.srcposns(:,1), 1);
+            translatedsrcs = translateCoordinates(probe.module.srcposns, [x,y]);
+            moduleidxsrcs = ones(nsrcs,1)*modcount;
+            allsrcs(srccount:srccount+nsrcs-1,:) = [translatedsrcs, moduleidxsrcs];
+            srccount = srccount+nsrcs;
             
             % translate and rotate detectors. Save which module idx they
             % belong to
+            ndets = size(probe.module.detposns(:,1), 1);
+            translateddets = translateCoordinates(probe.module.detposns, [x,y]);
+            moduleidxdets = ones(ndets,1)*modcount;
+            alldets(detcount:detcount+ndets-1,:) = [translateddets, moduleidxdets];
+            detcount = detcount+ndets;
             
             % Save the module
-            modcount=modcount+1;
             modules(modcount,:) = [x,y,orientation,active]; % x, y, orientation (deg), active
+            modcount = modcount+1;
         end
     end
 end
@@ -44,7 +54,10 @@ end
 % Update probe values
 probe.n_modules = n_modules;
 probe.modules = modules;
-probe.single_row_quantities = single_row_quantities; 
+probe.single_row_quantities = single_row_quantities;
+
+probe.srcposns = allsrcs;
+probe.detposns = alldets;
     
     
 end
