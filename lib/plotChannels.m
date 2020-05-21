@@ -42,15 +42,31 @@ switch nargin
         rangetype =     rangetypein;
         breakdowntype = breakdowntypein;
     otherwise
-        warning('Please correct the plot types')
 end
 
 
+hold on
 % PLOT THEM AS A HISTOGRAM
+switch plottype
+    case 'hist'
 
+        % Determine rangetype
+        switch rangetype
+            case 'sd'
+            case 'full'
+                h1 = histogram(probe.results.fullintrachannels(:,1), 'BinWidth', 1);
+                h2 = histogram(probe.results.fullinterchannels(:,1), 'BinWidth', 1);
+                legend('intra', 'inter')
+        end
+    
 
 
 % PLOT THEM SPATIALLY
+	case 'spat'
+
+
+
+end
 
 
 
