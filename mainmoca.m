@@ -36,10 +36,9 @@ figure; plotROI(probe);
 %% Assembly Processes
 probe.spacing = 10;  % not necessary
 probe = createLayout(probe); %roi, SDrange, spacing);
-figure; plotProbe(probe, probe.roi);
 
 % Adjustments to probe assembly
-%probe = toggleModules(probe, [1:6], 'on');
+probe = toggleModules(probe, [2 6], 'off');
 probe = translateProbe(probe, 'center');
 figure; plotProbe(probe, probe.roi);
 
@@ -48,7 +47,10 @@ figure; plotProbe(probe, probe.roi);
 probe = characterizeProbe(probe);
 
 %% Visualize Characterization
-figure; plotChannels(probe, 'hist', 'full');
-figure; plotChannels(probe, 'spat', 'full');
-figure; plotChannels(probe, 'spat', 'full', 'int');
+% plot channel histogram
+figure; plotChannels(probe, 'hist', 'full'); 
+% plot probe + all channels by color/separation
+figure; plotProbe(probe, probe.roi); plotChannels(probe, 'spat', 'full', 'col');
+% plot probe + all channel broken down by inter/intra channels
+figure; plotProbe(probe, probe.roi); plotChannels(probe, 'spat', 'full', 'int');
 

@@ -106,51 +106,33 @@ switch plottype
                         end
 
                     case 'int'
-                        % INTRA module channels
-                        c = probe.results.fullintrachannels(:,1);    % data to be plotted
-                        srcidx = probe.results.fullintrachannels(:,2);
-                        detidx = probe.results.fullintrachannels(:,3);
-                        for i=1:length(c)
-                            src = srcidx(i);
-                            det = detidx(i);
-                            row = find(probe.results.fullintrachannels(:,2)==src & probe.results.fullintrachannels(:,3)==det);
-                            plot([probe.srcposns(src,1), probe.detposns(det,1)],...
-                                    [probe.srcposns(src,2), probe.detposns(det,2)],...
-                                    'Color', [0.8500 0.3250 0.0980],...
-                                    'LineWidth',2);
-                        end
-                        clear c srcidx detidx i
                         % INTER module channels
-                        c = probe.results.fullinterchannels(:,1);    % data to be plotted
+                        c = probe.results.fullinterchannels(:,1);    % channel separations
                         srcidx = probe.results.fullinterchannels(:,2);
                         detidx = probe.results.fullinterchannels(:,3);
                         for i=1:length(c)
                             src = srcidx(i);
                             det = detidx(i);
-                            row = find(probe.results.fullinterchannels(:,2)==src & probe.results.fullinterchannels(:,3)==det);
-                            plot([probe.srcposns(src,1), probe.detposns(det,1)],...
+                            h(1) = plot([probe.srcposns(src,1), probe.detposns(det,1)],...
                                     [probe.srcposns(src,2), probe.detposns(det,2)],...
                                     'Color', [0 0.4470 0.7410],...
                                     'LineWidth',2);
                         end
-                        %ran=range(c);   % range of data
-                        %min_val=min(c); % minimum value of data
-                        %max_val=max(c); % maximum value of data
-                        %y=floor(((c-min_val)/ran)*63)+1;    % 2^6, scale for 6 bit colors
-                        %col=zeros(length(c),3);     % an rgb value for each channel
-                        %p=colormap;
-%                         for i=1:length(c)
-%                             a=y(i);
-%                             col(i,:)=p(a,:);
-%                             plot([probe.srcposns(srcidx(i),1), probe.detposns(detidx(i),1)],...
-%                                     [probe.srcposns(srcidx(i),2), probe.detposns(detidx(i),2)],...
-%                                     'Color',col(i,:),...
-%                                     'LineWidth',2);
-%                             axis equal;
-%                             h = colorbar;
-%                             ylabel(h, 'SD Separation [mm]');
-%                             caxis([min_val max_val]);
-%                         end
+                        clear c srcidx detidx i
+                        % INTRA module channels
+                        c = probe.results.fullintrachannels(:,1);    % channel separations
+                        srcidx = probe.results.fullintrachannels(:,2);
+                        detidx = probe.results.fullintrachannels(:,3);
+                        for i=1:length(c)
+                            src = srcidx(i);
+                            det = detidx(i);
+                            h(2) = plot([probe.srcposns(src,1), probe.detposns(det,1)],...
+                                    [probe.srcposns(src,2), probe.detposns(det,2)],...
+                                    'Color', [0.8500 0.3250 0.0980],...
+                                    'LineWidth',2);
+                        end
+                        %legend('inter', 'intra');
+                        legend(h(1:2),'inter','intra');
                 end
         end
 
