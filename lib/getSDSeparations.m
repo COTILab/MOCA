@@ -10,6 +10,9 @@ srcs = probe.srcposns; % [x, y, modidx, srcidx]
 dets = probe.detposns; % [x, y, modidx, detidx]
 
 sd = zeros(size(srcs,1)*size(dets,1), 5);
+intraidx = false(size(srcs,1)*size(dets,1), 1);  % logical matrix identifying intra channels.
+sdintra = sd;   % intra (within) module channels
+sdinter = sd;   % inter (between) module channels
 sdcount = 1;
 
 for s=1:size(srcs,1)
@@ -20,11 +23,22 @@ for s=1:size(srcs,1)
         srcmodidx = srcs(s,3);
         detmodidx = dets(d,3);
         sd(sdcount,:) = [separation, srcidx, detidx, srcmodidx, detmodidx];
+
+        if (srcmodidx == detmodidx)
+            intraidx(sdcount) = true;
+        else
+            intraidx(sdcount) = false;
+        end
+        
         sdcount = sdcount + 1;
     end
 end
 
+interidx = not(intraidx);
+
 probe.results.fullchannels = sd;
+probe.results.fullintrachannels = sd(intraidx,:);
+probe.results.fullinterchannels = sd(interidx,:);
 
 end
 
