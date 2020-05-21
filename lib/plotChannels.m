@@ -44,30 +44,74 @@ switch nargin
     otherwise
 end
 
+% Check that the sdrange limited channels exists. If they don't default to
+% fullintrachannels and fullinterchannels. 
 
+
+% Begin plotting
 hold on
+
 % PLOT THEM AS A HISTOGRAM
 switch plottype
     case 'hist'
-
         % Determine rangetype
         switch rangetype
             case 'sd'
             case 'full'
-                h1 = histogram(probe.results.fullintrachannels(:,1), 'BinWidth', 1);
-                h2 = histogram(probe.results.fullinterchannels(:,1), 'BinWidth', 1);
-                legend('intra', 'inter')
+                h1 = histogram(probe.results.fullintrachannels(:,1),...
+                                'BinWidth', 1, 'FaceColor', [0 0.4470 0.7410]);
+                h2 = histogram(probe.results.fullinterchannels(:,1),...
+                                'BinWidth', 1, 'FaceColor', [0.8500 0.3250 0.0980]);
+                legend('intra', 'inter');
+                xlabel('SD Separation [mm]');
+                ylabel('Channel Count [n]');
+                title('Channel Count Distribution');
         end
     
-
-
 % PLOT THEM SPATIALLY
 	case 'spat'
+        % Determine rangetype
+        switch rangetype
+            case 'sd'
+                % Determine breakdowntype
+                switch breakdowntype
+                    case 'col'
+                    case 'int'
+                end
 
+            case 'full'
+                % Determine breakdowntype
+                switch breakdowntype
+                    case 'col'
+                        x = probe.results.fullchannels(:,1);    % data to be plotted
+                        srcidx = probe.results.fullchannels(:,2);
+                        detidx = probe.results.fullchannels(:,3);
+                        ran=range(x);   % finding range of data
+                        min_val=min(x); % finding maximum value of data
+                        max_val=max(x); % finding minimum value of data
+                        y=floor(((x-min_val)/ran)*63)+1;    % 2^6, scale for 6 bit colors
+                        col=zeros(length(x),3); % an rgb value for each channel
+                        p=colormap;
+                        for i=1:length(x)
+                            a=y(i);
+                            col(i,:)=p(a,:);
+                            plot([probe.srcposns(srcidx(i),1), probe.detposns(detidx(i),1)],...
+                                    [probe.srcposns(srcidx(i),2), probe.detposns(detidx(i),2)],...
+                                    'Color',col(i,:),...
+                                    'LineWidth',2);
+%                             plot([sep_xy(i,2), sep_xy(i,4)],... %srcx, detx
+%                                     [sep_xy(i,3), sep_xy(i,5)],...  %srcy, dety
+%                                     'Color',col(i,:),...
+%                                     'LineWidth',2);
+                        end
 
+                    case 'int'
+                end
+        end
 
 end
 
+% update xlabels, ylabels, and titles
 
 
 end
