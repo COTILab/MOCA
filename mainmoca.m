@@ -47,3 +47,6 @@ figure; plotProbe(probe, probe.roi);
 %% Probe Characterization
 probe = characterizeProbe(probe);
 
+%% Visualize Characterization
+figure; plotChannels(probe, 'hist'); %can be histogram, or spatial
+
