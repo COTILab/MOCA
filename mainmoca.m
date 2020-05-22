@@ -54,7 +54,27 @@ figure; plotChannels(probe, 'hist', 'sd');
 figure; plotProbe(probe); plotROI(probe); plotChannels(probe, 'spat', 'sd', 'int');
 % brain sensitivity
 figure; plotProbe(probe); plotROI(probe); plotBrainSensitivity(probe, 'all');
+% spatial multiplexing groups
+figure; plotProbe(probe); plotROI(probe); plotSpatialMultiplexingGroups(probe, [2]);
 
-%%
-figure; plotSpatialMultiplexingGroups(probe, [1 3 7]);
+%% Spatial Multiplexing groups gif
+fig = figure
+ngroups = size(unique(probe.results.groupings(:,3)), 1);
+for i=1:ngroups
+    clf(fig)
+    
+    plotProbe(probe);
+    plotROI(probe);
+    plotSpatialMultiplexingGroups(probe, [i]);
+    
+    title(strcat('Group: ',num2str(i),'/',num2str(ngroups)))
+    
+    xlim([min(probe.srcposns(:,1))-probe.sdrange(2),...
+        max(probe.srcposns(:,1))+probe.sdrange(2)]);
+    ylim([min(probe.srcposns(:,2))-probe.sdrange(2),...
+        max(probe.srcposns(:,2))+probe.sdrange(2)]);
+    
+    pause(1)
+    
+end
 
