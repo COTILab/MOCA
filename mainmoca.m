@@ -44,7 +44,6 @@ probe = rotateModules(probe, [1 4], 45);
 
 figure; plotProbe(probe); plotROI(probe)
 
-
 %% Probe Characterization
 probe = characterizeProbe(probe);
 
@@ -53,9 +52,9 @@ probe = characterizeProbe(probe);
 figure; plotChannels(probe, 'hist', 'sd'); 
 % plot probe + all channels by color/separation
 figure; plotProbe(probe); plotROI(probe); plotChannels(probe, 'spat', 'sd', 'int');
-%% brain sensitivity
+% brain sensitivity
 figure; plotProbe(probe); plotROI(probe); plotBrainSensitivity(probe, 'all');
 
 %%
-
+figure; plotSpatialMultiplexingGroups(probe, [1 2 3]);
 

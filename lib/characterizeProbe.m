@@ -32,7 +32,7 @@ if (moduleexists && roiexists)
         probe = getChannelData(probe);
         if (sdrangeexists)
             probe = getBrainSensitivity(probe);
-%             probe = getSpatialMultiplexingGroups(probe);
+            probe = getSpatialMultiplexingGroups(probe);
         end
     end
 else
