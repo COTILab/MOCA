@@ -56,5 +56,5 @@ figure; plotProbe(probe); plotROI(probe); plotChannels(probe, 'spat', 'sd', 'int
 figure; plotProbe(probe); plotROI(probe); plotBrainSensitivity(probe, 'all');
 
 %%
-figure; plotSpatialMultiplexingGroups(probe, [1 2 3]);
+figure; plotSpatialMultiplexingGroups(probe, [1 3 7]);
 
