@@ -45,7 +45,7 @@ switch nargin
 end
 
 % Check that the sdrange limited channels exists. If they don't default to
-% fullintrachannels and fullinterchannels. 
+% full.intrachannels and full.interchannels. 
 
 
 % Begin plotting
@@ -58,9 +58,9 @@ switch plottype
         switch rangetype
             case 'sd'
             case 'full'
-                h1 = histogram(probe.results.fullintrachannels(:,1),...
+                h1 = histogram(probe.results.full.intrachannels(:,1),...
                                 'BinWidth', 1, 'FaceColor', [0 0.4470 0.7410]);
-                h2 = histogram(probe.results.fullinterchannels(:,1),...
+                h2 = histogram(probe.results.full.interchannels(:,1),...
                                 'BinWidth', 1, 'FaceColor', [0.8500 0.3250 0.0980]);
                 legend('intra', 'inter');
                 xlabel('SD Separation [mm]');
@@ -83,9 +83,9 @@ switch plottype
                 % Determine breakdowntype
                 switch breakdowntype
                     case 'col'
-                        c = probe.results.fullchannels(:,1);    % data to be plotted
-                        srcidx = probe.results.fullchannels(:,2);
-                        detidx = probe.results.fullchannels(:,3);
+                        c = probe.results.full.channels(:,1);    % data to be plotted
+                        srcidx = probe.results.full.channels(:,2);
+                        detidx = probe.results.full.channels(:,3);
                         ran=range(c);   % range of data
                         min_val=min(c); % minimum value of data
                         max_val=max(c); % maximum value of data
@@ -107,9 +107,9 @@ switch plottype
 
                     case 'int'
                         % INTER module channels
-                        c = probe.results.fullinterchannels(:,1);    % channel separations
-                        srcidx = probe.results.fullinterchannels(:,2);
-                        detidx = probe.results.fullinterchannels(:,3);
+                        c = probe.results.full.interchannels(:,1);    % channel separations
+                        srcidx = probe.results.full.interchannels(:,2);
+                        detidx = probe.results.full.interchannels(:,3);
                         for i=1:length(c)
                             src = srcidx(i);
                             det = detidx(i);
@@ -120,9 +120,9 @@ switch plottype
                         end
                         clear c srcidx detidx i
                         % INTRA module channels
-                        c = probe.results.fullintrachannels(:,1);    % channel separations
-                        srcidx = probe.results.fullintrachannels(:,2);
-                        detidx = probe.results.fullintrachannels(:,3);
+                        c = probe.results.full.intrachannels(:,1);    % channel separations
+                        srcidx = probe.results.full.intrachannels(:,2);
+                        detidx = probe.results.full.intrachannels(:,3);
                         for i=1:length(c)
                             src = srcidx(i);
                             det = detidx(i);
