@@ -2,18 +2,20 @@ function [probe] = getChannelData(probe)
 %GETCHANNELDATA Summary of this function goes here
 %   Detailed explanation goes here
 
+% first, get only the active modules, srcs, and detectors
+[activemodules, activesrcposns, activedetposns] = getActiveMSD(probe);
+tmpprobe = probe;
+tmpprobe.modules = activemodules;
+tmpprobe.srcposns = activesrcposns;
+tmpprobe.detposns = activedetposns;
+
 
 % WITHOUT sdrange DEFINED, ONLY CALCULATE THESE
 % fullchannels (all) [sep srcid detid srcmodid detmodid]
 % fullintrachannels (channels within modules)
 % fullinterchannels (channels with optodes on diff modules)
-
-probe = getSDSeparations(probe);
-
-
-
-
-
+tmpprobe = getSDSeparations(tmpprobe);
+probe.results = tmpprobe.results;
 
 
 % IF sdrange IS DEFINED, CALCULATE THESE TOO

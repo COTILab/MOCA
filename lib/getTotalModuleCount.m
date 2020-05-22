@@ -4,6 +4,7 @@ function [probe] = getTotalModuleCount(probe)
 
 activemoduleidx = probe.modules(:,4) == 1;  % indeces of active modules
 activemodules = probe.modules(activemoduleidx,:); % logic for sub-matrix
+
 probe.results.modulecount = size(activemodules,1);
 
 end
