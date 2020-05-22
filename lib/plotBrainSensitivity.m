@@ -1,10 +1,30 @@
-function [] = plotBrainSensitivity(probe)
+function [] = plotBrainSensitivity(probe, channeltype)
 %PLOTBRAINSENSITIVITY Summary of this function goes here
-%   Detailed explanation goes here
+%   Generate a spatial plot of channels color-coded by their brain
+%   sensitivity.  Can plot all channels, intra module channels, or inter
+%   module channels only with the channeltype input. Channeltype can be
+%   'all', 'intra', or 'inter'. If no channeltype is inputted, defaults to
+%   'all'.
 
-c = probe.results.brainsensitivity(:,1);    % data to be plotted
-srcidx = probe.results.brainsensitivity(:,2);
-detidx = probe.results.brainsensitivity(:,3);
+% determine which channels to plot.
+if (nargin == 2)
+    switch channeltype
+        case 'all'
+            bs = probe.results.brainsensitivity;
+        case 'intra'
+            bs = probe.results.intrabrainsensitivity;
+        case 'inter'
+            bs = probe.results.interbrainsensitivity;
+        otherwise
+    end
+elseif(nargin == 1)
+    bs = probe.results.brainsensitivity;
+end
+
+% determine colormap based on max and min
+c = bs(:,1);
+srcidx = bs(:,2);
+detidx = bs(:,3);
 ran=range(c);   % range of data
 min_val=min(c); % minimum value of data
 max_val=max(c); % maximum value of data
