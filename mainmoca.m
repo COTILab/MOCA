@@ -54,7 +54,7 @@ figure; plotChannels(probe, 'hist', 'sd');
 % plot probe + all channels by color/separation
 figure; plotProbe(probe); plotROI(probe); plotChannels(probe, 'spat', 'sd', 'int');
 %% brain sensitivity
-figure; plotProbe(probe); plotROI(probe); plotBrainSensitivity(probe, 'inter');
+figure; plotProbe(probe); plotROI(probe); plotBrainSensitivity(probe, 'all');
 
 %%
 

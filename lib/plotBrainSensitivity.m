@@ -25,9 +25,9 @@ end
 c = bs(:,1);
 srcidx = bs(:,2);
 detidx = bs(:,3);
-ran=range(c);   % range of data
-min_val=min(c); % minimum value of data
-max_val=max(c); % maximum value of data
+ran=range(probe.results.brainsensitivity(:,1));   % range of data
+min_val=min(probe.results.brainsensitivity(:,1)); % minimum value of data
+max_val=max(probe.results.brainsensitivity(:,1)); % maximum value of data
 y=floor(((c-min_val)/ran)*63)+1;    % 2^6, scale for 6 bit colors
 col=zeros(length(c),3);     % an rgb value for each channel
 p=colormap;
