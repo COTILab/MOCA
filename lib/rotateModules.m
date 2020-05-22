@@ -30,7 +30,13 @@ else
         modulexy = probe.modules(moduleidx(i), 1:2); % current xy of centroid
         moduleangle = probe.modules(moduleidx(i), 3); % current angle
         modulestate = probe.modules(moduleidx(i), 4); % current state
-        newangle = moduleangle + rotate_amount;
+        newangle = moduleangle + rotate_amount; % add rotation amount to current angle
+        while (newangle>360) % keep rotation between 0 and 360
+            newangle = newangle - 360;
+        end
+        while (newangle<0)
+            newangle = newangle + 360;
+        end
         probe.modules(moduleidx(i), :) = [modulexy(1), modulexy(2), newangle, modulestate];
         
         % srcposns and detposns are used directly in channel analysis.
