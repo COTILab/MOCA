@@ -74,17 +74,17 @@ if(isfield(probe, 'sdrange'))
     interchannels = sd(interidx,:);
     
     % indexes that limit channels to sdrange
-    chidx = sd(:,1) <= probe.sdrange(2);    % indeces of channels below <= sdrange(2)
-    raidx = intrachannels(:,1) <= probe.sdrange(2);    % indeces of intra channels <= sdrange(2)
-    eridx = interchannels(:,1) <= probe.sdrange(2);    % indeces of inter channels <= sdrange(2)
+    chidx = probe.results.full.channels(:,1) <= probe.sdrange(2);    % indeces of channels below <= sdrange(2)
+    raidx = probe.results.full.intrachannels(:,1) <= probe.sdrange(2);    % indeces of intra channels <= sdrange(2)
+    eridx = probe.results.full.interchannels(:,1) <= probe.sdrange(2);    % indeces of inter channels <= sdrange(2)
     ssidx = sd(:,1) < probe.sdrange(1); % indeces of ss channels
     lsidx = ( sd(:,1) >= probe.sdrange(1) & sd(:,1) <= probe.sdrange(2) ); % indeces of in range channels
     exidx = sd(:,1) > probe.sdrange(2); % indeces of channels above range 
 
     
-    probe.results.channels = sd(chidx,:);
-    probe.results.intrachannels = sd(raidx,:);
-    probe.results.interchannels = sd(eridx,:);
+    probe.results.channels = probe.results.full.channels(chidx,:);
+    probe.results.intrachannels = probe.results.full.intrachannels(raidx,:);
+    probe.results.interchannels = probe.results.full.interchannels(eridx,:);
     probe.results.sschannels = sd(ssidx,:);
     probe.results.lschannels = sd(lsidx,:);
     probe.results.exchannels = sd(exidx,:);

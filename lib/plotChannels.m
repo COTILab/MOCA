@@ -44,8 +44,19 @@ switch nargin
     otherwise
 end
 
-% Check that the sdrange limited channels exists. If they don't default to
-% full.intrachannels and full.interchannels. 
+
+% make temporary variables based on rangetype
+srcposns = probe.srcposns;
+detposns = probe.detposns;
+if (strcmp(rangetype, 'sd'))
+    channels = probe.results.channels;
+    intrachannels = probe.results.intrachannels;
+    interchannels = probe.results.interchannels;
+elseif (strcmp(rangetype, 'full'))
+    channels = probe.results.full.channels;
+    intrachannels = probe.results.full.intrachannels;
+    interchannels = probe.results.full.interchannels;
+end
 
 
 % Begin plotting
@@ -54,19 +65,14 @@ hold on
 % PLOT THEM AS A HISTOGRAM
 switch plottype
     case 'hist'
-        % Determine rangetype
-        switch rangetype
-            case 'sd'
-            case 'full'
-                h1 = histogram(probe.results.full.intrachannels(:,1),...
-                                'BinWidth', 1, 'FaceColor', [0 0.4470 0.7410]);
-                h2 = histogram(probe.results.full.interchannels(:,1),...
-                                'BinWidth', 1, 'FaceColor', [0.8500 0.3250 0.0980]);
-                legend('intra', 'inter');
-                xlabel('SD Separation [mm]');
-                ylabel('Channel Count [n]');
-                title('Channel Count Distribution');
-        end
+        h1 = histogram(intrachannels(:,1),...
+                        'BinWidth', 1, 'FaceColor', [0 0.4470 0.7410]);
+        h2 = histogram(interchannels(:,1),...
+                        'BinWidth', 1, 'FaceColor', [0.8500 0.3250 0.0980]);
+        legend('intra', 'inter');
+        xlabel('SD Separation [mm]');
+        ylabel('Channel Count [n]');
+        title('Channel Count Distribution');
     
 % PLOT THEM SPATIALLY
 	case 'spat'
@@ -77,6 +83,32 @@ switch plottype
                 switch breakdowntype
                     case 'col'
                     case 'int'
+                        % INTER module channels
+                        c = probe.results.interchannels(:,1);    % channel separations
+                        srcidx = probe.results.interchannels(:,2);
+                        detidx = probe.results.interchannels(:,3);
+                        for i=1:length(c)
+                            src = srcidx(i);
+                            det = detidx(i);
+                            h(1) = plot([probe.srcposns(src,1), probe.detposns(det,1)],...
+                                    [probe.srcposns(src,2), probe.detposns(det,2)],...
+                                    'Color', [0 0.4470 0.7410],...
+                                    'LineWidth',2);
+                        end
+                        clear c srcidx detidx i
+                        % INTRA module channels
+                        c = probe.results.intrachannels(:,1);    % channel separations
+                        srcidx = probe.results.intrachannels(:,2);
+                        detidx = probe.results.intrachannels(:,3);
+                        for i=1:length(c)
+                            src = srcidx(i);
+                            det = detidx(i);
+                            h(2) = plot([probe.srcposns(src,1), probe.detposns(det,1)],...
+                                    [probe.srcposns(src,2), probe.detposns(det,2)],...
+                                    'Color', [0.8500 0.3250 0.0980],...
+                                    'LineWidth',2);
+                        end
+                        legend(h(1:2),'inter','intra');
                 end
 
             case 'full'
@@ -131,7 +163,6 @@ switch plottype
                                     'Color', [0.8500 0.3250 0.0980],...
                                     'LineWidth',2);
                         end
-                        %legend('inter', 'intra');
                         legend(h(1:2),'inter','intra');
                 end
         end

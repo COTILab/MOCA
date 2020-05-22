@@ -48,9 +48,9 @@ probe = characterizeProbe(probe);
 
 %% Visualize Characterization
 % plot channel histogram
-figure; plotChannels(probe, 'hist', 'full'); 
+figure; plotChannels(probe, 'hist', 'sd'); 
 % plot probe + all channels by color/separation
 figure; plotProbe(probe, probe.roi); plotChannels(probe, 'spat', 'full', 'col');
 % plot probe + all channel broken down by inter/intra channels
-figure; plotProbe(probe, probe.roi); plotChannels(probe, 'spat', 'full', 'int');
+figure; plotProbe(probe, probe.roi); plotChannels(probe, 'spat', 'sd', 'int');
 
