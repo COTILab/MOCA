@@ -12,7 +12,7 @@ probe.module = createModule(4, 40); % nsides, mdimension
 % Region-of-interest Geometry
 % design.roi is an Nx2 matrix specifying the perimeter of the ROI. All
 % values in mm.
-probe.roi = createROI(120,80); % width and height
+probe.roi = createROI(160,120); % width and height
 
 % Optode layout on a single module
 % srcpsns and detposns within design.layout must each be Nx2 matrix
@@ -27,7 +27,7 @@ probe.module.detposns = [-12.5,4; 12.5,12.5; 12.5,-4; -12.5,-12.5];
 % lower end of the SD range. Channels < design.maxsdsep(1) are considered
 % short-separation (SS) channels. The default SS channel threshold is 10mm,
 % inclusive. Value should be in mm.
-probe.sdrange = 40;
+probe.sdrange = 50;
 
 % Visualizing the design structure
 figure; plotModule(probe);
@@ -38,7 +38,7 @@ probe.spacing = 10;  % not necessary
 probe = createLayout(probe); %roi, SDrange, spacing);
 
 % Adjustments to probe assembly
-probe = toggleModules(probe, [2 6], 'off');
+probe = toggleModules(probe, [7], 'off');
 probe = translateProbe(probe, 'center');
 figure; plotProbe(probe, probe.roi);
 
@@ -50,7 +50,7 @@ probe = characterizeProbe(probe);
 % plot channel histogram
 figure; plotChannels(probe, 'hist', 'sd'); 
 % plot probe + all channels by color/separation
-figure; plotProbe(probe, probe.roi); plotChannels(probe, 'spat', 'full', 'col');
+%figure; plotProbe(probe, probe.roi); plotChannels(probe, 'spat', 'full', 'col');
 % plot probe + all channel broken down by inter/intra channels
 figure; plotProbe(probe, probe.roi); plotChannels(probe, 'spat', 'sd', 'int');
 

@@ -48,14 +48,16 @@ end
 % make temporary variables based on rangetype
 srcposns = probe.srcposns;
 detposns = probe.detposns;
-if (strcmp(rangetype, 'sd'))
-    channels = probe.results.channels;
-    intrachannels = probe.results.intrachannels;
-    interchannels = probe.results.interchannels;
-elseif (strcmp(rangetype, 'full'))
-    channels = probe.results.full.channels;
-    intrachannels = probe.results.full.intrachannels;
-    interchannels = probe.results.full.interchannels;
+switch rangetype
+    case 'sd'
+        channels = probe.results.channels;
+        intrachannels = probe.results.intrachannels;
+        interchannels = probe.results.interchannels;
+    case 'full'
+        channels = probe.results.full.channels;
+        intrachannels = probe.results.full.intrachannels;
+        interchannels = probe.results.full.interchannels;
+    otherwise
 end
 
 
@@ -66,9 +68,9 @@ hold on
 switch plottype
     case 'hist'
         h1 = histogram(intrachannels(:,1),...
-                        'BinWidth', 1, 'FaceColor', [0 0.4470 0.7410]);
+                'BinWidth', 1, 'FaceColor', [0 0.4470 0.7410]);
         h2 = histogram(interchannels(:,1),...
-                        'BinWidth', 1, 'FaceColor', [0.8500 0.3250 0.0980]);
+                'BinWidth', 1, 'FaceColor', [0.8500 0.3250 0.0980]);
         legend('intra', 'inter');
         xlabel('SD Separation [mm]');
         ylabel('Channel Count [n]');
@@ -76,98 +78,62 @@ switch plottype
     
 % PLOT THEM SPATIALLY
 	case 'spat'
-        % Determine rangetype
-        switch rangetype
-            case 'sd'
-                % Determine breakdowntype
-                switch breakdowntype
-                    case 'col'
-                    case 'int'
-                        % INTER module channels
-                        c = probe.results.interchannels(:,1);    % channel separations
-                        srcidx = probe.results.interchannels(:,2);
-                        detidx = probe.results.interchannels(:,3);
-                        for i=1:length(c)
-                            src = srcidx(i);
-                            det = detidx(i);
-                            h(1) = plot([probe.srcposns(src,1), probe.detposns(det,1)],...
-                                    [probe.srcposns(src,2), probe.detposns(det,2)],...
-                                    'Color', [0 0.4470 0.7410],...
-                                    'LineWidth',2);
-                        end
-                        clear c srcidx detidx i
-                        % INTRA module channels
-                        c = probe.results.intrachannels(:,1);    % channel separations
-                        srcidx = probe.results.intrachannels(:,2);
-                        detidx = probe.results.intrachannels(:,3);
-                        for i=1:length(c)
-                            src = srcidx(i);
-                            det = detidx(i);
-                            h(2) = plot([probe.srcposns(src,1), probe.detposns(det,1)],...
-                                    [probe.srcposns(src,2), probe.detposns(det,2)],...
-                                    'Color', [0.8500 0.3250 0.0980],...
-                                    'LineWidth',2);
-                        end
-                        legend(h(1:2),'inter','intra');
+        % Determine breakdowntype
+        switch breakdowntype
+            case 'col'
+                c = channels(:,1);    % data to be plotted
+                srcidx = channels(:,2);
+                detidx = channels(:,3);
+                ran=range(c);   % range of data
+                min_val=min(c); % minimum value of data
+                max_val=max(c); % maximum value of data
+                y=floor(((c-min_val)/ran)*63)+1;    % 2^6, scale for 6 bit colors
+                col=zeros(length(c),3);     % an rgb value for each channel
+                p=colormap;
+                for i=1:length(c)
+                    a=y(i);
+                    col(i,:)=p(a,:);
+                    plot([srcposns(srcidx(i),1), detposns(detidx(i),1)],...
+                            [srcposns(srcidx(i),2), detposns(detidx(i),2)],...
+                            'Color',col(i,:),...
+                            'LineWidth',2);
+                    axis equal;
+                    h = colorbar;
+                    ylabel(h, 'SD Separation [mm]');
+                    caxis([min_val max_val]);
                 end
 
-            case 'full'
-                % Determine breakdowntype
-                switch breakdowntype
-                    case 'col'
-                        c = probe.results.full.channels(:,1);    % data to be plotted
-                        srcidx = probe.results.full.channels(:,2);
-                        detidx = probe.results.full.channels(:,3);
-                        ran=range(c);   % range of data
-                        min_val=min(c); % minimum value of data
-                        max_val=max(c); % maximum value of data
-                        y=floor(((c-min_val)/ran)*63)+1;    % 2^6, scale for 6 bit colors
-                        col=zeros(length(c),3);     % an rgb value for each channel
-                        p=colormap;
-                        for i=1:length(c)
-                            a=y(i);
-                            col(i,:)=p(a,:);
-                            plot([probe.srcposns(srcidx(i),1), probe.detposns(detidx(i),1)],...
-                                    [probe.srcposns(srcidx(i),2), probe.detposns(detidx(i),2)],...
-                                    'Color',col(i,:),...
-                                    'LineWidth',2);
-                            axis equal;
-                            h = colorbar;
-                            ylabel(h, 'SD Separation [mm]');
-                            caxis([min_val max_val]);
-                        end
-
-                    case 'int'
-                        % INTER module channels
-                        c = probe.results.full.interchannels(:,1);    % channel separations
-                        srcidx = probe.results.full.interchannels(:,2);
-                        detidx = probe.results.full.interchannels(:,3);
-                        for i=1:length(c)
-                            src = srcidx(i);
-                            det = detidx(i);
-                            h(1) = plot([probe.srcposns(src,1), probe.detposns(det,1)],...
-                                    [probe.srcposns(src,2), probe.detposns(det,2)],...
-                                    'Color', [0 0.4470 0.7410],...
-                                    'LineWidth',2);
-                        end
-                        clear c srcidx detidx i
-                        % INTRA module channels
-                        c = probe.results.full.intrachannels(:,1);    % channel separations
-                        srcidx = probe.results.full.intrachannels(:,2);
-                        detidx = probe.results.full.intrachannels(:,3);
-                        for i=1:length(c)
-                            src = srcidx(i);
-                            det = detidx(i);
-                            h(2) = plot([probe.srcposns(src,1), probe.detposns(det,1)],...
-                                    [probe.srcposns(src,2), probe.detposns(det,2)],...
-                                    'Color', [0.8500 0.3250 0.0980],...
-                                    'LineWidth',2);
-                        end
-                        legend(h(1:2),'inter','intra');
+            case 'int'
+                % INTER module channels
+                c = interchannels(:,1);    % channel separations
+                srcidx = interchannels(:,2);
+                detidx = interchannels(:,3);
+                for i=1:length(c)
+                    src = srcidx(i); % src 1
+                    det = detidx(i); % det 16   
+                    % fix this part. Find the xy coor of the src_th src
+                    h(1) = plot([srcposns(src,1), detposns(det,1)],...
+                            [srcposns(src,2), detposns(det,2)],...
+                            'Color', [0 0.4470 0.7410],...
+                            'LineWidth',2);
                 end
+                clear c srcidx detidx i
+                % INTRA module channels
+                c = intrachannels(:,1);    % channel separations
+                srcidx = intrachannels(:,2);
+                detidx = intrachannels(:,3);
+                for i=1:length(c)
+                    src = srcidx(i);
+                    det = detidx(i);
+                    h(2) = plot([srcposns(src,1), detposns(det,1)],...
+                            [srcposns(src,2), detposns(det,2)],...
+                            'Color', [0.8500 0.3250 0.0980],...
+                            'LineWidth',2);
+                end
+                legend(h(1:2),'inter','intra');
         end
-
 end
+
 
 % update xlabels, ylabels, and titles
 
