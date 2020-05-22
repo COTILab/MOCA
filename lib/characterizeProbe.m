@@ -30,10 +30,10 @@ if (moduleexists && roiexists)
     if (optodesexists)
         probe = getTotalOptodeCount(probe);
         probe = getChannelData(probe);
-%         if (sdrangeexists)
-%             probe = getBrainSensitivity(probe);
+        if (sdrangeexists)
+            probe = getBrainSensitivity(probe);
 %             probe = getSpatialMultiplexingGroups(probe);
-%         end
+        end
     end
 else
     disp('Incorrect design parameters');
