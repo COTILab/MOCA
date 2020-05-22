@@ -39,6 +39,7 @@ probe = createLayout(probe); %roi, SDrange, spacing);
 
 % Adjustments to probe assembly
 probe = toggleModules(probe, [7], 'off');
+% probe = rotateModules(probe, [], angle);
 probe = translateProbe(probe, 'center');
 figure; plotProbe(probe, probe.roi);
 
@@ -50,7 +51,7 @@ probe = characterizeProbe(probe);
 % plot channel histogram
 figure; plotChannels(probe, 'hist', 'sd'); 
 % plot probe + all channels by color/separation
-%figure; plotProbe(probe, probe.roi); plotChannels(probe, 'spat', 'full', 'col');
-% plot probe + all channel broken down by inter/intra channels
 figure; plotProbe(probe, probe.roi); plotChannels(probe, 'spat', 'sd', 'int');
+% brain sensitivity
+
 

@@ -32,6 +32,8 @@ if (strcmp(probe.module.shape, 'square'))
             % translate and rotate sources. Save which module idx they
             % belong to. give a unique id to each source
             nsrcs = size(probe.module.srcposns(:,1), 1);
+            % rotatedsrcs = rotateCoordinates(probe.module.srcposns,
+            % angle);
             translatedsrcs = translateCoordinates(probe.module.srcposns, [x,y]);
             moduleidxsrcs = modcount; 
             for s=1:nsrcs
