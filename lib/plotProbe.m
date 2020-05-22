@@ -18,11 +18,16 @@ for i = 1:size(modules,1)
     text(modules(i,1), modules(i,2), num2str(i));
     
     if (modules(i,4) == 1)  % If the module is active
-        % plot the shape over each centroid
-        peri = translateCoordinates(probe.module.perimeter, modules(i,1:2));
-        % peri = orientShape();
-        peri_x = [peri(:,1); peri(1,1)];
-        peri_y = [peri(:,2); peri(1,2)];
+        % plot the shape/perimeter over each centroid
+        modulexy = modules(i, 1:2); % current xy of centroid
+        moduleangle = modules(i, 3); % current angle
+        
+        % rotate the module
+        rperimeter = rotateCoordinates(probe.module.perimeter, moduleangle);
+        trperimeter = translateCoordinates(rperimeter, modulexy); % rotated AND translated perimeter
+                
+        peri_x = [trperimeter(:,1); trperimeter(1,1)];
+        peri_y = [trperimeter(:,2); trperimeter(1,2)];
         plot(peri_x, peri_y, 'k-', 'LineWidth', 3);
         
         % Find sources on this module and plot them

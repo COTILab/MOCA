@@ -39,8 +39,8 @@ probe = createLayout(probe); %roi, SDrange, spacing);
 
 % Adjustments to probe assembly
 probe = toggleModules(probe, [7], 'off');
-% probe = rotateModules(probe, [], angle);
-probe = translateProbe(probe, 'center');
+probe = rotateModules(probe, [1 4], 45);
+%probe = translateProbe(probe, 'center');
 figure; plotProbe(probe, probe.roi);
 
 
