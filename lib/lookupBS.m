@@ -76,9 +76,9 @@ bs = [1	0.0006271050572	0.0001611401955	0.9992213933
 60	0.1108286016	0.03548327744	0.8568026843];
 
 if(separation<1)
-    b_sensitivity = [0, 0, 0, 0];
+    b_sensitivity = 0; %[0, 0, 0, 0];
 elseif(separation>60)
-    b_sensitivity = [0, 0, 0, 0];
+    b_sensitivity = 0; %[0, 0, 0, 0];
 else
     GM = interp1(bs(:,1), bs(:,2), separation);
     WM = interp1(bs(:,1), bs(:,3), separation);

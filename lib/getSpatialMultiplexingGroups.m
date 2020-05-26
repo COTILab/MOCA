@@ -4,20 +4,30 @@ function [probe] = getSpatialMultiplexingGroups(probe)
 %   columns refer to [x y groupid srcid].
 
 
-assigned_srcs = probe.srcposns;  % [x y groupid srcid]
-assigned_srcs(:,3) = zeros(size(probe.srcposns,1), 1);
+activemoduleidx = probe.modules(:,4) == 1;  % indeces of active modules
+activemodules = probe.modules(activemoduleidx,:); % logic for sub-matrix
+
+assigned_srcs = probe.srcposns;  % [x y modid srcid]
+for m=1:size(probe.modules(:,4),1)
+    if (probe.modules(m,4)==0) % if probe is inactive
+        inactivesrcidx = assigned_srcs(:,3) ~= m;
+        assigned_srcs = assigned_srcs(inactivesrcidx,:);
+    end
+end
+
+assigned_srcs(:,5) = zeros(size(assigned_srcs,1), 1); % [x y modid srcid groupid]
 
 groupn = 1;
 group_flag = 0;  % =1 when all srcs have been given a group
 
 while (group_flag == 0)
-    group_assignments = assigned_srcs(:,3);
+    group_assignments = assigned_srcs(:,5);
     fsog = find(group_assignments==0, 1, 'first');  % idx of first source in current group
-    assigned_srcs(fsog,3) = groupn; % assign a group to this source
+    assigned_srcs(fsog,5) = groupn; % assign a group to this source
     
     for srcn = fsog:size(assigned_srcs,1)
         % idx of all srcs in this current group
-        srcs_in_this_group_idx = assigned_srcs(:,3) == groupn; 
+        srcs_in_this_group_idx = assigned_srcs(:,5) == groupn; 
         srcs_in_this_group = assigned_srcs(srcs_in_this_group_idx, :); % [x y groupid srcid]
         all_srcs = assigned_srcs(:,1:2);    % coordinatess of all sources in the probe
         
@@ -27,8 +37,8 @@ while (group_flag == 0)
             (srcs_in_this_group(:,2) - all_srcs(srcn,2)) .^ 2);
         % If the candidate src is far away enough AND isn't current
         % assigned a group, assign it to this group
-        if (min(distances)>2*probe.sdrange(2) && assigned_srcs(srcn,3)==0)
-            assigned_srcs(srcn,3) = groupn;
+        if (min(distances)>2*probe.sdrange(2) && assigned_srcs(srcn,5)==0)
+            assigned_srcs(srcn,5) = groupn;
         end
     end
     
@@ -42,7 +52,7 @@ while (group_flag == 0)
     
 end
 
-probe.results.groupings = assigned_srcs; % [x y groupid srcid]
+probe.results.groupings = assigned_srcs; % [x y modid srcid groupid]
 
 
 end
