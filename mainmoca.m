@@ -36,7 +36,7 @@ figure; plotROI(probe);
 
 %% Assembly Processes
 probe.spacing = 10;  % not necessary
-probe = createLayout(probe); %roi, SDrange, spacing);
+probe = createLayout(probe); 
 
 figure; plotProbe(probe); plotROI(probe)
 
