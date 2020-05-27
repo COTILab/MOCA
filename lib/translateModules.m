@@ -1,6 +1,8 @@
-function [probe] = translateModule(probe, moduleidx, translate_amount)
+function [probe] = translateModules(probe, moduleidx, translate_amount)
 %TRANSLATEMODULE Translates a module within a probe in x and y
-%   Detailed explanation goes here
+%   Give a vector of module ids and a translate_amount=[x,y], this function
+%   will update the modules' centroid position as well as sources and
+%   detector (if they exist).
 
 
 optexist = true;    % flag to determine if optodes were defined. 
@@ -22,7 +24,7 @@ for i=1:size(moduleidx,2)
         newxy = translateCoordinates(modulexy, translate_amount);
         probe.modules(moduleidx(i), :) = [newxy(1), newxy(2), moduleangle, modulestate];
         
-        % if optodes were defined, rotate them too
+        % if optodes were defined, translate them too
         if (optexist)
             % srcposns and detposns are used directly in channel analysis.
             % Similarly, to use with other software, they need to know the xy
