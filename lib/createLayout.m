@@ -4,8 +4,12 @@ function [probe] = createLayout(probe)
 
 probe.maxroiwidth = max(probe.roi(:,1)) - min(probe.roi(:,1));     % probe's max width
 probe.maxroiheight = max(probe.roi(:,2)) - min(probe.roi(:,2));    % probe's max height
-if (length(probe.sdrange) == 1)       % if only a single number inputted, 
-    probe.sdrange = [10 probe.sdrange];   % then default to SS channels being < 10mm, inclusive
+if (isfield(probe,'sdrange'))
+    if (length(probe.sdrange) == 1)       % if only a single number inputted, 
+        probe.sdrange = [10 probe.sdrange];   % then default to SS channels being < 10mm, inclusive
+    end
+else    % if sdrange was never inputted 
+    probe.sdrange = [10 1000];
 end
 if(isfield(probe, 'spacing') == 0)     % if spacing not specified
     probe.spacing = 0;
