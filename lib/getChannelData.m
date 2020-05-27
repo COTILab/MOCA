@@ -1,6 +1,11 @@
 function [probe] = getChannelData(probe)
-%GETCHANNELDATA Summary of this function goes here
-%   Detailed explanation goes here
+%GETCHANNELDATA Determine channel distribution of the probe
+%   Calculates the SD separations for (1) channels limited by sdrange and
+%   (2) without sdrange limits. For when output is limited to sdrange,
+%   three additional sub-fields (sschannels, lschannels, exchannels) are
+%   also calculated. Else, only channels, intrachannels, and interchannels
+%   are outputted. Outputs are Nx5 matrixes, where the columns are 
+%   [SDseparation, sourceID, detectorID, moduleIDofSource, moduleIDofdetector]
 
 % first, get only the active modules, srcs, and detectors
 [activemodules, activesrcposns, activedetposns] = getActiveMSD(probe);
@@ -10,8 +15,7 @@ tmpprobe.srcposns = activesrcposns;
 tmpprobe.detposns = activedetposns;
 
 
-% IF sdrange IS DEFINED, IT WILL CALCULATE
-% channels (all, limited to sdrange(2) inclusive)
+% channels (all, limited to sdrange(2) inclusive) [sep srcid detid srcmodid detmodid]
 % intrachannels (channels within modules)
 % interchannels (channels with optodes on diff modules)
 % sschannels (channels below sdrange(1), exclusive)
@@ -20,10 +24,7 @@ tmpprobe.detposns = activedetposns;
 tmpprobe = getSDSeparations(tmpprobe);
 probe.results = tmpprobe.results;
 
-% WITHOUT sdrange DEFINED, ONLY CALCULATE THESE
-% fullchannels (all) [sep srcid detid srcmodid detmodid]
-% fullintrachannels (channels within modules)
-% fullinterchannels (channels with optodes on diff modules)
+
 
 
 

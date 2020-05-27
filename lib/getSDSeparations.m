@@ -1,13 +1,16 @@
 function [probe] = getSDSeparations(probe)
-%GETSDSEPARATIONS Summary of this function goes here
+%GETSDSEPARATIONS Calculates separation for each src/det pair
 %   Given a probe with src and detposns defined as [x, y, modidx,
 %   src/detidx], calculate the euler distance between all
 %   permutations/pairs of sources and detectors, of active modules only. 
-%   Output is a Nx5 matrix,
-%   where N=(number of srcs)*(number of dets)-> only from active modules. 
-%   The five columns refer to
+%   Output is a Nx5 matrix, where N=(number of srcs)*(number of dets)-> 
+%   only from active modules. The five columns refer to
 %   [separation, srcidx, detidx, srcmodidx, detmodidx]. This function
-%   calculates for both full sdrange as well as within range
+%   calculates for both full sdrange as well as within sdrange channels.
+%   Within range outputs are saved to sub-fields probe.results.channels,
+%   .intramodulechannels, and .intermodulechannels. The same three
+%   subfields are calculated without SDrange limitations and saved to
+%   probe.results.full
 
 srcs = probe.srcposns; % [x, y, modidx, srcidx]
 dets = probe.detposns; % [x, y, modidx, detidx]

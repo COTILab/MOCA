@@ -1,10 +1,10 @@
 function [probe] = rotateModules(probe, moduleidx, rotate_amount)
-%ROTATEMODULES Summary of this function goes here
-%   Rotates a modules within a probe layout by rotate_amount. Modules are
+%ROTATEMODULES Rotates modules within a probe
+%   Rotates modules within a probe layout by rotate_amount. Modules are
 %   identified by their module idx. moduleidx can be a vector of module ids
 %   in the probe. If moduleidx is empty (ie []), then the elementary
-%   module, probe.module, is rotate.  Rotation of a module refers to the
-%   rotation of its perimeter, its sources, and its detector.
+%   module, probe.module, is rotated.  Rotation of a module refers to the
+%   rotation of its perimeter and its optodes (if they exist).
 
 optexist = true;    % flag to determine if optodes were defined. 
 if( isfield(probe.module, 'srcposns') == false )

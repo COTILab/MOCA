@@ -1,5 +1,5 @@
 function [] = plotChannels(probe, plottypein, rangetypein, breakdowntypein)
-%PLOTCHANNELS Summary of this function goes here
+%PLOTCHANNELS Plot histrogram or spatial plot of channel distribution
 %   Plot the channels. There are two plot types: histogram and spatial.
 %   Histogram plots the channels in a histogram showing frequency of SD
 %   separations. By default, the binwidth is 1mm.  Spatial plots plot the
@@ -9,18 +9,17 @@ function [] = plotChannels(probe, plottypein, rangetypein, breakdowntypein)
 %   channels. How to define the plot, range, and breakdown type is shown in
 %   the table below. If a type in a column in not defined, the type with
 %   the asterisk (*) is plotted by default.
-
-% Plot    | Range     | Breakdown
-% type    | type      | type
-% -------------------------------
-% 'hist'* | 'sd'*     | 
-%         | 'full'    | 
-% -------------------------------
-% 'spat'  | 'sd'*     | 'col'*
-%         |           | 'int'
-%         -----------------------
-%         | 'full'    | 'col'*
-%         |           | 'int'
+%         Plot    | Range     | Breakdown
+%         type    | type      | type
+%         -------------------------------
+%         'hist'* | 'sd'*     | 
+%                 | 'full'    | 
+%         -------------------------------
+%         'spat'  | 'sd'*     | 'col'*
+%                 |           | 'int'
+%                 -----------------------
+%                 | 'full'    | 'col'*
+%                 |           | 'int'
 
 
 % Determine the number of inputs.

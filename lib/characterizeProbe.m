@@ -1,6 +1,11 @@
 function [probe] = characterizeProbe(probe)
-%CHARACTERIZEPROBE Summary of this function goes here
-%   Detailed explanation goes here
+%CHARACTERIZEPROBE Derives characterization metrics of a probe
+%   This function takes in design parameters and assembly processes to
+%   produce quantitative metrics that characterize the probe. The number of
+%   characterizations depends on the number of inputted parameters. When
+%   fully defined, this results in total module count, total optode count,
+%   channel distribution, brain sensitivity, and assignment of sources into
+%   spatial multiplexing groups. 
 
 moduleexists = false; 
 roiexists = false;

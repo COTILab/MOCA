@@ -1,5 +1,5 @@
 function [] = plotBrainSensitivity(probe, channeltype)
-%PLOTBRAINSENSITIVITY Summary of this function goes here
+%PLOTBRAINSENSITIVITY Plot spatial brain sensitivity 
 %   Generate a spatial plot of channels color-coded by their brain
 %   sensitivity.  Can plot all channels, intra module channels, or inter
 %   module channels only with the channeltype input. Channeltype can be

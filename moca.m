@@ -21,7 +21,7 @@ function [] = moca()
 %     **probe.module:     A struct with sub-fields:
 %             probe.module.perimeter: a Px2 double matrix specifying the X,Y 
 %                         coordinates of the perimeter of the module shape in mm.
-%                         Modules should be centered at 0,0
+%                         Modules should be centered at [x,y]=[0,0]
 %             probe.module.shape:     (optional) a string specifying the 
 %                         module shape. Can be 'square', 'triangle', or 'hexagon'
 %             probe.module.dimension: (optional) integer specifying the 
@@ -36,7 +36,10 @@ function [] = moca()
 %                         coordinates of each detector within a single module in mm
 %      *probe.sdrange:    an array specifying the minimum and maximum SD
 %                         separation in mm. Defined as [minSD, maxSD]. minSD is used to 
-%                         define short-separation channels.
+%                         define short-separation channels. If only one
+%                         value is defined, it is treated at the maxSD.
+%                         Values are in mm. The default threshold for
+%                         short-separation channels is 10. 
 %       probe.spacing:    an integer value specifying the spacing between
 %                         modules when tessellated over a ROI in mm. Spacing 
 %                         is done in both X and Y axes. If not defined, 

@@ -1,6 +1,6 @@
 function [] = plotROI(probe)
 %PLOTROI Plots the perimeter of the ROI
-%   plots the perimeter of the ROI on a new figure
+%   plots the perimeter of the ROI.
 
 hold on
 

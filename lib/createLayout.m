@@ -1,6 +1,16 @@
 function [probe] = createLayout(probe) 
 %CREATELAYOUT Create a probe composed of modules over a ROI
-%   Detailed explanation goes here
+%   Create layout is a MOCA function used to facilitate the tessellation of
+%   a module design over a ROI. Tessellation is done as a "grid" over the
+%   ROI that covers the max width and max height of the ROI. For triangle
+%   and hexagon shapes, the 'dense' option permits MOCA to change the
+%   orientation of each module to tessellate the module shape over the ROI
+%   without leaving any gaps. If the module shape was defined manually (not
+%   using createModule(), then only the grid tessellation is available.
+%   Individual modules can be translated and oriented using rotateModule()
+%   and translateProbe() functions. This function results in sub-fields of
+%   probe.modules, probe.srcposns, and probe.detposns. These sub-fields can
+%   be individually inputted manually for higher control.
 
 probe.maxroiwidth = max(probe.roi(:,1)) - min(probe.roi(:,1));     % probe's max width
 probe.maxroiheight = max(probe.roi(:,2)) - min(probe.roi(:,2));    % probe's max height

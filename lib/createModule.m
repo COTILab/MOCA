@@ -4,9 +4,9 @@ function [module] = createModule(nsides,mdimension)
 %   regular shape. A regular shape is defined as equiangular and
 %   equilateral. The first three regular polygons that can tessellate by
 %   themselves are support (triangle, square, hexagon). Each module is
-%   centered on the origin 0,0.
-%   nsides must be equal to 3, 4, or 6
-%   mdimension must be positive
+%   centered on the origin [0,0]. nsides must be equal to 3, 4, or 6. 
+%   mdimension must be positive and refers to the length of one side of the
+%   shape
 
 
 % Triangle shaped module

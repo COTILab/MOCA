@@ -1,9 +1,11 @@
 function [b_sensitivity] = lookupBS(separation)
-%LOOKUPBS Summary of this function goes here
-%   Detailed explanation goes here
+%LOOKUPBS Brain Sensitivity lookup table
+%   Returns the brain sensitivity (white + gray matter only) of a SD
+%   separation. Assumes a five layer slab model. If the SD separation is
+%   not an integer, brain sensitivity is linearly interpolated. The max SD
+%   separation is 60 mm.
 
 % 1e7, Strangman2013 OPs - https://doi.org/10.1371/journal.pone.0066319
-% % from Strangman2013 
 % g = 0.01;
 % n = 1;
 % OP_strangman=[0 0 1 1            % medium 0: the environment
@@ -78,7 +80,7 @@ bs = [1	0.0006271050572	0.0001611401955	0.9992213933
 if(separation<1)
     b_sensitivity = 0; %[0, 0, 0, 0];
 elseif(separation>60)
-    b_sensitivity = 0; %[0, 0, 0, 0];
+    b_sensitivity = 0.1463; % 0.1108286016	+ 0.03548327744
 else
     GM = interp1(bs(:,1), bs(:,2), separation);
     WM = interp1(bs(:,1), bs(:,3), separation);

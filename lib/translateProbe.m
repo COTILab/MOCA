@@ -1,6 +1,10 @@
 function [probe] = translateProbe(probe, translate_amount)
-%TRANSLATEPROBE Summary of this function goes here
-%   Detailed explanation goes here
+%TRANSLATEPROBE Translate probe relative to ROI
+%   Translates the entire probe (assembly of modules) relative to ROI to
+%   ensure proper coverage. Translate_amount is defined as [deltax, deltay]
+%   where deltas can be negative or positive. Additionally, if
+%   translate_amount is set to 'center', then this function calculates the
+%   centroid of the ROI and the centroid of the probe to overlay.
 
 optexist = true;    % flag to determine if optodes were defined. 
 if( isfield(probe.module, 'srcposns') == false )

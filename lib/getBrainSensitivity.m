@@ -1,11 +1,12 @@
 function [probe] = getBrainSensitivity(probe)
-%GETBRAINSENSITIVITY Summary of this function goes here
-%   Detailed explanation goes here
+%GETBRAINSENSITIVITY Returns Brain Sensitivity for each channel
+%   Calculates Brain Sensitivity for each channel in
+%   probe.results.lschannels, since this function can only be executed if
+%   sdrange is defined. It ignores short separation channels since by
+%   definition these channels only sample superficial areas of the brain.
+%   It ignores exchannels since they are above sdrange(2). 
 
-% only get BS for long separation channels. Ignore short separation
-% channels, and channels above the sdrange.  Since, according to the
-% workflow, we can only get BS if we have already ran channel analysis,
-% lets just use probe.results.lschannels. 
+
 sdseparation = probe.results.lschannels;
 brainsensitivity = sdseparation;
 for i=1:size(sdseparation,1)

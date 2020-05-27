@@ -1,6 +1,8 @@
 function [probe] = getTotalOptodeCount(probe)
-%GETTOTALOPTODECOUNT Summary of this function goes here
-%   Detailed explanation goes here
+%GETTOTALOPTODECOUNT Derive total number of optodes (regardless of active)
+%   Determines the total number of sources and detectors of all modules,
+%   regardless of their active state. Returns an integer value for srcs,
+%   dets, and optodes = srcs+dets.
 
 results = probe.results;
 
