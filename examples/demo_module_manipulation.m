@@ -20,7 +20,7 @@ probe = createLayout(probe);
 figure; plotProbe(probe); plotROI(probe)
 
 % Toggle individual modules on and off
-probe = toggleModules(probe, [2 8 11], 'off');
+probe = toggleModules(probe, [2 8], 'off');
 
 % Translate the entire probe relative to ROI
 probe = translateProbe(probe, [20 40]);
@@ -33,7 +33,12 @@ probe = rotateModules(probe, [7], -15);
 % Translate individual modules
 probe = translateModules(probe, [1], [-10 -10]);
 
-% Probe Characterization
+% Visualize the changes to the probe
+figure; plotProbe(probe); plotROI(probe);
+plotDiGraph(probe);
+
+
+%% Probe Characterization
 probe = characterizeProbe(probe);
 
 % Visualize Characterization - plot channel histogram
