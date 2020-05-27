@@ -30,6 +30,9 @@ probe = translateProbe(probe, 'center'); % centered probe to ROI
 probe = rotateModules(probe, [1 9], 45);
 probe = rotateModules(probe, [7], -15);
 
+% Translate individual modules
+probe = translateModules(probe, [1], [-10 -10]);
+
 % Probe Characterization
 probe = characterizeProbe(probe);
 

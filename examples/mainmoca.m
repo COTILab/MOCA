@@ -28,6 +28,7 @@ probe = toggleModules(probe, [8 12 16], 'off');
 probe = translateProbe(probe, 'center');
 probe = rotateModules(probe, [11], 45);
 probe = rotateModules(probe, [7], 15);
+probe = translateModules(probe, [3 4 7 11], [20 0]);
 
 figure; plotProbe(probe); plotROI(probe)
 %% Probe Characterization
