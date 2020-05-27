@@ -1,7 +1,7 @@
 function [probe] = getSpatialMultiplexingGroups(probe)
 %GETSPATIALMULTIPLEXINGGROUPS Summary of this function goes here
 %   Results in a Nx4 matrix, where N is number of sources and the four 
-%   columns refer to [x y groupid srcid].
+%   columns refer to [x y modid srcid groupid].
 
 
 activemoduleidx = probe.modules(:,4) == 1;  % indeces of active modules
