@@ -14,9 +14,10 @@ function [probe] = createLayout(probe)
 
 probe.maxroiwidth = max(probe.roi(:,1)) - min(probe.roi(:,1));     % probe's max width
 probe.maxroiheight = max(probe.roi(:,2)) - min(probe.roi(:,2));    % probe's max height
+
 if (isfield(probe,'sdrange'))
-    if (length(probe.sdrange) == 1)       % if only a single number inputted, 
-        probe.sdrange = [10 probe.sdrange];   % then default to SS channels being < 10mm, inclusive
+    if (length(probe.sdrange) == 1)         % if only a single number inputted, 
+        probe.sdrange = [10 probe.sdrange]; % then default to SS channels being < 10mm, inclusive
     end
 else    % if sdrange was never inputted 
     probe.sdrange = [10 1000];
@@ -42,6 +43,9 @@ if (strcmp(probe.module.shape, 'square'))
     
     probe = tessellateModule(probe);
 end
+
+
+probe = getAdjMatrix(probe, add_module);
 
 end
 
