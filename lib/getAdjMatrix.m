@@ -3,6 +3,14 @@ function [probe] = getAdjMatrix(probe, add_module)
 %   Detailed explanation goes here
 
 
+add_module = 0;
+if (isfield(probe, 'denseflag'))
+    if (probe.denseflag)
+        add_module = 1;
+    end
+end
+
+
 s=0;
 t=0;
 
@@ -37,11 +45,11 @@ end
 
 % Remove any inactive modules
 nodepairs = [s',t'];    % two column s,t
-for m = 1:size(probe.modules(:,4), 2)
+for m = 1:size(probe.modules(:,4), 1)
     if (probe.modules(m,4)==0)  % module is inactive
         sidx = nodepairs(:,1)==m;
         tidx = nodepairs(:,2)==m;
-        inactivemodidx = or(idx1,idx2);
+        inactivemodidx = or(sidx,tidx);
         activemodidx = not(inactivemodidx);
         nodepairs = nodepairs(activemodidx,:);
     end

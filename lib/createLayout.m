@@ -1,4 +1,4 @@
-function [probe] = createLayout(probe) 
+function [probe] = createLayout(probe, denseoption) 
 %CREATELAYOUT Create a probe composed of modules over a ROI
 %   Create layout is a MOCA function used to facilitate the tessellation of
 %   a module design over a ROI. Tessellation is done as a "grid" over the
@@ -11,6 +11,18 @@ function [probe] = createLayout(probe)
 %   and translateProbe() functions. This function results in sub-fields of
 %   probe.modules, probe.srcposns, and probe.detposns. These sub-fields can
 %   be individually inputted manually for higher control.
+
+if (nargin == 2)
+    if (strcmp(denseoption, 'dense'))
+        probe.denseflag = true;
+        add_module = 1;
+    else
+        probe.denseflag = false;
+        add_module = 0;
+    end
+elseif (nargin == 1)
+    add_module = 0;     % flag to know if another module should be added to a row
+end
 
 probe.maxroiwidth = max(probe.roi(:,1)) - min(probe.roi(:,1));     % probe's max width
 probe.maxroiheight = max(probe.roi(:,2)) - min(probe.roi(:,2));    % probe's max height
@@ -25,7 +37,7 @@ end
 if(isfield(probe, 'spacing') == 0)     % if spacing not specified
     probe.spacing = 0;
 end
-add_module = 0;     % flag to know if another module should be added to a row
+
 
 
 if (strcmp(probe.module.shape, 'square'))
@@ -40,12 +52,13 @@ if (strcmp(probe.module.shape, 'square'))
     if(probe.n_modules_y*probe.module.dimension + (probe.n_modules_y-1)*probe.spacing < probe.maxroiheight)
         probe.n_modules_y = probe.n_modules_y + 1;
     end
-    
+
     probe = tessellateModule(probe);
 end
 
 
-probe = getAdjMatrix(probe, add_module);
+
+probe = getAdjMatrix(probe);
 
 end
 
