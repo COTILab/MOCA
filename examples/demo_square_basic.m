@@ -7,11 +7,13 @@ probe.roi = createROI(160,120); % width and height
 
 % Assembly Processes
 probe = createLayout(probe); %roi, SDrange, spacing);
+%figure; plotProbe(probe); plotROI(probe)
 
-figure; plotProbe(probe); plotROI(probe)
+
+
 
 %% Adjustments to probe assembly
-probe = toggleModules(probe, [8 12 16], 'off');
+probe = toggleModules(probe, [8 12 16 20], 'off');
 probe = translateProbe(probe, 'center');
 probe = rotateModules(probe, [11], 45);
 probe = rotateModules(probe, [7], 15);

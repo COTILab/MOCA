@@ -6,16 +6,23 @@ function [probe] = rotateModules(probe, moduleidx, rotate_amount)
 %   module, probe.module, is rotate.  Rotation of a module refers to the
 %   rotation of its perimeter, its sources, and its detector.
 
+optexist = true;    % flag to determine if optodes were defined. 
+if( isfield(probe.module, 'srcposns') == false )
+    optexist = false;
+end
 
 % IF A SINGLE MODULE IS INPUTTED, ROTATE JUST THAT MODULE
 if (isempty(moduleidx))    
     rperimeter = rotateCoordinates(probe.module.perimeter, rotate_amount);
-    rsrcposns = rotateCoordinates(probe.module.srcposns, rotate_amount);
-    rdetposns = rotateCoordinates(probe.module.detposns, rotate_amount);
-    
     probe.module.perimeter = rperimeter;
-    probe.module.srcposns = rsrcposns;
-    probe.module.detposns = rdetposns;
+    
+    % if optodes were defined, rotate them too
+    if (optexist)
+        rsrcposns = rotateCoordinates(probe.module.srcposns, rotate_amount);
+        rdetposns = rotateCoordinates(probe.module.detposns, rotate_amount);
+        probe.module.srcposns = rsrcposns;
+        probe.module.detposns = rdetposns;
+    end
     
     
 % IF A PROBE IS INPUTTED, ROTATE THE LIST OF MODULES
@@ -39,24 +46,27 @@ else
         end
         probe.modules(moduleidx(i), :) = [modulexy(1), modulexy(2), newangle, modulestate];
         
-        % srcposns and detposns are used directly in channel analysis.
-        % Similarly, to use with other software, they need to know the xy
-        % of each optode. Saving just the rotation angle isn't helpful.
-        % Rather, we need to directly update the xy of each optode. 
-        % probe.srcposns = [x, y, moduleid, srcid]
-        srcposnsxy = probe.module.srcposns; % based on probe.module definition, NOT current srcposns
-        rsrcposnsxy = rotateCoordinates(srcposnsxy, newangle); % rotate coors by inputted amount
-        trsrcposnsxy = translateCoordinates(rsrcposnsxy, modulexy); % translate back to module centroid 
-        srcposnsidx = probe.srcposns(:,3) == moduleidx(i); % find the sources on module moduleidx(i) that need to be updated
-        probe.srcposns(srcposnsidx, 1:2) = trsrcposnsxy;  % update the coordinates of those sources only
-        
-        % repeat this process for detector as well. 
-        % probe.detposns = [x, y, moduleid, detid]
-        detposnsxy = probe.module.detposns; % based on probe.module definition, NOT current detposns
-        rdetposnsxy = rotateCoordinates(detposnsxy, newangle); % rotate coors by inputted amount
-        trdetposnsxy = translateCoordinates(rdetposnsxy, modulexy); % translate back to module centroid 
-        detposnsidx = probe.detposns(:,3) == moduleidx(i); % find the sources on module moduleidx(i) that need to be updated
-        probe.detposns(detposnsidx, 1:2) = trdetposnsxy;  % update the coordinates of those sources only 
+        % if optodes were defined, rotate them too
+        if (optexist)
+            % srcposns and detposns are used directly in channel analysis.
+            % Similarly, to use with other software, they need to know the xy
+            % of each optode. Saving just the rotation angle isn't helpful.
+            % Rather, we need to directly update the xy of each optode. 
+            % probe.srcposns = [x, y, moduleid, srcid]
+            srcposnsxy = probe.module.srcposns; % based on probe.module definition, NOT current srcposns
+            rsrcposnsxy = rotateCoordinates(srcposnsxy, newangle); % rotate coors by inputted amount
+            trsrcposnsxy = translateCoordinates(rsrcposnsxy, modulexy); % translate back to module centroid 
+            srcposnsidx = probe.srcposns(:,3) == moduleidx(i); % find the sources on module moduleidx(i) that need to be updated
+            probe.srcposns(srcposnsidx, 1:2) = trsrcposnsxy;  % update the coordinates of those sources only
+
+            % repeat this process for detector as well. 
+            % probe.detposns = [x, y, moduleid, detid]
+            detposnsxy = probe.module.detposns; % based on probe.module definition, NOT current detposns
+            rdetposnsxy = rotateCoordinates(detposnsxy, newangle); % rotate coors by inputted amount
+            trdetposnsxy = translateCoordinates(rdetposnsxy, modulexy); % translate back to module centroid 
+            detposnsidx = probe.detposns(:,3) == moduleidx(i); % find the sources on module moduleidx(i) that need to be updated
+            probe.detposns(detposnsidx, 1:2) = trdetposnsxy;  % update the coordinates of those sources only 
+        end
         
     end
     

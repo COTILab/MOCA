@@ -2,6 +2,11 @@ function [probe] = translateProbe(probe, translate_amount)
 %TRANSLATEPROBE Summary of this function goes here
 %   Detailed explanation goes here
 
+optexist = true;    % flag to determine if optodes were defined. 
+if( isfield(probe.module, 'srcposns') == false )
+    optexist = false;
+end
+
 
 % if the translate amount is a vector 
 if (isnumeric(translate_amount))
@@ -10,15 +15,18 @@ if (isnumeric(translate_amount))
     translatedmodules = translateCoordinates(modulecentroids, translate_amount);
     probe.modules(:,1:2) = translatedmodules;
 
-    % translate sources
-    sources = probe.srcposns(:,1:2);
-    translatedsources = translateCoordinates(sources, translate_amount);
-    probe.srcposns(:,1:2) = translatedsources;
+    % translate optodes if they exist
+    if (optexist)
+        % translate sources
+        sources = probe.srcposns(:,1:2);
+        translatedsources = translateCoordinates(sources, translate_amount);
+        probe.srcposns(:,1:2) = translatedsources;
 
-    % translate detectors
-    detectors = probe.detposns(:,1:2);
-    translateddetectors = translateCoordinates(detectors, translate_amount);
-    probe.detposns(:,1:2) = translateddetectors;
+        % translate detectors
+        detectors = probe.detposns(:,1:2);
+        translateddetectors = translateCoordinates(detectors, translate_amount);
+        probe.detposns(:,1:2) = translateddetectors;
+    end
 
 elseif (ischar(translate_amount))
     % find center roi
