@@ -23,14 +23,18 @@ probe = createLayout(probe);
 
 % Adjustments to probe assembly
 probe = toggleModules(probe, [2], 'off');
-probe = translateProbe(probe, 'center');
-probe = rotateModules(probe, [11], 45);
-probe = rotateModules(probe, [7], 15);
-probe = translateModules(probe, [3 4 7 11], [20 0]);
+% probe = translateProbe(probe, 'center');
+% probe = rotateModules(probe, [11], 45);
+% probe = rotateModules(probe, [7], 15);
+% probe = translateModules(probe, [3 4 7 11], [20 0]);
 
 %figure; plotProbe(probe); plotROI(probe)
-figure; plotProbe(probe); plotROI(probe)
-plotDiGraph(probe);
+%figure; plotProbe(probe); plotROI(probe)
+%plotDiGraph(probe);
+
+%
+probe = rearrangeModules(probe);
+
 %% Probe Characterization
 probe = characterizeProbe(probe);
 

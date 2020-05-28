@@ -4,11 +4,11 @@
 % modules on/off, how to translate the probe relative to ROI, and how to
 % rotate individual modules. 
 
-
+clear all
 
 % Design Parameters (module, roi, SD sep range)
 probe.module = createModule(4, 35); % nsides, mdimension
-probe.roi = createROI(160,120);     % width and height
+probe.roi = createROI(160,80);     % width and height
 probe.module.srcposns = [-12.5,12.5; 12.5,-12.5];
 probe.module.detposns = [-12.5,4; 12.5,12.5; 12.5,-4];
 
@@ -27,7 +27,7 @@ probe = translateProbe(probe, [20 40]);
 probe = translateProbe(probe, 'center'); % centered probe to ROI
 
 % Rotate individual modules
-probe = rotateModules(probe, [1 9], 45);
+probe = rotateModules(probe, [1 6], 45);
 probe = rotateModules(probe, [7], -15);
 
 % Translate individual modules
