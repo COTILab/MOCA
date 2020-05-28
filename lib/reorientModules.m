@@ -11,7 +11,7 @@ minmodidx = min(k);
 maxmodidx = max(k);
 
 % all paths from minmodule to max module
-allsimplepaths = findPathInDiGraph(probe.A, minmodidx, maxmodidx, true); % (adj, src, snk, verbose)    
+allsimplepaths = findPathInDiGraph(probe.A, minmodidx, maxmodidx, false); % (adj, src, snk, verbose)    
 
 % extract only the longest paths
 val = cellfun(@(x) numel(x),allsimplepaths);

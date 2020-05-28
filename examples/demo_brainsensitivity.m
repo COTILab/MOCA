@@ -2,21 +2,21 @@
 % alongside plotProbe() and plotROI(), the probe, it's optodes, and a
 % spatial brain sensitivity plot can show areas of high channel density
 
+clear all
+
 %% Design Parameters (module, roi)
-probe.module = createModule(4, 25); % nsides, mdimension
+probe.module = createModule(4, 30); % nsides, mdimension
 
-probe.roi = createROI(100,80);      % width and height
+probe.roi = createROI(100,90);      % width and height
 
-probe.module.srcposns = [-10.5,10.5; 10.5,-10.5];
-probe.module.detposns = [-10.5,4; 10.5,10.5];
+probe.module.srcposns = [-12.5,12.5; 12.5,-12.5];
+probe.module.detposns = [-12.5,4; -4,12.5; 12.5,4];
 
 probe.sdrange = 40;
 
 %% Assembly Processes
 probe.spacing = 5;
 probe = createLayout(probe); 
-
-probe = toggleModules(probe, [4 8 12], 'off'); % Adjustments to probe assembly
 
 figure; plotProbe(probe); plotROI(probe)
 

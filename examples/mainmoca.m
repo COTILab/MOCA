@@ -27,7 +27,6 @@ probe = toggleModules(probe, [2 8 9], 'off');
 probe = translateProbe(probe, 'center');
 probe = rotateModules(probe, [7 5 6], 15);
 probe = translateModules(probe, [1 5], [-20 0]);
-probe = translateModules(probe, [5], [-40 0]);
 figure; plotProbe(probe); plotROI(probe); 
 
 probe = reorientModules(probe);
@@ -36,7 +35,7 @@ figure; plotProbe(probe); plotROI(probe); plotDiGraph(probe);
 %% Probe Characterization
 probe = characterizeProbe(probe);
 
-%% Visualize Characterization
+%% Visualize Characterization - channel distribution
 % plot channel histogram
 figure; 
 plotChannels(probe, 'hist', 'sd'); 
@@ -45,12 +44,14 @@ figure;
 plotProbe(probe); 
 plotROI(probe); 
 plotChannels(probe, 'spat', 'sd', 'int');
-% brain sensitivity
+
+%% brain sensitivity
 figure; 
 plotProbe(probe); 
 plotROI(probe); 
 plotBrainSensitivity(probe, 'all');
-% spatial multiplexing groups
+
+%% spatial multiplexing groups
 ngroups = size(unique(probe.results.groupings(:,5)), 1);
 figure; plotProbe(probe); plotROI(probe); plotSpatialMultiplexingGroups(probe, [1:ngroups]);
 

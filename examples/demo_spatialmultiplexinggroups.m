@@ -6,6 +6,7 @@
 % on the probe. We also show how to generate a gif that cycles through all
 % groupings of a particular probe.
 
+clear all
 
 %% Design Parameters (module, roi)
 probe.module = createModule(4, 25); % nsides, mdimension

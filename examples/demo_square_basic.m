@@ -5,7 +5,7 @@
 
 % Design Parameters (module, roi, SD sep range)
 probe.module = createModule(4, 35); % nsides, mdimension
-probe.roi = createROI(160,120);     % width and height
+probe.roi = createROI(180,140);     % width and height
 
 % Assembly Processes
 probe = createLayout(probe); 
@@ -16,13 +16,4 @@ probe.results.modulecount
 
 % Visualize probe
 figure; plotProbe(probe); plotROI(probe)
-
-
-
-
-%% Adjustments to probe assembly
-%probe = toggleModules(probe, [8 12 16 20], 'off');
-%probe = translateProbe(probe, 'center');
-%probe = rotateModules(probe, [11], 45);
-%probe = rotateModules(probe, [7], 15);
 
