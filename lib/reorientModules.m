@@ -11,7 +11,7 @@ minmodidx = min(k);
 maxmodidx = max(k);
 
 % all paths from minmodule to max module
-allsimplepaths = pathBetweenNodes(probe.A, minmodidx, maxmodidx, false); % (adj, src, snk, verbose)
+allsimplepaths = findPathInDiGraph(probe.A, minmodidx, maxmodidx, true); % (adj, src, snk, verbose)    
 
 % extract only the longest paths
 val = cellfun(@(x) numel(x),allsimplepaths);
@@ -20,6 +20,7 @@ paths = allsimplepaths(val==max(val));
 % now loop through the first path, and orient the modules
 path = paths{1};
 for i = 1:size(path,2)
+    
     % Find angle to Rotate
     if (i==size(path,2))
         rotate_amount = 0;
@@ -30,7 +31,10 @@ for i = 1:size(path,2)
                                     xynext(1,1)-xycurr(1,1)) ); % from horizontal, of pair of nodes
         rotate_amount = (angle_nodes - 90); % ccw = positive
     end
-    probe = rotateModules(probe, path(i), rotate_amount);
+    
+    % Reset any module already rotated
+    currentangle = probe.modules(path(i),3);    
+    probe = rotateModules(probe, path(i), rotate_amount-currentangle);
 end
 
 probe.path = path;

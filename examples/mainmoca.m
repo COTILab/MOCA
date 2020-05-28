@@ -9,31 +9,28 @@ probe.roi = createROI(160,120); % width and height
 %probe.roi = [160 0; 0 0; 0 160; 120 160; 120 130; 60 80; 60 40; 120 60]; 
 
 probe.module.srcposns = [-12.5,12.5; 12.5,-12.5];
-probe.module.detposns = [-12.5,4; 12.5,12.5; 12.5,-4; -12.5,-12.5];
+probe.module.detposns = [-12.5,4; -4,12.5; 12.5,4];
 
-probe.sdrange = 100;
+probe.sdrange = 40;
 
 % Visualizing the design structure
-figure; plotModule(probe);
-figure; plotROI(probe);
+%figure; plotModule(probe);
+%figure; plotROI(probe);
 
 %% Assembly Processes
 probe.spacing = 10; 
 probe = createLayout(probe); 
+figure; plotProbe(probe); plotROI(probe)
 
 % Adjustments to probe assembly
-probe = toggleModules(probe, [2], 'off');
-% probe = translateProbe(probe, 'center');
-% probe = rotateModules(probe, [11], 45);
-% probe = rotateModules(probe, [7], 15);
-% probe = translateModules(probe, [3 4 7 11], [20 0]);
+probe = toggleModules(probe, [2 8 9], 'off');
+probe = translateProbe(probe, 'center');
+probe = rotateModules(probe, [7 5 6], 15);
+probe = translateModules(probe, [1 5], [-20 0]);
+probe = translateModules(probe, [5], [-40 0]);
+figure; plotProbe(probe); plotROI(probe); 
 
-%figure; plotProbe(probe); plotROI(probe)
-%figure; plotProbe(probe); plotROI(probe)
-%plotDiGraph(probe);
-
-%
-probe = rearrangeModules(probe);
+probe = reorientModules(probe);
 figure; plotProbe(probe); plotROI(probe); plotDiGraph(probe);
 
 %% Probe Characterization
@@ -54,7 +51,8 @@ plotProbe(probe);
 plotROI(probe); 
 plotBrainSensitivity(probe, 'all');
 % spatial multiplexing groups
-figure; plotProbe(probe); plotROI(probe); plotSpatialMultiplexingGroups(probe, [1:20]);
+ngroups = size(unique(probe.results.groupings(:,5)), 1);
+figure; plotProbe(probe); plotROI(probe); plotSpatialMultiplexingGroups(probe, [1:ngroups]);
 
 %% Spatial Multiplexing groups gif
 fig = figure
