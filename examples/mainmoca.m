@@ -34,6 +34,7 @@ probe = toggleModules(probe, [2], 'off');
 
 %
 probe = rearrangeModules(probe);
+figure; plotProbe(probe); plotROI(probe); plotDiGraph(probe);
 
 %% Probe Characterization
 probe = characterizeProbe(probe);

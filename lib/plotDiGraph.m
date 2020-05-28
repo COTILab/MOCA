@@ -11,12 +11,14 @@ h = plot(probe.G,...
             'nodecolor', [.7 .7 .7],...
             'NodeLabel',{});    % plots the directional graph (ie neighboring nodes)
 
-% Plot a path
-% h.NodeLabel = {};
-% highlight(h, path, 'edgecolor', [0 .5 0], 'nodecolor', [0 .5 0]); 
-% %highlight(h, path(1), 'nodecolor', 'b');
-% %highlight(h, path(end), 'nodecolor', 'r');
-% highlight(h,[path(1) path(end)])
+% Highlight a specific path.
+if (isfield(probe, 'path'))
+    h.NodeLabel = {};
+    highlight(h, probe.path, 'edgecolor', [0 .5 0], 'nodecolor', [0 .5 0]); 
+    %highlight(h, probe.path(1), 'nodecolor', 'b');
+    %highlight(h, probe.path(end), 'nodecolor', 'r');
+    highlight(h,[probe.path(1) probe.path(end)])
+end
     
 end
 

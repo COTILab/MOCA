@@ -1,7 +1,9 @@
-function [probe] = rearrangeModules(probe)
-%REARRANGEMODULES Finds a path between digraph and orients modules to it
+function [probe] = reorientModules(probe)
+%REORIENTMODULES Finds a path between digraph and orients modules to it
 %   Finds a path between all modules using the digraph. It then reorients
-%   all modules to align with the path. 
+%   all modules to align with the path. Orientation does not take into
+%   account the current module's orientation. Rather, it finds the
+%   orientation relative to the originally defined module.
 
 % find the lowest and highest active module id
 k = find(probe.modules(:,4));
@@ -9,9 +11,9 @@ minmodidx = min(k);
 maxmodidx = max(k);
 
 % all paths from minmodule to max module
-allsimplepaths = pathBetweenNodes(probe.A, minmodidx, maxmodidx, true); % (adj, src, snk, verbose)
+allsimplepaths = pathBetweenNodes(probe.A, minmodidx, maxmodidx, false); % (adj, src, snk, verbose)
 
-% only the longest paths
+% extract only the longest paths
 val = cellfun(@(x) numel(x),allsimplepaths);
 paths = allsimplepaths(val==max(val));
 
@@ -31,5 +33,6 @@ for i = 1:size(path,2)
     probe = rotateModules(probe, path(i), rotate_amount);
 end
 
+probe.path = path;
 end
 
