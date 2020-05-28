@@ -40,7 +40,13 @@ end
 
 
 
-if (strcmp(probe.module.shape, 'square'))
+if ((isfield(probe.module, 'shape')==false) || strcmp(probe.module.shape, 'square'))
+    if(isfield(probe.module, 'shape')==false)
+        maxmodwidth = max(probe.module.perimeter(:,1)) - min(probe.module.perimeter(:,1));
+        maxmodheight = max(probe.module.perimeter(:,2)) - min(probe.module.perimeter(:,2));
+        probe.module.dimension = max([maxmodwidth, maxmodheight]);
+    end
+    
     % Find number of modules in x axis
     probe.n_modules_x = ceil(probe.maxroiwidth / (probe.module.dimension + probe.spacing));
     % if n_modules_x + spacing in between is less than width, add another

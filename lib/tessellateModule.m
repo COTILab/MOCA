@@ -7,7 +7,7 @@ if( isfield(probe.module, 'srcposns') == false )
     optexist = false;
 end
 
-if (strcmp(probe.module.shape, 'square'))   
+if ((isfield(probe.module, 'shape')==false) || strcmp(probe.module.shape, 'square'))
     single_row_quantities = probe.n_modules_x;
     n_modules = probe.n_modules_x * probe.n_modules_y;
     

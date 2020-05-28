@@ -14,7 +14,7 @@ end
 s=0;
 t=0;
 
-if (strcmp(probe.module.shape, 'square') || (isfield(probe.module, 'shape')==false))
+if ((isfield(probe.module, 'shape')==false) || strcmp(probe.module.shape, 'square'))
     for row=1:probe.n_modules_y     % all rows
         nodes = ((row-1)*probe.n_modules_x)+1:1:row*probe.n_modules_x; % All nodes in a single row 
         
