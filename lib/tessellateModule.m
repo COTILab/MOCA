@@ -7,6 +7,7 @@ if( isfield(probe.module, 'srcposns') == false )
     optexist = false;
 end
 
+% SQUARE MODULES, or not defined
 if ((isfield(probe.module, 'shape')==false) || strcmp(probe.module.shape, 'square'))
     single_row_quantities = probe.n_modules_x;
     n_modules = probe.n_modules_x * probe.n_modules_y;
@@ -61,6 +62,54 @@ if ((isfield(probe.module, 'shape')==false) || strcmp(probe.module.shape, 'squar
             % increment module
             modcount = modcount+1;
             
+        end
+    end
+
+% HEXAGON SHAPE
+elseif (strcmp(probe.module.shape, 'hexagon'))   
+    % always assume add_module = 1
+    % if(add_module == 1);
+    single_row_quantities = probe.n_modules_x;
+    n_modules = probe.n_modules_x * probe.n_modules_y;
+    
+    modules = zeros(n_modules, 4); % x_centroid,y_centroid, orientation, active
+    if(optexist)
+        allsrcs = zeros(size(probe.module.srcposns(:,1), 1) * n_modules, 4); % x,y,moduleIdx,globalsrcIdx
+        alldets = zeros(size(probe.module.detposns(:,1), 1) * n_modules, 4); % x,y,moduleIdx,globaldetIdx
+    end
+    
+    modcount = 1;
+    srccount = 1;
+    detcount = 1;
+    
+    xdim = 2*probe.module.dimension*cosd(30); %module.dimension*cosd(30);
+    ydim = probe.module.dimension;
+    
+    for row=1:probe.n_modules_y
+        for col=1:probe.n_modules_x
+            % Find dimensions of the centroid, adjusting for probe.spacing
+            if(mod(row,2)==1)       %odd
+                x = (xdim/2) + ((col-1)*xdim);
+                y = (ydim) + ((row-1)*1.5*ydim);
+            elseif (mod(row,2)==0)  %even
+                x = (xdim) + ((col-1)*xdim);
+                y = (ydim) + ((row-1)*1.5*ydim);
+            end
+            
+            % Save orientation of individual module (deg)
+            orientation = 0;
+            % Save whether module is active or inactive
+            active = 1;
+            % Save the module
+            modules(modcount,:) = [x,y,orientation,active]; % x, y, orientation (deg), active
+            
+            
+            % translate and rotate sources, if they exist. Save which module idx they
+            % belong to. give a unique id to each source
+            
+            
+            % increment module
+            modcount = modcount+1;
         end
     end
 end

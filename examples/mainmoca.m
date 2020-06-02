@@ -1,27 +1,33 @@
-addpath('lib')
 
 %% Design Parameters (module, roi, SD sep range)
 clear all
 
-probe.module = createModule(4, 35); % nsides, mdimension
+% Lumo
+probe.module = createModule(6, 18);
+y1 = 10; 
+probe.module.srcposns = [0,               y1;...
+                        y1*cosd(30),    -y1*sind(30);...
+                        -y1*cosd(30),   -y1*sind(30);];
+probe.module.detposns = [y1*cosd(30),    y1*sind(30);...
+                        0,              -y1;
+                        -y1*cosd(30),   y1*sind(30);...
+                        0,              0]; 
+figure; plotModule(probe);
 
-probe.roi = createROI(160,120); % width and height
-%probe.roi = [160 0; 0 0; 0 160; 120 160; 120 130; 60 80; 60 40; 120 60]; 
 
-probe.module.srcposns = [-12.5,12.5; 12.5,-12.5];
-probe.module.detposns = [-12.5,4; -4,12.5; 12.5,4];
 
-probe.sdrange = 40;
+probe.roi = createROI(100,50); % width and height
+probe.sdrange = [10 40];
 
 % Visualizing the design structure
 %figure; plotModule(probe);
-%figure; plotROI(probe);
+figure; plotROI(probe);
 
 %% Assembly Processes
-probe.spacing = 10; 
 probe = createLayout(probe); 
 figure; plotProbe(probe); plotROI(probe)
 
+%%
 % Adjustments to probe assembly
 probe = toggleModules(probe, [2 8 9], 'off');
 probe = translateProbe(probe, 'center');
