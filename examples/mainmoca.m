@@ -16,15 +16,15 @@ figure; plotModule(probe);
 
 
 
-probe.roi = createROI(100,50); % width and height
+probe.roi = createROI(100,85); % width and height
 probe.sdrange = [10 40];
 
 % Visualizing the design structure
 %figure; plotModule(probe);
-figure; plotROI(probe);
+%figure; plotROI(probe);
 
 %% Assembly Processes
-probe.spacing = 10;
+probe.spacing = 5;
 probe = createLayout(probe); 
 figure; plotProbe(probe); plotROI(probe)
 

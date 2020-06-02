@@ -66,14 +66,14 @@ elseif (strcmp(probe.module.shape, 'hexagon'))
     add_module = 1;
     hex_width = 2*probe.module.dimension*cosd(30);
     probe.n_modules_x = ceil(probe.maxroiwidth / (hex_width + probe.spacing));
-    % if n_modules_x + spacing in between is less than width, add another
-    if(probe.n_modules_x*probe.module.dimension + (probe.n_modules_x-1)*probe.spacing < probe.maxroiwidth)
+    % if n_modules_x + spacing in between is less than roi width, add another
+    if(probe.n_modules_x*hex_width + (probe.n_modules_x-1)*probe.spacing < probe.maxroiwidth)
         probe.n_modules_x = probe.n_modules_x + 1;
     end
     probe.n_modules_y = ceil((probe.maxroiheight) / ((1.5*probe.module.dimension) + probe.spacing));
-%     if(probe.n_modules_y*probe.module.dimension + (probe.n_modules_y-1)*probe.spacing < probe.maxroiheight)
-%         probe.n_modules_y = probe.n_modules_y + 1;
-%     end
+    if(probe.n_modules_y*1.5*probe.module.dimension + (probe.n_modules_y-1)*probe.spacing < probe.maxroiheight)
+        probe.n_modules_y = probe.n_modules_y + 1;
+    end
 %     % check if you should add another hexagon to second row
 %     if (probe.n_modules_x*hex_width - (hex_width/2) < probe.maxroiwidth)
 %         add_module = 1;
