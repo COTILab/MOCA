@@ -109,6 +109,27 @@ elseif (strcmp(probe.module.shape, 'hexagon'))
             
             % translate and rotate sources, if they exist. Save which module idx they
             % belong to. give a unique id to each source
+            if (optexist)
+                nsrcs = size(probe.module.srcposns(:,1), 1);
+                % rotatedsrcs = rotateCoordinates(probe.module.srcposns,
+                % angle);
+                translatedsrcs = translateCoordinates(probe.module.srcposns, [x,y]);
+                moduleidxsrcs = modcount; 
+                for s=1:nsrcs
+                    allsrcs(srccount,:) = [translatedsrcs(s,:), moduleidxsrcs, srccount];
+                    srccount = srccount+1;
+                end
+
+                % translate and rotate detectors. Save which module idx they
+                % belong to. give a unique id to each detector
+                ndets = size(probe.module.detposns(:,1), 1);
+                translateddets = translateCoordinates(probe.module.detposns, [x,y]);
+                moduleidxdets = modcount;
+                for d=1:ndets
+                    alldets(detcount,:) = [translateddets(d,:), moduleidxdets, detcount];
+                    detcount = detcount+1;
+                end
+            end
             
             
             % increment module

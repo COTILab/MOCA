@@ -12,10 +12,9 @@ probe.module.detposns = [y1*cosd(30),    y1*sind(30);...
                         0,              -y1;
                         -y1*cosd(30),   y1*sind(30);...
                         0,              0]; 
-figure; plotModule(probe);
 
-
-
+                    
+%figure; plotModule(probe);
 probe.roi = createROI(100,85); % width and height
 probe.sdrange = [10 40];
 
