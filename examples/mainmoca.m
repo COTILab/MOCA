@@ -24,6 +24,7 @@ probe.sdrange = [10 40];
 figure; plotROI(probe);
 
 %% Assembly Processes
+probe.spacing = 10;
 probe = createLayout(probe); 
 figure; plotProbe(probe); plotROI(probe)
 

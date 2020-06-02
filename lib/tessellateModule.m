@@ -88,12 +88,15 @@ elseif (strcmp(probe.module.shape, 'hexagon'))
     for row=1:probe.n_modules_y
         for col=1:probe.n_modules_x
             % Find dimensions of the centroid, adjusting for probe.spacing
+            x = (probe.module.dimension/2) + ((col-1)*probe.module.dimension) + ((col-1)*probe.spacing);
+            y = (probe.module.dimension/2) + ((row-1)*probe.module.dimension) + ((row-1)*probe.spacing);
+            
             if(mod(row,2)==1)       %odd
-                x = (xdim/2) + ((col-1)*xdim);
-                y = (ydim) + ((row-1)*1.5*ydim);
+                x = (xdim/2) + ((col-1)*xdim) + ((col-1)*probe.spacing);
+                y = (ydim) + ((row-1)*1.5*ydim) + ((row-1)*probe.spacing);
             elseif (mod(row,2)==0)  %even
-                x = (xdim) + ((col-1)*xdim);
-                y = (ydim) + ((row-1)*1.5*ydim);
+                x = (xdim) + ((col-1)*xdim) + ((col-1)*probe.spacing) + probe.spacing/2;
+                y = (ydim) + ((row-1)*1.5*ydim) + ((row-1)*probe.spacing);
             end
             
             % Save orientation of individual module (deg)
