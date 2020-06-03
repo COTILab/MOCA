@@ -15,7 +15,7 @@ for i=1:size(moduleidx,2)
 end
 
 % Update the adjacency matrix to not include this module
-probe = getAdjMatrix(probe);
+%probe = getAdjMatrix(probe);
 
 end
 
