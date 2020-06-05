@@ -4,7 +4,7 @@ clear all
 probe.module = createModule(3, 50);
 
 % all shapes have the same layout, ROI, and SD range 
-probe.roi = createROI(300,200);
+probe.roi = createROI(200,200);
 probe.sdrange = [10 30];
 probe.module.srcposns = [0,12; -12,0];
 probe.module.detposns = [0,-12; 12,0];
@@ -12,11 +12,12 @@ probe.spacing = 10;
 
 probe = createLayout(probe); 
 %probe = translateProbe(probe, 'center');
+probe = toggleModules(probe, [8 16 24 32], 'off');
+probe = translateProbe(probe, [-(probe.module.dimension+probe.spacing)/2, 0]);
 figure; plotProbe(probe); plotROI(probe);
 
 %%
 probe = characterizeProbe(probe);
-squareprobe = probe;
 
 
 

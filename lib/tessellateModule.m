@@ -129,17 +129,34 @@ elseif (strcmp(probe.module.shape, 'triangle'))
             active = 1;
             % Save the module
             modules(modcount,:) = [x,y,orientation,active]; % x, y, orientation (deg), active
-          
+            
+             % translate and rotate sources, if they exist. Save which module idx they
+            % belong to. give a unique id to each source
+            if (optexist)
+                nsrcs = size(probe.module.srcposns(:,1), 1);
+                rotatedsrcs = rotateCoordinates(probe.module.srcposns,orientation);
+                translatedsrcs = translateCoordinates(rotatedsrcs, [x,y]);
+                moduleidxsrcs = modcount; 
+                for s=1:nsrcs
+                    allsrcs(srccount,:) = [translatedsrcs(s,:), moduleidxsrcs, srccount];
+                    srccount = srccount+1;
+                end
+
+                % translate and rotate detectors. Save which module idx they
+                % belong to. give a unique id to each detector
+                ndets = size(probe.module.detposns(:,1), 1);
+                rotateddets = rotateCoordinates(probe.module.detposns,orientation);
+                translateddets = translateCoordinates(rotateddets, [x,y]);
+                moduleidxdets = modcount;
+                for d=1:ndets
+                    alldets(detcount,:) = [translateddets(d,:), moduleidxdets, detcount];
+                    detcount = detcount+1;
+                end
+            end
+            
             % increment module
             modcount = modcount+1;
             
-            
-%             start_row = ((row-1)*single_row_quantities)+1;
-%         end_row = start_row+(single_row_quantities-1);
-%         single_row_centroids = getTriangleRow(single_row_quantities,mod(row,2),module,triangle_height);
-%         centroids(start_row:end_row,1) = single_row_centroids(:,1);
-%         centroids(start_row:end_row,2) = single_row_centroids(:,2)+((row-1)*triangle_height);
-%         centroids(start_row:end_row,3) = single_row_centroids(:,3);
             
             
         end
