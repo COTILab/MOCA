@@ -65,6 +65,86 @@ if ((isfield(probe.module, 'shape')==false) || strcmp(probe.module.shape, 'squar
         end
     end
 
+    
+% TRIANGLE SHAPE
+elseif (strcmp(probe.module.shape, 'triangle')) 
+    % always assume add_module = 1
+    % if(add_module == 1);
+    single_row_quantities = probe.n_modules_x;
+    n_modules = probe.n_modules_x * probe.n_modules_y;
+    
+    modules = zeros(n_modules, 4); % x_centroid,y_centroid, orientation, active
+    if(optexist)
+        allsrcs = zeros(size(probe.module.srcposns(:,1), 1) * n_modules, 4); % x,y,moduleIdx,globalsrcIdx
+        alldets = zeros(size(probe.module.detposns(:,1), 1) * n_modules, 4); % x,y,moduleIdx,globaldetIdx
+    end
+    
+    modcount = 1;
+    srccount = 1;
+    detcount = 1;
+    
+    xdim = probe.module.dimension; 
+    ydim = probe.module.dimension*sqrt(3)/2;
+    tri_height = probe.module.dimension*sqrt(3)/2;
+    centery = (probe.module.dimension/2) * tan(deg2rad(30));
+    
+    for row=1:probe.n_modules_y
+        for col=1:probe.n_modules_x
+            % Find coordinates of the centroid, adjusting for probe.spacing
+            x = (probe.module.dimension/2) + ((col-1)*probe.module.dimension) + ((col-1)*probe.spacing);
+            y = (centery) + ((row-1)*tri_height) + ((row-1)*probe.spacing);
+            fy = (tri_height-centery) + ((row-1)*tri_height) + ((row-1)*probe.spacing);% flipped y
+            
+            if(mod(row,2)==1)       % odd row, start with triangle right side up (y first)
+                if(mod(col,2)==1)       % odd col inside odd row
+                    nrcol = ceil(col/2);     % number of regular oriented triangles in this row
+                    x = (xdim/2) + ((nrcol-1)*xdim) + ((col-1)*probe.spacing);
+                    y = (centery) + ((row-1)*tri_height) + ((row-1)*probe.spacing);
+                    triorientation = 0;
+                elseif(mod(col,2)==0)   % even col inside odd row
+                    nfcol = ceil(col/2);    % nth flipped triangle in this row
+                    x = (xdim) + ((nfcol-1)*xdim) + ((col-1)*probe.spacing);
+                    y = (tri_height-centery) + ((row-1)*tri_height) + ((row-1)*probe.spacing);
+                    triorientation = 180;
+                end
+            elseif (mod(row,2)==0)  % even row, start with triangle upside down (fy first)
+                if(mod(col,2)==1)       % odd col inside even row
+                    nfcol = ceil(col/2);    % nth flipped triangle in this row
+                    x = (xdim/2) + ((nfcol-1)*xdim) + ((col-1)*probe.spacing);
+                    y = (tri_height-centery) + ((row-1)*tri_height) + ((row-1)*probe.spacing);
+                    triorientation = 180;
+                elseif(mod(col,2)==0)   % even col inside even row
+                    nrcol = ceil(col/2);
+                    x = (xdim) + ((nrcol-1)*xdim) + ((col-1)*probe.spacing);
+                    y = (centery) + ((row-1)*tri_height) + ((row-1)*probe.spacing);
+                    triorientation = 0;
+                end
+                
+
+            end
+            
+            % Save orientation of individual module (deg)
+            orientation = triorientation;
+            % Save whether module is active or inactive
+            active = 1;
+            % Save the module
+            modules(modcount,:) = [x,y,orientation,active]; % x, y, orientation (deg), active
+          
+            % increment module
+            modcount = modcount+1;
+            
+            
+%             start_row = ((row-1)*single_row_quantities)+1;
+%         end_row = start_row+(single_row_quantities-1);
+%         single_row_centroids = getTriangleRow(single_row_quantities,mod(row,2),module,triangle_height);
+%         centroids(start_row:end_row,1) = single_row_centroids(:,1);
+%         centroids(start_row:end_row,2) = single_row_centroids(:,2)+((row-1)*triangle_height);
+%         centroids(start_row:end_row,3) = single_row_centroids(:,3);
+            
+            
+        end
+    end
+    
 % HEXAGON SHAPE
 elseif (strcmp(probe.module.shape, 'hexagon'))   
     % always assume add_module = 1
@@ -87,7 +167,7 @@ elseif (strcmp(probe.module.shape, 'hexagon'))
     
     for row=1:probe.n_modules_y
         for col=1:probe.n_modules_x
-            % Find dimensions of the centroid, adjusting for probe.spacing
+            % Find coordinates of the centroid, adjusting for probe.spacing
             x = (probe.module.dimension/2) + ((col-1)*probe.module.dimension) + ((col-1)*probe.spacing);
             y = (probe.module.dimension/2) + ((row-1)*probe.module.dimension) + ((row-1)*probe.spacing);
             
