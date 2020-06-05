@@ -69,7 +69,7 @@ elseif (strcmp(probe.module.shape, 'triangle'))
     tri_width = probe.module.dimension;
     
     % Find number of modules in x axis
-    probe.n_modules_x = ceil(probe.maxroiwidth / (tri_width + probe.spacing));
+    probe.n_modules_x = ceil(probe.maxroiwidth / (tri_width + probe.spacing)) * 2;
     % if n_modules_x + spacing in between is less than roi width, add another
     if(probe.n_modules_x*tri_width + (probe.n_modules_x-1)*probe.spacing < probe.maxroiwidth)
         probe.n_modules_x = probe.n_modules_x + 1;
