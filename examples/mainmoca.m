@@ -1,4 +1,25 @@
 
+clear all
+
+probe.module = createModule(3, 50);
+
+% all shapes have the same layout, ROI, and SD range 
+probe.roi = createROI(200,200);
+probe.sdrange = [10 30];
+probe.module.srcposns = [0,12; -12,0];
+probe.module.detposns = [0,-12; 12,0];
+%probe.spacing = 5;
+
+probe = createLayout(probe); 
+%probe = translateProbe(probe, 'center');
+figure; plotProbe(probe); plotROI(probe);
+
+%%
+probe = characterizeProbe(probe);
+squareprobe = probe;
+
+
+
 %% Design Parameters (module, roi, SD sep range)
 clear all
 
@@ -69,6 +90,12 @@ probe = characterizeProbe(probe);
 % plot channel histogram
 figure; 
 plotChannels(probe, 'hist', 'sd'); 
+
+% Brain Sensitivity
+% figure; 
+% plotProbe(probe); 
+% plotROI(probe); 
+% plotBrainSensitivity(probe, 'all');
 
 bs = mean(probe.results.brainsensitivity(:,1))
 intrabs = mean(probe.results.intrabrainsensitivity(:,1))
