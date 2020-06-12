@@ -19,6 +19,7 @@ probe.sdrange = 45;
 probe.spacing = 10; 
 probe = createLayout(probe); 
 % Visualize the current probe
+probe = translateProbe(probe, 'center');
 figure; plotProbe(probe); plotROI(probe)
 title('Probe prior to manipulation')
 
@@ -56,7 +57,7 @@ ngroups = size(unique(probe.results.groupings(:,5)), 1);
 figure; plotProbe(probe); plotROI(probe); 
 plotSpatialMultiplexingGroups(probe, [2]);
 
-%%
+%% Gif of groupings
 fig = figure
 giftitle = 'examples/loopinggroups.gif';
 for i=1:ngroups
@@ -86,3 +87,12 @@ for i=1:ngroups
     
 end
 
+%% Hexagon probe
+probe.module = createModule(6, 25);
+probe.module.srcposns = [0,12; -12,0];
+probe.module.detposns = [0,-12; 12,0];
+
+%% Triangle Probe
+probe.module = createModule(3, 45);
+probe.module.srcposns = [0,12; -9,0];
+probe.module.detposns = [0,-9; 9,0];
