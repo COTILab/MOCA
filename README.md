@@ -78,9 +78,7 @@ title('Intra Channel Brain Sensitivity')
 ```
 Resulting probes, respectively
 
-<img src="images/demo_bs_all.png" width="400" >
-<img src="images/demo_bs_inter.png" width="400" >
-<img src="images/demo_bs_intra.png" width="400" >
+<img src="images/demo_bs_all.png" width="400" > <img src="images/demo_bs_inter.png" width="400" > <img src="images/demo_bs_intra.png" width="400" >
 
 
 ### Spatial Multiplexing Groups
