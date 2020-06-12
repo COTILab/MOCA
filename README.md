@@ -56,7 +56,30 @@ The resulting probe
 
 
 ## Outputs - Probe Characterizations
-The final layout of the probe can then be characterized by running ``` probe = characterizeProbe(probe); ```
+The final layout of the probe can then be characterized by running ``` probe = characterizeProbe(probe); ```. Results are saved within the probe structure and can be viewed by typing ```probe.results```
+
+```
+>> probe.results
+
+ans = 
+
+  struct with fields:
+
+              modulecount: 10
+              optodecount: [1×1 struct]
+                     full: [1×1 struct]
+                 channels: [108×5 double]
+            intrachannels: [60×5 double]
+            interchannels: [48×5 double]
+               sschannels: [20×5 double]
+               lschannels: [88×5 double]
+               exchannels: [492×5 double]
+         brainsensitivity: [88×5 double]
+    intrabrainsensitivity: [40×5 double]
+    interbrainsensitivity: [48×5 double]
+                groupings: [20×5 double]
+```
+However, it is much easier to visually inspect the outputs using the built-in functions below
 
 ### Channel distribution
 ``` figure; plotChannels(probe, 'hist', 'sd'); ```
