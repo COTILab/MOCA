@@ -7,7 +7,7 @@
 
 clear all
 
-% Design Parameters (module, roi, SD sep range)
+%% Design Parameters (module, roi, SD sep range)
 probe.module = createModule(4, 35); % nsides, mdimension
 probe.roi = createROI(160,120); % width and height
 probe.module.srcposns = [-12.5,12.5; 12.5,-12.5];
@@ -15,7 +15,7 @@ probe.module.detposns = [-12.5,4; -4,12.5; 12.5,4];
 probe.sdrange = 45;
 
 
-% Assembly Processes
+%% Assembly Processes
 probe.spacing = 10; 
 probe = createLayout(probe); 
 % Visualize the current probe
@@ -34,7 +34,7 @@ figure; plotProbe(probe); plotROI(probe);
 title('Manually manipulated probe')
 
 
-% Characterize Probe
+%% Characterize Probe
 probe = characterizeProbe(probe);
 
 % Channel Distribution Results
