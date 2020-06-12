@@ -34,19 +34,19 @@ The resulting probe
 ### Detailed control over layout
 MOCA provides functions to alter layouts to fit real-word constricted designs. 
 
-Toggle individual modules on and off
+* Toggle individual modules on and off
 ``` probe = toggleModules(probe, [2 8], 'off'); ```
 
-Translate the entire probe relative to ROI
+* Translate the entire probe relative to ROI
 ```
 probe = translateProbe(probe, [20 40]);
 probe = translateProbe(probe, 'center');
 ```
 
-Rotate individual modules
+* Rotate individual modules
 ``` probe = rotateModules(probe, [1 6], -15); ```
 
-Translate individual modules
+* Translate individual modules
 ``` probe = translateModules(probe, [9:12], [0 30]); ```
 
 The resulting probe
@@ -94,6 +94,25 @@ We can also generate a gif of all the groups
 
 <img src="images/loopinggroups.gif" width="400" >
 
+
+## Expandable architecture
+Easily extend any process to include any module shape. We can define a new shape and new optode layout to easily create new probes. 
+
+```
+% Hexagon probe
+probe.module = createModule(6, 25);
+probe.module.srcposns = [0,12; -12,0];
+probe.module.detposns = [0,-12; 12,0];
+
+%% Triangle Probe
+probe.module = createModule(3, 45);
+probe.module.srcposns = [0,12; -9,0];
+probe.module.detposns = [0,-9; 9,0];
+```
+
+The resulting probes
+
+<img src="images/demo_probe_hexagon.png" width="400" > <img src="images/demo_probe_triangle.png" width="400" >
 
 
 # Structure details
