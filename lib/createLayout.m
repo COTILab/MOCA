@@ -39,13 +39,8 @@ if(isfield(probe, 'spacing') == 0)     % if spacing not specified
 end
 
 
-% SQUARE or arbitrary shape
-if ((isfield(probe.module, 'shape')==false) || strcmp(probe.module.shape, 'square'))
-    if(isfield(probe.module, 'shape')==false)
-        maxmodwidth = max(probe.module.perimeter(:,1)) - min(probe.module.perimeter(:,1));
-        maxmodheight = max(probe.module.perimeter(:,2)) - min(probe.module.perimeter(:,2));
-        probe.module.dimension = max([maxmodwidth, maxmodheight]);
-    end
+% SQUARE shape
+if (strcmp(probe.module.shape, 'square'))
     
     % Find number of modules in x axis
     probe.n_modules_x = ceil(probe.maxroiwidth / (probe.module.dimension + probe.spacing));
@@ -103,6 +98,28 @@ elseif (strcmp(probe.module.shape, 'hexagon'))
     
     probe.add_module = add_module;
     probe = tessellateModule(probe);
+    
+%ARBITRARY shape  
+elseif ((isfield(probe.module, 'shape')==false) || strcmp(probe.module.shape, 'diamond'))
+    maxmodwidth = max(probe.module.perimeter(:,1)) - min(probe.module.perimeter(:,1));
+    maxmodheight = max(probe.module.perimeter(:,2)) - min(probe.module.perimeter(:,2));
+    probe.module.dimension = max([maxmodwidth, maxmodheight]);
+    
+    % Find number of modules in x axis
+    probe.n_modules_x = ceil(probe.maxroiwidth / (maxmodwidth + probe.spacing));
+    % if n_modules_x + spacing in between is less than width, add another
+    if(probe.n_modules_x*maxmodwidth + (probe.n_modules_x-1)*probe.spacing < probe.maxroiwidth)
+        probe.n_modules_x = probe.n_modules_x + 1;
+    end
+    % Find number of modules in y axis
+    probe.n_modules_y = ceil(probe.maxroiheight/ (maxmodheight + probe.spacing));
+    if(probe.n_modules_y*maxmodheight + (probe.n_modules_y-1)*probe.spacing < probe.maxroiheight)
+        probe.n_modules_y = probe.n_modules_y + 1;
+    end
+    
+    probe.add_module = add_module;
+    probe = tessellateModule(probe);
+
 end
 
 
