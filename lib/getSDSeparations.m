@@ -12,8 +12,8 @@ function [probe] = getSDSeparations(probe)
 %   subfields are calculated without SDrange limitations and saved to
 %   probe.results.full
 
-srcs = probe.srcposns; % [x, y, modidx, srcidx]
-dets = probe.detposns; % [x, y, modidx, detidx]
+srcs = probe.results.srcposns; % [x, y, modidx, srcidx]
+dets = probe.results.detposns; % [x, y, modidx, detidx]
 
 % Calculate for FULL CHANNELS (channels, intra, inter)
 sd = zeros(size(srcs,1)*size(dets,1), 5);

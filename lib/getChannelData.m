@@ -10,9 +10,13 @@ function [probe] = getChannelData(probe)
 % first, get only the active modules, srcs, and detectors
 [activemodules, activesrcposns, activedetposns] = getActiveMSD(probe);
 tmpprobe = probe;
-tmpprobe.modules = activemodules;
-tmpprobe.srcposns = activesrcposns;
-tmpprobe.detposns = activedetposns;
+%tmpprobe.modules = activemodules;
+%tmpprobe.srcposns = activesrcposns;
+%tmpprobe.detposns = activedetposns;
+tmpprobe.results.modules = activemodules;
+tmpprobe.results.srcposns = activesrcposns;
+tmpprobe.results.detposns = activedetposns;
+
 
 
 % channels (all, limited to sdrange(2) inclusive) [sep srcid detid srcmodid detmodid]

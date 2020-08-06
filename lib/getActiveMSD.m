@@ -14,6 +14,7 @@ for m=1:size(activemoduleidx,1)
     end
 end
 activemodules = probe.modules(activemoduleidx,:); % logic for sub-matrix
+probe.results.modules = activemodules;
 
 % get active SOURCES only
 activesrcidx = false(size(probe.srcposns,1), 1);
@@ -25,6 +26,7 @@ for m=1:size(activemoduleN,1)
     end
 end
 activesrcposns = probe.srcposns(activesrcidx,:);
+probe.results.srcposns = activesrcposns;
 
 % get active DETECTORS only
 %activedetposns
@@ -37,6 +39,7 @@ for m=1:size(activemoduleN,1)
     end
 end
 activedetposns = probe.detposns(activedetidx,:);
+probe.results.detposns = activedetposns;
 
 end
 
