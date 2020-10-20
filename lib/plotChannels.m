@@ -80,12 +80,13 @@ switch plottype
         % Determine breakdowntype
         switch breakdowntype
             case 'col'
-                c = channels(:,1);    % data to be plotted
-                srcidx = channels(:,2);
-                detidx = channels(:,3);
-                ran=range(c);   % range of data
-                min_val=min(c); % minimum value of data
-                max_val=max(c); % maximum value of data
+                clear c srcidx detidx i
+                c = probe.results.channels(:,1);    % data to be plotted
+                srcidx = probe.results.channels(:,2);
+                detidx = probe.results.channels(:,3);
+                ran=range(probe.results.channels(:,1));   % range of data
+                min_val=min(probe.results.channels(:,1)); % minimum value of data
+                max_val=max(probe.results.channels(:,1)); % maximum value of data
                 y=floor(((c-min_val)/ran)*63)+1;    % 2^6, scale for 6 bit colors
                 col=zeros(length(c),3);     % an rgb value for each channel
                 p=colormap;
@@ -103,6 +104,7 @@ switch plottype
                 end
 
             case 'int'
+                clear c srcidx detidx i
                 % INTER module channels
                 c = interchannels(:,1);    % channel separations
                 srcidx = interchannels(:,2);
