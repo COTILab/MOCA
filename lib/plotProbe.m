@@ -70,7 +70,7 @@ else
                 trperimeter = translateCoordinates(rperimeter, modulexy); % rotated AND translated perimeter
                 peri_x = [trperimeter(:,1); trperimeter(1,1)];
                 peri_y = [trperimeter(:,2); trperimeter(1,2)];
-                fill(peri_x,peri_y,[0.9 0.9 0.9])
+                fill(peri_x,peri_y,[0.95 0.95 0.95])
                 %plot(peri_x, peri_y, 'k--', 'LineWidth', 1, 'Color',[.75 .75 .75]);
             end
         end

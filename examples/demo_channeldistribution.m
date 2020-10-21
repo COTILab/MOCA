@@ -46,3 +46,29 @@ title('SD separations by color and line length')
 figure; plotProbe(probe); plotROI(probe); 
 plotChannels(probe, 'spat', 'sd', 'int');
 title('SD separations by intra vs inter')
+
+
+%% Individually control module and channel color
+% useful for embedding MOCA into visualization software
+figure; 
+
+plotProbe(probe, 'outline'); % plots the module outlines, dashed in gray
+plotProbe(probe, 'srcs'); % plots only the srcs
+plotProbe(probe, 'dets'); % plots only the dets
+plotProbe(probe, 'srcnumbers'); % plots text numbers over optodes
+plotProbe(probe, 'detnumbers'); % plots text numbers over optodes
+
+% Plot all intra channels
+for i=1:size(probe.results.intrachannels,1)
+    plotSingleChannel(probe, probe.results.intrachannels(i,2),...
+        probe.results.intrachannels(i,3),...
+        '-',[0.5 0.5 0.5]);
+end
+% Plot all inter channels
+for i=1:size(probe.results.interchannels,1)
+    plotSingleChannel(probe, probe.results.interchannels(i,2),...
+        probe.results.interchannels(i,3),...
+        'none',[0.5 0.5 0.5]); % LineStyle, Color
+end
+
+axis equal
