@@ -55,7 +55,8 @@ while (group_flag == 0)
     
 end
 
-probe.results.groupings = assigned_srcs; % [x y modid srcid groupid]
+probe.results.groups = assigned_srcs; % [x y modid srcid groupid]
+probe.results.ngroups = size(unique(probe.results.groupings(:,5)), 1);
 
 
 end
