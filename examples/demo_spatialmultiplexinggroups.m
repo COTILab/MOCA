@@ -31,10 +31,12 @@ probe = characterizeProbe(probe);
 
 
 %% Visualize Characterization - static groups
+patterns = getSMGMatrix(probe, 'num');
+
 figure; 
 plotProbe(probe); 
 plotROI(probe); 
-plotSpatialMultiplexingGroups(probe, [2,4,6]);
+plotSpatialMultiplexingGroups(probe, [4]);
 
 
 %% Visualize Characterization - cycle through groupings. Save a .gif
@@ -57,9 +59,9 @@ for i=1:ngroups
     
     pause(1);
     
-    frame = getframe(gcf);
-    img =  frame2im(frame);
-    [img,cmap] = rgb2ind(img,256);
+%     frame = getframe(gcf);
+%     img =  frame2im(frame);
+%     [img,cmap] = rgb2ind(img,256);
 %     if i == 1
 %         imwrite(img,cmap,giftitle,'gif','LoopCount',Inf,'DelayTime',1);
 %     else
