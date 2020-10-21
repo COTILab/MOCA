@@ -15,8 +15,8 @@ hold on
 
 % for every group, plot a sphere of influence over each source
 for g=1:size(groups,2)
-    srcs_in_this_group_idx = probe.results.groupings(:,5) == groups(g);
-    srcs_in_this_group = probe.results.groupings(srcs_in_this_group_idx, 1:2);
+    srcs_in_this_group_idx = probe.results.groups(:,5) == groups(g);
+    srcs_in_this_group = probe.results.groups(srcs_in_this_group_idx, 1:2);
 
     % viscircles( coors, radii )
     if(g<=13)
