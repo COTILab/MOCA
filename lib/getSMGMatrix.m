@@ -15,7 +15,7 @@ function [matrix] = getSMGMatrix(probe,outputtype)
 groups = probe.results.groups;          % [x y modid srcid groupid]
 ngroups = probe.results.ngroups;        % number of groups
 nmodules = probe.results.modulecount;   % number of modules
-nsrcssingle = size(probe.module.srcposns,2);    % n srcs in one module
+nsrcssingle = size(probe.module.srcposns,1);    % n srcs in one module
 
 % update src numbers from global (1:total srcs in the entire probe) to 
 % module (1:number of src on a single module)
@@ -26,19 +26,15 @@ srcrelative(srcrelative == 0) = nsrcssingle;
 patterns = zeros(ngroups+2, 1+nmodules);
 
 for row = 1:ngroups
-    %for col = 2:1+nmodules
-        % inside one row
-        
-        % find all rows of group 1
+        % find all rows of that are part of this group
         idxOfGroup = find(groups(:,5) == row);
         globalModuleNumber = groups(idxOfGroup,3);
         srcID = srcrelative(idxOfGroup,1);
         
+        % update the row values with src number
         for col = 1:size(globalModuleNumber,1)
             patterns(row, 1+globalModuleNumber(col)) = srcID(col);
         end
-        
-    %end
 end
 
 % row defining SS channels
@@ -47,25 +43,37 @@ patterns(size(patterns,1)-1, 2:size(patterns,2)) = 3*ones(1,nmodules);
 % row defining auxiliary sensors (IMU)
 patterns(size(patterns,1),   2:size(patterns,2)) = 8*ones(1,nmodules);
 
+% create string list for copy and paste
+strList = string( zeros(size(patterns,1), 1) );
 
+for r=1:size(patterns,1)
+    n = patterns(r,:);
+    allOneString = sprintf('%.0f,' , n);    % character vector   
+    allOneString = allOneString(1:end-1);   % strip final comma
+    textRow = "{" + allOneString + "},";
+    strList(r) = string(textRow);      % string
+end
+
+
+% save to output
 if (strcmp(outputtype, 'num'))
     matrix = patterns;
 elseif (strcmp(outputtype, 'str'))
-    disp('make to string')
+    matrix = strList;
 end
 
-% example
-% int patterns[NUMBER_PATTERNS+2][NUMBER_DEVICES+1] = { 
-%   {0, 0,3,0,0,0,0,0,0},
-%   {0, 1,0,0,0,3,0,0,0},
-%   {0, 8,0,0,0,0,0,0,0},
-%   {0, 0,8,0,0,0,0,0,0},
-%   //{0, 3,3,3,3,3,3,3,3},   // TODO: Confirm this reads all SS channels at once
-%   //{0, 8,8,8,8,8,8,8,8},   // TODO: Confirm this gets all IMU data at once
-% 
-%   };
 
-%matrix;
+
+% example string output for arduino
+% int patterns[NUMBER_PATTERNS+2][NUMBER_DEVICES+1] = { 
+%     {0,1,0,1,0,1,0,1,0},
+%     {0,2,1,0,1,0,1,0,1},
+%     {0,3,0,2,3,0,2,3,0},
+%     {0,0,2,3,0,2,3,0,2},
+%     {0,0,3,0,2,3,0,2,3},
+%     {0,3,3,3,3,3,3,3,3}, // TODO: Confirm this reads all SS channels at once
+%     {0,8,8,8,8,8,8,8,8}, // TODO: Confirm this gets all IMU data at once 
+%   };
 
 end
 
