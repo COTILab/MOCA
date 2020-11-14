@@ -58,6 +58,16 @@ end
 probe.results.groups = assigned_srcs; % [x y modid srcid groupid]
 probe.results.ngroups = size(unique(probe.results.groups(:,5)), 1);
 
+% get the ss group
+src_ss_idx = size(probe.module.srcposns,1); %nth src is a ss channel src
+n_src_in_ss_group = 0;
+for g=1:size(probe.srcposns,1) %go through all srcs
+    if( mod(g,src_ss_idx) == 0)
+        n_src_in_ss_group = n_src_in_ss_group+1;
+        ss_group(n_src_in_ss_group,:) = [probe.srcposns(g,:), probe.results.ngroups+1];
+    end
+end
+probe.results.groups_ss = ss_group;
 
 end
 
