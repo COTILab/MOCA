@@ -17,7 +17,7 @@ function [globalmatrix, localmatrix] = getSMGMatrix(probe,outputtype)
 
 
 groups = probe.results.groups;          % [x y modid srcid groupid]
-ngroups = probe.results.ngroups;        % number of groups
+ngroups = probe.results.ngroups;        % number of groups, excluding SS and IMU
 nmodules = probe.results.modulecount;   % number of modules
 nsrcssingle = size(probe.module.srcposns,1);    % n srcs in one module
 
@@ -37,7 +37,7 @@ for row = 1:ngroups
 end
 
 % row defining SS channels
-patterns(size(patterns,1)-1, 2:size(patterns,2)) = 3*ones(1,nmodules);
+patterns(size(patterns,1)-1, 2:size(patterns,2)) = 3*[1:8]; %3*ones(1,nmodules);
 
 % row defining auxiliary sensors (IMU)
 patterns(size(patterns,1),   2:size(patterns,2)) = 8*ones(1,nmodules);
@@ -53,6 +53,7 @@ srcrelative(srcrelative == 0) = nsrcssingle;
 srcrelative(isnan(srcrelative)) = 0;% preserve the zeros
 localpatterns = patterns;
 localpatterns(1:ngroups, 2:nmodules+1) = srcrelative;
+localpatterns(ngroups+1, 2:end) = nsrcssingle*ones(1,nmodules);
 
 
 % create string list for copy and paste
@@ -94,8 +95,8 @@ end
 %     {0,3,0,2,3,0,2,3,0},
 %     {0,0,2,3,0,2,3,0,2},
 %     {0,0,3,0,2,3,0,2,3},
-%     {0,3,3,3,3,3,3,3,3}, // TODO: Confirm this reads all SS channels at once
-%     {0,8,8,8,8,8,8,8,8}, // TODO: Confirm this gets all IMU data at once 
+%     {0,3,3,3,3,3,3,3,3}, 
+%     {0,8,8,8,8,8,8,8,8}, 
 %   };
 
 end
