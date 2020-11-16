@@ -41,9 +41,10 @@ end
 
 interidx = not(intraidx);
 
-probe.results.full.channels = sd;
+%probe.results.full.channels = sd;
 probe.results.full.intrachannels = sd(intraidx,:);
 probe.results.full.interchannels = sd(interidx,:);
+probe.results.full.channels = [probe.results.full.intrachannels; probe.results.full.interchannels];
 
 
 % Calculate for SDRANGE-LIMITED CHANNELS (channels, intra, inter, sschannels, lschannels, exchannels)
@@ -85,9 +86,10 @@ if(isfield(probe, 'sdrange'))
     exidx = sd(:,1) > probe.sdrange(2); % indeces of channels above range 
 
     
-    probe.results.channels = probe.results.full.channels(chidx,:);
+    %probe.results.channels = probe.results.full.channels(chidx,:);
     probe.results.intrachannels = probe.results.full.intrachannels(raidx,:);
     probe.results.interchannels = probe.results.full.interchannels(eridx,:);
+    probe.results.channels = [probe.results.intrachannels; probe.results.interchannels];    % intra then inter channels
     probe.results.sschannels = sd(ssidx,:);
     probe.results.lschannels = sd(lsidx,:);
     probe.results.exchannels = sd(exidx,:);
