@@ -38,6 +38,9 @@ if (moduleexists && roiexists)
         if (sdrangeexists)
             probe = getBrainSensitivity(probe);
             probe = getSpatialMultiplexingGroups(probe);
+            [globalmatrix, localmatrix] = getSMGMatrix(probe,'num');
+            probe.results.globalgroupmatrix = globalmatrix;
+            probe.results.localgroupmatrix = localmatrix;
         end
     end
 else
