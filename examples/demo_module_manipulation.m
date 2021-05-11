@@ -39,6 +39,8 @@ probe = translateModules(probe, [9:12], [0 30]);
 figure; plotProbe(probe); plotROI(probe);
 title('Manually manipulated probe')
 
+
+%%
 % Use a digraph to orient the modules within a probe
 probe = reorientModules(probe);
 
