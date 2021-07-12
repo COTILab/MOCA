@@ -36,8 +36,14 @@ for row = 1:ngroups
         end
 end
 
+% pop away the colums of OFF sources
+offmodules = find(probe.modules(:,4)==0);
+for om = size(offmodules,1):-1:1
+    patterns(:,offmodules(om)+1) = []; % remove a columm
+end
+
 % row defining SS channels
-patterns(size(patterns,1)-1, 2:size(patterns,2)) = 3*[1:nmodules]; %3*ones(1,nmodules);
+patterns(size(patterns,1)-1, 2:size(patterns,2)) = nsrcssingle*[1:nmodules]; %3*ones(1,nmodules);
 
 % row defining auxiliary sensors (IMU)
 patterns(size(patterns,1),   2:size(patterns,2)) = 8*ones(1,nmodules);
