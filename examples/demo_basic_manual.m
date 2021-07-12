@@ -56,7 +56,7 @@ clear all
 
 % Design parameters
 probe.module = createModule(4, 35); % nsides, mdimension
-probe.roi = [160 0; 0 0; 0 80; 60 80; 60 40; 120 60];  
+probe.roi = [130 0; 0 0; 0 80; 60 80; 60 40; 120 60];  
 probe.module.srcposns = [-12.5,12.5];
 probe.module.detposns = [-12.5,4];
 probe.sdrange = 40;
@@ -64,7 +64,7 @@ probe.sdrange = 40;
 % Assembly processes
 probe.spacing = 0;
 probe = createLayout(probe); 
-probe = toggleModules(probe, [5, 8:15], 'off');
+probe = toggleModules(probe, [7:15], 'off');
 
 % Probe Characterization
 probe = characterizeProbe(probe);
