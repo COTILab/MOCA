@@ -53,7 +53,7 @@ plotProbe(probe); plotROI(probe); plotBrainSensitivity(probe, 'intra');
 title('Intra Channel Brain Sensitivity')
 
 % Spatial multiplexing groups
-ngroups = size(unique(probe.results.groupings(:,5)), 1);
+ngroups = size(unique(probe.results.groups(:,5)), 1);
 figure; plotProbe(probe); plotROI(probe); 
 plotSpatialMultiplexingGroups(probe, [2]);
 
