@@ -33,12 +33,6 @@ probe = characterizeProbe(probe);
 %                 | 'full'    | 'col'*
 %                 |           | 'int'
 
-figure; plotChannels(probe, 'hist', 'sd'); 
-title('Histogram of channels limited by SDrange')
-
-figure; plotChannels(probe, 'hist', 'full'); 
-title('Histogram of channels, all (not limited)')
-
 figure; plotProbe(probe); plotROI(probe); 
 plotChannels(probe, 'spat', 'sd', 'col');
 title('SD separations by color and line length')
@@ -47,6 +41,11 @@ figure; plotProbe(probe); plotROI(probe);
 plotChannels(probe, 'spat', 'sd', 'int');
 title('SD separations by intra vs inter')
 
+figure; plotChannels(probe, 'hist', 'sd'); 
+title('Histogram of channels limited by SDrange')
+
+figure; plotChannels(probe, 'hist', 'full'); 
+title('Histogram of channels, all (not limited)')
 
 %% Individually control module and channel color
 % useful for embedding MOCA into visualization software

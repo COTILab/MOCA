@@ -89,10 +89,13 @@ switch plottype
                 max_val=max(probe.results.channels(:,1)); % maximum value of data
                 y=floor(((c-min_val)/ran)*63)+1;    % 2^6, scale for 6 bit colors
                 col=zeros(length(c),3);     % an rgb value for each channel
-                p=colormap;
+                p=colormap; %jet;     % defaults to 256 rows if no figure is open
                 for i=1:length(c)
+                    % y goes to 64, p goes to 256. Must scale Y up by a
+                    % factor
+                    scaleup = round(size(p,1)/max(y));
                     a=y(i);
-                    col(i,:)=p(a,:);
+                    col(i,:)=p(a*scaleup,:);
                     plot([srcposns(srcidx(i),1), detposns(detidx(i),1)],...
                             [srcposns(srcidx(i),2), detposns(detidx(i),2)],...
                             'Color',col(i,:),...
