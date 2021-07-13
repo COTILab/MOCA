@@ -120,10 +120,10 @@ SD.AnchorList = AnchorList;
 %SD.SrcMap
 
 SD.SpatialUnit = 'mm';
-SD.xmin = 0;
-SD.xmax = 0;
-SD.ymin = 0;
-SD.ymax = 0;
+SD.xmin = xmin;
+SD.xmax = xmax;
+SD.ymin = ymin;
+SD.ymax = ymax;
 SD.auxChannels = [];
 
 % save as SD file
