@@ -25,6 +25,13 @@ title('SD separations by intra vs inter')
 
 
 %% Generate specific components
+allx = [probe.results.srcposns(:,1); probe.results.detposns(:,1)];
+xmin = min(allx);
+xmax = max(allx);
+ally = [probe.results.srcposns(:,2); probe.results.detposns(:,2)];
+ymin = min(ally);
+ymax = max(ally);
+
 Lambda = [690,830];
 nSrcs = size(probe.results.srcposns,1);
 nDets = size(probe.results.detposns,1);
@@ -78,23 +85,30 @@ InterSpringList(:,3) = probe.results.interchannels(:,1);        % actual distanc
 InterSpringList(:,2) = InterSpringList(:,2) + nSrcs;            % shift det numbering
 InterSpringList(:,3) = -1 * ones(size(probe.results.interchannels,1), 1);   % make -1 to be flexible
 
+% Dummy optode to use an an anchor
+DummyPos = [mean([xmin,xmax]), mean([ymin,ymax]), 0];
+nDummys = size(DummyPos,1);
+
+% Anchor list
+AnchorList{1,1} = nSrcs+nDets+1;
+AnchorList{1,2} = 'Fpz'; %Fpz=forehead. Cz=top of head, C5=left of head, C6=right of head, Oz=back of head
 
 %% Save appropriate components
 SD.Lambda = Lambda;
 
 SD.SrcPos = [probe.results.srcposns(:,1:2), zeros(nSrcs,1)];
 SD.DetPos = [probe.results.detposns(:,1:2), zeros(nDets,1)];
-SD.DummyPos = [];
+SD.DummyPos = DummyPos;
 
 SD.nSrcs = nSrcs;
 SD.nDets = nDets;
-SD.nDummys = 0;
+SD.nDummys = nDummys;
 
 SD.MeasList = MeasList;
 
 SD.SpringList = [IntraSpringList; InterSpringList];
 
-SD.AnchorList = {};
+SD.AnchorList = AnchorList;
 
 %SD.MeasListAct
 %SD.SrcMap
