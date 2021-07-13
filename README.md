@@ -6,6 +6,16 @@ Modular Optode Configuration Analyzer
 MOCA is a matlab-based workflow to design new and analyze existing fNIRS modules and their associated probes. It provides researchers with a command-line-based approach to define modules, contains functions to assist in tessellating modules over a region of interest, and produces quantitative metrics of the final probe to interative improvements or to compare probes composed of vastly different modules designs and layouts. 
 
 
+# Automation Examples
+## Determining spacing between modules
+Refer to ```demo_auto_spacing.m``` for details. Below is an example probe layout using hexagonal modules. The function ```exhaustSpacing()``` varies the spacing between modules by a user specified amount.
+<img src="images/demo_auto_spacing_layout.png" width="400" >
+<img src="images/exhaustSpacing.gif" width="400" >
+
+The number of channels, the average brain sensititivy, and the number of spatial multiplexing groups for each resulting probe with varying spacing can then be displayed to determine the best spacing for a particular application. 
+<img src="images/demo_auto_spacing_results.png" width="600" >
+
+
 # Example Usage
 ## Design Parameters (Inputs)
 Defining the module and regions of interest
