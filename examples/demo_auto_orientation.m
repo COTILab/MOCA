@@ -36,34 +36,59 @@ for i=1:size(cfgs,2) %permutations
     ngroups(i) = cfgs(i).results.ngroups;
 end
 
-% Channels
+%% plot on single figure
 figure
-plot(1:size(cfgs,2), channels, '*-')
-xlabel('Configuration number');
-ylabel('Number of channels');
-title('Number of channels per combination');
-
-% Inter-module Channels
-figure
-plot(1:size(cfgs,2), interchannels, '*-')
-xlabel('Configuration number');
-ylabel('Number of channels');
-title('Number of inter-module channels per combination');
-
-% Brain Sensitivity
-figure
-plot(1:size(cfgs,2), brainsensitivity, '*-')
-xlabel('Configuration number');
-ylabel('Average Brain Sensitivity');
-title('Average Brain Sensitivity per combination');
-maxBSval = max(brainsensitivity);
-maxBSidx = find(brainsensitivity == maxBSval);
+set(gca,'FontSize',20)
 hold on
-plot(maxBSidx, maxBSval, 'r*');
 
-% Number of SMGs
-figure
-plot(1:size(cfgs,2), ngroups, '*-')
-xlabel('Configuration number');
-ylabel('Number of Spatial Multiplexing Groups');
-title('Number of SMGs per combination');
+% left side
+yyaxis left
+plot(1:size(cfgs,2), 100*brainsensitivity, 'b*-', 'LineWidth',2, 'MarkerSize',10)
+maxBSval = max(brainsensitivity); maxBSidx = find(brainsensitivity == maxBSval);
+plot(maxBSidx, 100*maxBSval, 'r*', 'LineWidth',2, 'MarkerSize',10);
+
+plot(1:size(cfgs,2), ngroups, 'c+-', 'LineWidth',2, 'MarkerSize',10);
+
+ylabel({'Average Brain Sensitivity [%]';'Number of SMGs [N]'})
+xlabel('Offset staggering [mm]');
+
+% right side
+yyaxis right
+plot(1:size(cfgs,2), channels, 'x-', 'LineWidth',2, 'MarkerSize',10)
+ylabel('Number of channels [N]');
+
+legend('Average Brain Sensitivity', 'Max Brain Sensitivity', 'Number of SMGs', 'Number of Channels', 'Location', 'NorthWest')
+title('Number of channels, Average Brain Sensitivity, and Spatial Multiplexing Groups')
+
+%%
+% % Channels
+% figure
+% plot(1:size(cfgs,2), channels, '*-')
+% xlabel('Configuration number');
+% ylabel('Number of channels');
+% title('Number of channels per combination');
+% 
+% % Inter-module Channels
+% figure
+% plot(1:size(cfgs,2), interchannels, '*-')
+% xlabel('Configuration number');
+% ylabel('Number of channels');
+% title('Number of inter-module channels per combination');
+% 
+% % Brain Sensitivity
+% figure
+% plot(1:size(cfgs,2), brainsensitivity, '*-')
+% xlabel('Configuration number');
+% ylabel('Average Brain Sensitivity');
+% title('Average Brain Sensitivity per combination');
+% maxBSval = max(brainsensitivity);
+% maxBSidx = find(brainsensitivity == maxBSval);
+% hold on
+% plot(maxBSidx, maxBSval, 'r*');
+% 
+% % Number of SMGs
+% figure
+% plot(1:size(cfgs,2), ngroups, '*-')
+% xlabel('Configuration number');
+% ylabel('Number of Spatial Multiplexing Groups');
+% title('Number of SMGs per combination');
