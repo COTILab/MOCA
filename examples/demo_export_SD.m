@@ -3,7 +3,7 @@
 
 clear all
 
-%% Create a layout
+% Create a layout
 % Design Parameters (module, roi, SD sep range)
 probe.module = createModule(4, 35); % nsides, mdimension
 probe.roi = createROI(70,70);     % width and height
@@ -22,6 +22,7 @@ figure; plotProbe(probe); plotROI(probe);
 plotChannels(probe, 'spat', 'sd', 'int');
 title('SD separations by intra vs inter')
 
-%% Create SD structure and export
+
+% Create SD structure and export
 SD = exportOptodes(probe, 'examples/mocaexport.SD');
 
