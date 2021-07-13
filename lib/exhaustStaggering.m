@@ -23,15 +23,6 @@ for c=1:size(staggerAmount,2)
     probe = characterizeProbe(probe);
     cfgs(c).results = probe.results;
     
-    % save individual metrics
-%     channels(count) = size(output(count).results.channels,1);
-%     intrachannels(count) = size(output(count).results.intrachannels,1);
-%     interchannels(count) = size(output(count).results.interchannels,1);
-%     brainsensitivity(count) = mean( output(count).results.brainsensitivity(:,1) );
-%     intrabrainsensitivity(count) = mean( output(count).results.intrabrainsensitivity(:,1) );
-%     interbrainsensitivity(count) = mean( output(count).results.interbrainsensitivity(:,1) );
-%     ngroups(count) = output(count).results.ngroups;
-    
     % visual display
     plotProbe(probe); 
     title(strcat('Staggering: ',num2str(offset),'mm'))
