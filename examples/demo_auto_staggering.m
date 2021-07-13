@@ -37,34 +37,60 @@ for i = 1:size(cfgs,2)
     ngroups(i) = cfgs(i).results.ngroups;
 end
 
-% Channels
+%% plot on single figure
 figure
-plot(staggerAmount, channels, '*-')
-xlabel('Offset staggering [mm]');
-ylabel('Number of channels');
-title('Number of channels per staggering amount');
-
-% Inter-module Channels
-figure
-plot(staggerAmount, interchannels, '*-')
-xlabel('Offset staggering [mm]');
-ylabel('Number of channels');
-title('Number of inter-module channels per staggering amount');
-
-% Brain Sensitivity
-figure
-plot(staggerAmount, brainsensitivity, '*-')
-xlabel('Offset staggering [mm]');
-ylabel('Average Brain Sensitivity');
-title('Average Brain Sensitivity per staggering amount');
-maxBSval = max(brainsensitivity);
-maxBSidx = find(brainsensitivity == maxBSval)-1;
+set(gca,'FontSize',20)
 hold on
-plot(maxBSidx, maxBSval, 'r*');
 
-% Number of SMGs
-figure
-plot(staggerAmount, ngroups, '*-')
+% left side
+yyaxis left
+plot(staggerAmount, 100*brainsensitivity, 'b*-', 'LineWidth',2, 'MarkerSize',10)
+maxBSval = max(brainsensitivity); maxBSidx = find(brainsensitivity == maxBSval)-1;
+plot(maxBSidx, 100*maxBSval, 'r*', 'LineWidth',2, 'MarkerSize',10);
+
+plot(staggerAmount, ngroups, 'c+-', 'LineWidth',2, 'MarkerSize',10);
+
+ylabel({'Average Brain Sensitivity [%]';'Number of SMGs [N]'})
 xlabel('Offset staggering [mm]');
-ylabel('Number of Spatial Multiplexing Groups');
-title('Number of SMGs per combination');
+
+% right side
+yyaxis right
+plot(staggerAmount, channels, 'x-', 'LineWidth',2, 'MarkerSize',10)
+ylabel('Number of channels [N]');
+
+legend('Average Brain Sensitivity', 'Max Brain Sensitivity', 'Number of SMGs', 'Number of Channels', 'Location', 'NorthWest')
+title('Number of channels, Average Brain Sensitivity, and Spatial Multiplexing Groups')
+
+
+%%
+% % Channels
+% figure
+% plot(staggerAmount, channels, '*-')
+% xlabel('Offset staggering [mm]');
+% ylabel('Number of channels');
+% title('Number of channels per staggering amount');
+% 
+% % Inter-module Channels
+% figure
+% plot(staggerAmount, interchannels, '*-')
+% xlabel('Offset staggering [mm]');
+% ylabel('Number of channels');
+% title('Number of inter-module channels per staggering amount');
+% 
+% % Brain Sensitivity
+% figure
+% plot(staggerAmount, brainsensitivity, '*-')
+% xlabel('Offset staggering [mm]');
+% ylabel('Average Brain Sensitivity');
+% title('Average Brain Sensitivity per staggering amount');
+% maxBSval = max(brainsensitivity);
+% maxBSidx = find(brainsensitivity == maxBSval)-1;
+% hold on
+% plot(maxBSidx, maxBSval, 'r*');
+% 
+% % Number of SMGs
+% figure
+% plot(staggerAmount, ngroups, '*-')
+% xlabel('Offset staggering [mm]');
+% ylabel('Number of Spatial Multiplexing Groups');
+% title('Number of SMGs per combination');
