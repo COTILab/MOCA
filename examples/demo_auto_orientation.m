@@ -16,88 +16,54 @@ probe = createLayout(probe);
 
 % Probe Characterization
 probe = characterizeProbe(probe);
-
 figure; plotProbe(probe); plotROI(probe)
 
 
-%% Number of combinations for this layout.
-orientations = [0 90 180 270];
-nPossibleOrientations = size(orientations,2);
-nModules = probe.results.modulecount;
-nCombinations = nPossibleOrientations^nModules;
-
-% create array of orientations
-vectors = { orientations, orientations, orientations, orientations}; %input data: cell array of vectors
-n = numel(vectors); % number of vectors
-combs = cell(1,n); % pre-define to generate comma-separated list
-[combs{end:-1:1}] = ndgrid(vectors{end:-1:1}); % the reverse order in these two
-% comma-separated lists is needed to produce the rows of the result matrix 
-combs = cat(n+1, combs{:}); %concat the n n-dim arrays along dimension n+1
-combs = reshape(combs,[],n); %reshape to obtain desired matrix
-
-
-%% Run through all combinations
-fig = figure;    
-    
-for c=1:size(combs,1) %permutations
-    % clear and reset probe
-    clf(fig)
-    c
-    probe = createLayout(probe); % reset back to basic
-    
-    % change orientation of modules based on combination
-    for m=1:nModules
-        probe = rotateModules(probe, [m], combs(c,m));
-    end
-    
-    % Re-characterize and save the results structur
-    probe = characterizeProbe(probe);
-    output(c).results = probe.results;
-    
-    % save individual metrics
-    channels(c) = size(output(c).results.channels,1);
-    intrachannels(c) = size(output(c).results.intrachannels,1);
-    interchannels(c) = size(output(c).results.interchannels,1);
-    brainsensitivity(c) = mean( output(c).results.brainsensitivity(:,1) );
-    intrabrainsensitivity(c) = mean( output(c).results.intrabrainsensitivity(:,1) );
-    interbrainsensitivity(c) = mean( output(c).results.interbrainsensitivity(:,1) );
-    ngroups(c) = output(c).results.ngroups;
-    
-    % visual display
-    plotProbe(probe); plotROI(probe)
-    title(strcat('Combination: ',num2str(c),'/',num2str(nCombinations)))
-    pause(.01)
-end
+%% Study all permutations
+[cfgs] = exhaustOrientation(probe)
 
 
 %% Create visual plots of exhaustive search
 
+% get appropriate individual metrics from all configurations
+for i=1:size(cfgs,2) %permutations
+    channels(i) = size(cfgs(i).results.channels,1);
+    intrachannels(i) = size(cfgs(i).results.intrachannels,1);
+    interchannels(i) = size(cfgs(i).results.interchannels,1);
+    brainsensitivity(i) = mean( cfgs(i).results.brainsensitivity(:,1) );
+    intrabrainsensitivity(i) = mean( cfgs(i).results.intrabrainsensitivity(:,1) );
+    interbrainsensitivity(i) = mean( cfgs(i).results.interbrainsensitivity(:,1) );
+    ngroups(i) = cfgs(i).results.ngroups;
+end
+
 % Channels
 figure
-plot(1:size(combs,1), channels, '*-')
-xlabel('Combination number');
+plot(1:size(cfgs,2), channels, '*-')
+xlabel('Configuration number');
 ylabel('Number of channels');
 title('Number of channels per combination');
 
 % Inter-module Channels
 figure
-plot(1:size(combs,1), interchannels, '*-')
-xlabel('Combination number');
+plot(1:size(cfgs,2), interchannels, '*-')
+xlabel('Configuration number');
 ylabel('Number of channels');
 title('Number of inter-module channels per combination');
 
 % Brain Sensitivity
 figure
-plot(1:size(combs,1), brainsensitivity, '*-')
-xlabel('Combination number');
+plot(1:size(cfgs,2), brainsensitivity, '*-')
+xlabel('Configuration number');
 ylabel('Average Brain Sensitivity');
 title('Average Brain Sensitivity per combination');
 maxBSval = max(brainsensitivity);
 maxBSidx = find(brainsensitivity == maxBSval);
+hold on
+plot(maxBSidx, maxBSval, 'r*');
 
 % Number of SMGs
 figure
-plot(1:size(combs,1), ngroups, '*-')
-xlabel('Combination number');
+plot(1:size(cfgs,2), ngroups, '*-')
+xlabel('Configuration number');
 ylabel('Number of Spatial Multiplexing Groups');
 title('Number of SMGs per combination');
