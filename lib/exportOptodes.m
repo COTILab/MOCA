@@ -15,7 +15,7 @@ ymin = min(ally);
 ymax = max(ally);
 
 % get quantities and measurement list
-Lambda = [690,830];
+Lambda = [690,850]; % Can change
 nSrcs = size(probe.results.srcposns,1);
 nDets = size(probe.results.detposns,1);
 nChannels = size(probe.results.channels,1);
@@ -26,7 +26,7 @@ MeasList = [probe.results.channels(:,2:3), ones(nChannels,1), ones(nChannels,1);
 % FIRST, the distances between all optodes (including src-src and det-det
 % pairs) should be fixed. This prevents the module from changing shape when
 % registered to the scalp
-iSL = 1;
+idxIntra = 1;
 for m=1:probe.results.modulecount
     srcs = find(probe.results.srcposns(:,3)==m); %srcs in module m
     dets = find(probe.results.detposns(:,3)==m); %dets in module m
@@ -57,16 +57,36 @@ for m=1:probe.results.modulecount
         
         len = sqrt((op2x-op1x)^2 + (op2y-op1y)^2);
         
-        IntraSpringList(iSL, :) = [op1, op2, len];
-        iSL = iSL + 1;
+        IntraSpringList(idxIntra, :) = [op1, op2, len];
+        idxIntra = idxIntra + 1;
     end
 end
-% SECOND, add loose springs in between intermodule channels
-InterSpringList = zeros(size(probe.results.interchannels,1), 3);
-InterSpringList(:,1:2) = probe.results.interchannels(:,2:3);    % x,y positions
-InterSpringList(:,3) = probe.results.interchannels(:,1);        % actual distances
-InterSpringList(:,2) = InterSpringList(:,2) + nSrcs;            % shift det numbering
-InterSpringList(:,3) = -1 * ones(size(probe.results.interchannels,1), 1);   % make -1 to be flexible
+
+% SECOND, add fixed springs between intermodule channels that are within
+% range of SD separation limit
+interWithinRange=probe.results.interchannels;  % intermodule channels within SD range
+interAll=probe.results.full.interchannels; % intermodule channels (all)
+[C,idxInsideRange,idxA]=intersect(interAll,interWithinRange,'rows','stable');
+[C,idxOutsideRange] = setdiff(interAll,interWithinRange,'rows','stable');
+
+idxInter = 1;
+for w=1:size(idxInsideRange,1)    % within SD range. Keep fixed
+    op1 = probe.results.full.interchannels(idxInsideRange(w),2); %src
+    op2 = probe.results.full.interchannels(idxInsideRange(w),3) + nSrcs; %det
+    len = probe.results.full.interchannels(idxInsideRange(w),1); %distance
+    
+    InterSpringList(idxInter, :) = [op1, op2, len];
+    idxInter = idxInter + 1;
+end
+for w=1:size(idxOutsideRange,1)    % outside SD range. Keep flexible (-1)
+    op1 = probe.results.full.interchannels(idxOutsideRange(w),2); %src
+    op2 = probe.results.full.interchannels(idxOutsideRange(w),3) + nSrcs; %det
+    len = -1; %distance
+    
+    InterSpringList(idxInter, :) = [op1, op2, len];
+    idxInter = idxInter + 1;
+end
+
 
 % Add dummy optodes. Need at least 3 to use as anchors
 DummyPos(1,:) = [mean([xmin,xmax]), ymin             , 0];
