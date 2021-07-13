@@ -8,6 +8,7 @@ function [cfgs] = exhaustStaggering(probe, modulesToStagger, staggerAmount)
 %   each be row vectors
 
 fig = figure
+giftitle = 'images/exhaustStaggering.gif';
 
 for c=1:size(staggerAmount,2)
     offset = staggerAmount(c);
@@ -28,6 +29,16 @@ for c=1:size(staggerAmount,2)
     title(strcat('Staggering: ',num2str(offset),'mm'))
     pause(.01)
     
+%     % save gif
+%     frame = getframe(gcf);
+%     img =  frame2im(frame);
+%     [img,cmap] = rgb2ind(img,256);
+%     if c == 1
+%         imwrite(img,cmap,giftitle,'gif','LoopCount',Inf,'DelayTime',.1);
+%     else
+%         imwrite(img,cmap,giftitle,'gif','WriteMode','append','DelayTime',.1);
+%     end
+%     
 end
 
 
