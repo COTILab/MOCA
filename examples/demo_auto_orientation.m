@@ -6,7 +6,7 @@ clear all
 
 % Design Parameters (module, roi, SD sep range)
 probe.module = createModule(4, 35); % nsides, mdimension
-probe.roi = createROI(70,35);     % width and height
+probe.roi = createROI(70,70);     % width and height
 probe.module.srcposns = [-12.5,12.5];
 probe.module.detposns = [-12.5,4];
 %probe.sdrange = 40;
@@ -17,6 +17,7 @@ probe = createLayout(probe);
 % Probe Characterization
 probe = characterizeProbe(probe);
 
+figure; plotProbe(probe); plotROI(probe)
 
 
 %% Number of combinations for this layout.
@@ -26,7 +27,7 @@ nModules = probe.results.modulecount;
 nCombinations = nPossibleOrientations^nModules;
 
 % create array of orientations
-vectors = { orientations, orientations}; %input data: cell array of vectors
+vectors = { orientations, orientations, orientations, orientations}; %input data: cell array of vectors
 n = numel(vectors); % number of vectors
 combs = cell(1,n); % pre-define to generate comma-separated list
 [combs{end:-1:1}] = ndgrid(vectors{end:-1:1}); % the reverse order in these two
@@ -45,8 +46,9 @@ for c=1:size(combs,1) %permutations
     probe = createLayout(probe); % reset back to basic
     
     % change orientation of modules based on combination
-    probe = rotateModules(probe, [1], combs(c,1));
-    probe = rotateModules(probe, [2], combs(c,2));
+    for m=1:nModules
+        probe = rotateModules(probe, [m], combs(c,m));
+    end
     
     % Re-characterize and save the results structur
     probe = characterizeProbe(probe);
@@ -64,7 +66,7 @@ for c=1:size(combs,1) %permutations
     % visual display
     plotProbe(probe); plotROI(probe)
     title(strcat('Combination: ',num2str(c),'/',num2str(nCombinations)))
-    pause(.1)
+    pause(.01)
 end
 
 
@@ -90,6 +92,8 @@ plot(1:size(combs,1), brainsensitivity, '*-')
 xlabel('Combination number');
 ylabel('Average Brain Sensitivity');
 title('Average Brain Sensitivity per combination');
+maxBSval = max(brainsensitivity);
+maxBSidx = find(brainsensitivity == maxBSval);
 
 % Number of SMGs
 figure
