@@ -6,7 +6,7 @@ clear all
 
 probe.module = createModule(4, 42);
 y1 = 10; pos = 14;
-probe.module.srcposns = [pos, pos; -pos, -pos];
+probe.module.srcposns = [pos, pos; -pos, -pos; -pos, 0; 0,pos];
 probe.module.detposns = [-pos, pos; pos, -pos]; 
 
 probe.roi = createROI(80,120); % width and height
@@ -21,7 +21,7 @@ plotProbe(probe);
 
 %% Analyze staggering
 modulesToStagger = [3,4];
-staggerAmount = [0:42];
+staggerAmount = [1:42];
 
 [cfgs] = exhaustStaggering(probe, modulesToStagger, staggerAmount)
 
@@ -45,7 +45,7 @@ hold on
 % left side
 yyaxis left
 plot(staggerAmount, 100*brainsensitivity, 'b*-', 'LineWidth',2, 'MarkerSize',10)
-maxBSval = max(brainsensitivity); maxBSidx = find(brainsensitivity == maxBSval)-1;
+maxBSval = max(brainsensitivity); maxBSidx = find(brainsensitivity == maxBSval);
 plot(maxBSidx, 100*maxBSval, 'r*', 'LineWidth',2, 'MarkerSize',10);
 
 plot(staggerAmount, ngroups, 'c+-', 'LineWidth',2, 'MarkerSize',10);
@@ -58,7 +58,7 @@ yyaxis right
 plot(staggerAmount, channels, 'x-', 'LineWidth',2, 'MarkerSize',10)
 ylabel('Number of channels [N]');
 
-legend('Average Brain Sensitivity', 'Max Brain Sensitivity', 'Number of SMGs', 'Number of Channels', 'Location', 'NorthWest')
+legend('Average Brain Sensitivity', 'Max Brain Sensitivity', 'Number of SMGs', 'Number of Channels', 'Location', 'NorthEast')
 title('Number of channels, Average Brain Sensitivity, and Spatial Multiplexing Groups')
 
 
