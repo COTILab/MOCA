@@ -5,6 +5,12 @@ Modular Optode Configuration Analyzer
 
 MOCA is a matlab-based workflow to design new and analyze existing fNIRS modules and their associated probes. It provides researchers with a command-line-based approach to define modules, contains functions to assist in tessellating modules over a region of interest, and produces quantitative metrics of the final probe to interative improvements or to compare probes composed of vastly different modules designs and layouts. 
 
+CONTENTS
+- [Automation Examples](#automation-examples)
+- [Basic Example Usage](#example-usage)
+- [Output Definitions](#outputs---probe-characterizations)
+- [3D Export](#3d-export)
+- [Basic Example Usage](#structure-details)
 
 # Automation Examples
 ## Determining spacing between modules
@@ -147,8 +153,8 @@ We can also generate a gif of all the groups
 <img src="images/loopinggroups.gif" width="400" >
 
 
-## Export Optodes Locations for 3D Use in AtlasViewer
-The function ```exportOptodes()``` exports a structure in .SD format for use of the probe with 3D position software AtlasViewer. MOCA places a fixed (non-elongating) spring between all optodes within a module (including source-source and detector-detector pairs). This constraint prevents the module shape from altering when the probe is registered to the scalp. Inter-module channels are also saved as fixed springs. Inter-module channels outside of the defined SD range are saved as loose springs, allowing AtlasViewer some slack to move modules slightly to fit the curvature of the scalp. Three dummy variables are used as anchors to place the probe in different locations on the scalp. An example 2x2 probe made of square modules is below. The intra- and inter-module channels are also shown in blue and orange, respectively.
+## 3D Export
+Export Optodes Locations for 3D Use in AtlasViewer. The function ```exportOptodes()``` exports a structure in .SD format for use of the probe with 3D position software AtlasViewer. MOCA places a fixed (non-elongating) spring between all optodes within a module (including source-source and detector-detector pairs). This constraint prevents the module shape from altering when the probe is registered to the scalp. Inter-module channels are also saved as fixed springs. Inter-module channels outside of the defined SD range are saved as loose springs, allowing AtlasViewer some slack to move modules slightly to fit the curvature of the scalp. Three dummy variables are used as anchors to place the probe in different locations on the scalp. An example 2x2 probe made of square modules is below. The intra- and inter-module channels are also shown in blue and orange, respectively.
 
 <img src="images/demo_SD_layout.png" width="400" > <img src="images/demo_SD_channels.png" width="400" >
 
