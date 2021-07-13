@@ -22,27 +22,8 @@ probe.spacing = 0;
 probe = createLayout(probe); 
 probe = toggleModules(probe, [10 11 15], 'off');
 
-% % 3-4-3 lumo probe, 5 mm space.                     
-% probe.roi = createROI(150,80); % width and height
-% probe.spacing = 5;
-% probe = createLayout(probe); 
-% probe = toggleModules(probe, [10 11 15], 'off');
- 
-% % 3-4-3 lumo probe, 10 mm space.                     
-% probe.roi = createROI(170,80); % width and height
-% probe.spacing = 10;
-% probe = createLayout(probe); 
-% probe = toggleModules(probe, [10 11 15], 'off');
-
-% % 3-4-3 lumo probe, 15 mm space.                     
-% probe.roi = createROI(170,80); % width and height
-% probe.spacing = 15;
-% probe = createLayout(probe); 
-% probe = toggleModules(probe, [10 11 15], 'off');
-% probe.roi = createROI(200,160); % width and height
-% probe.spacing = 50;
-
 figure; plotProbe(probe); plotROI(probe)
+
 
 %% vary spacing
 fig = figure;    
@@ -75,7 +56,7 @@ for s=separations
     % visual display
     plotProbe(probe); 
     title(strcat('Spacing: ',num2str(s),'mm'))
-    pause(.1)
+    pause(.01)
     
     c = c+1;
     
