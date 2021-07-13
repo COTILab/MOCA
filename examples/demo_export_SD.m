@@ -85,13 +85,19 @@ InterSpringList(:,3) = probe.results.interchannels(:,1);        % actual distanc
 InterSpringList(:,2) = InterSpringList(:,2) + nSrcs;            % shift det numbering
 InterSpringList(:,3) = -1 * ones(size(probe.results.interchannels,1), 1);   % make -1 to be flexible
 
-% Dummy optode to use an an anchor
-DummyPos = [mean([xmin,xmax]), mean([ymin,ymax]), 0];
+% Dummy optodes to use an an anchors (placed in a vertical line)
+DummyPos(1,:) = [mean([xmin,xmax]), ymin             , 0];
+DummyPos(2,:) = [mean([xmin,xmax]), mean([ymin,ymax]), 0];
+DummyPos(3,:) = [mean([xmin,xmax]), ymax             , 0];
 nDummys = size(DummyPos,1);
 
 % Anchor list
 AnchorList{1,1} = nSrcs+nDets+1;
-AnchorList{1,2} = 'Fpz'; %Fpz=forehead. Cz=top of head, C5=left of head, C6=right of head, Oz=back of head
+AnchorList{2,1} = nSrcs+nDets+2;
+AnchorList{3,1} = nSrcs+nDets+3;
+AnchorList{1,2} = 'Oz'; %Fpz=forehead. Cz=top of head, C5=left of head, C6=right of head, Oz=back of head
+AnchorList{2,2} = 'POz';
+AnchorList{3,2} = 'Pz';
 
 %% Save appropriate components
 SD.Lambda = Lambda;
