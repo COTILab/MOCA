@@ -12,7 +12,7 @@ Refer to ```demo_auto_spacing.m``` for details. Below is an example probe layout
 
 <img src="images/demo_auto_spacing_layout.png" width="400" > <img src="images/exhaustSpacing.gif" width="400" >
 
-The number of channels, the average brain sensititivy, and the number of spatial multiplexing groups for each resulting probe with varying spacing can then be displayed to determine the best spacing for a particular application. 
+The number of channels, the average brain sensitivity, and the number of spatial multiplexing groups for each resulting probe with varying spacing can then be displayed to determine the best spacing for a particular application. 
 
 <img src="images/demo_auto_spacing_results.png" width="600" >
 
@@ -21,7 +21,7 @@ Refer to ```demo_auto_orientation.m``` for details. Below is an example probe la
 
 <img src="images/demo_auto_orientation_layout.png" width="400" ><img src="images/exhaustOrientation.gif" width="400" >
 
-The number of channels, the average brain sensititivy, and the number of spatial multiplexing groups for each resulting probe with different module orientations can then be displayed to determine the best spacing for a particular application. In this case, the number of channels (and thus the channel density) does not change as the orientation varies. The number of spatial multiplexing groups (and thus the sampling rate of the probe) is also constant. However, there is a configuration of module orientations that leads to the highest brain sensitivity for this type of square module.
+The number of channels, the average brain sensitivity, and the number of spatial multiplexing groups for each resulting probe with different module orientations can then be displayed to determine the best spacing for a particular application. In this case, the number of channels (and thus the channel density) does not change as the orientation varies. The number of spatial multiplexing groups (and thus the sampling rate of the probe) is also constant. However, there is a configuration of module orientations that leads to the highest brain sensitivity for this type of square module.
 
 <img src="images/demo_auto_orientation_results.png" width="600" >
 
@@ -148,7 +148,7 @@ We can also generate a gif of all the groups
 
 
 ## Export Optodes Locations for 3D Use in AtlasViewer
-The function ```exportOptodes()``` exports an structure in .SD format for use of the probe with 3D position software AtlasViewer. MOCA places a fixed (non-elongating) spring between all optodes within a module (including source-source and detector-detector pairs). This constraint prevents the module shape from altering when the probe is registered to the scalp. Inter-module channels are also saved as fixed springs. Inter-module channels outside of the defined SD range are saved as loose springs, allowing AtlasViewer some slack to move modules slightly to fit the curvature of the scalp. Three dummy variables are used as anchors to place the probe in different locations on the scalp. An example 2x2 probe made of square modules is below. The intra- and inter-module channels are also shown in blue and orange, respectively.
+The function ```exportOptodes()``` exports a structure in .SD format for use of the probe with 3D position software AtlasViewer. MOCA places a fixed (non-elongating) spring between all optodes within a module (including source-source and detector-detector pairs). This constraint prevents the module shape from altering when the probe is registered to the scalp. Inter-module channels are also saved as fixed springs. Inter-module channels outside of the defined SD range are saved as loose springs, allowing AtlasViewer some slack to move modules slightly to fit the curvature of the scalp. Three dummy variables are used as anchors to place the probe in different locations on the scalp. An example 2x2 probe made of square modules is below. The intra- and inter-module channels are also shown in blue and orange, respectively.
 
 <img src="images/demo_SD_layout.png" width="400" > <img src="images/demo_SD_channels.png" width="400" >
 
