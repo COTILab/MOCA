@@ -9,6 +9,7 @@ function [cfgs] = exhaustSpacing(probe, spacingAmount)
 % TODO
 %  toggleModules
 
+% find dimensions for scaling ROI for layout isn't changed with spacing
 switch probe.module.shape
     case 'square'
         modwidth = probe.module.dimension;
@@ -27,7 +28,10 @@ probewidth = modwidth*probe.n_modules_x;
 roiWidthAdj = probewidth-probe.maxroiwidth;
 probeheight = modheight*probe.n_modules_y;
 roiHeightAdj = probeheight-probe.maxroiheight;
-            
+           
+% determine if any modules are off. Keep them off. 
+offModules = find(probe.modules(:,4)==0)';
+
 fig = figure;    
 
 for s=1:size(spacingAmount,2)
@@ -42,7 +46,7 @@ for s=1:size(spacingAmount,2)
     
     % re-create the layout
     probe = createLayout(probe); 
-    probe = toggleModules(probe, [10 11 15], 'off');
+    probe = toggleModules(probe, offModules, 'off');
     
     % Re-characterize and save the results structur
     probe = characterizeProbe(probe);
