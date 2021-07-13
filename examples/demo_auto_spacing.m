@@ -24,73 +24,52 @@ probe = toggleModules(probe, [10 11 15], 'off');
 
 figure; plotProbe(probe); plotROI(probe)
 
+%% Analyze the spacing
+spacingAmount = 1:30;
+[cfgs] = exhaustSpacing(probe, spacingAmount)
 
-%% vary spacing
-fig = figure;    
-c = 1;
-separations = 0:20;
 
-for s=separations
-    % clear and reset probe
-    clf(fig)
-    
-    % vary the spacing
-    probe.spacing = s;
-    probe.roi = createROI(150+(s*2),80);    % 150,160,170,180,190
-    probe = createLayout(probe); 
-    probe = toggleModules(probe, [10 11 15], 'off');
-    
-    % Re-characterize and save the results structur
-    probe = characterizeProbe(probe);
-    output(c).results = probe.results;
-    
+%% Extract metrics and create plots of exhaustive search
+
+for i=1:size(spacingAmount,2)
     % save individual metrics
-    channels(c) = size(output(c).results.channels,1);
-    intrachannels(c) = size(output(c).results.intrachannels,1);
-    interchannels(c) = size(output(c).results.interchannels,1);
-    brainsensitivity(c) = mean( output(c).results.brainsensitivity(:,1) );
-    intrabrainsensitivity(c) = mean( output(c).results.intrabrainsensitivity(:,1) );
-    interbrainsensitivity(c) = mean( output(c).results.interbrainsensitivity(:,1) );
-    ngroups(c) = output(c).results.ngroups;
-    
-    % visual display
-    plotProbe(probe); 
-    title(strcat('Spacing: ',num2str(s),'mm'))
-    pause(.01)
-    
-    c = c+1;
-    
+    channels(i) = size(cfgs(i).results.channels,1);
+    intrachannels(i) = size(cfgs(i).results.intrachannels,1);
+    interchannels(i) = size(cfgs(i).results.interchannels,1);
+    brainsensitivity(i) = mean( cfgs(i).results.brainsensitivity(:,1) );
+    intrabrainsensitivity(i) = mean( cfgs(i).results.intrabrainsensitivity(:,1) );
+    interbrainsensitivity(i) = mean( cfgs(i).results.interbrainsensitivity(:,1) );
+    ngroups(i) = cfgs(i).results.ngroups;
 end
-
-
-%% Create visual plots of exhaustive search
 
 % Channels
 figure
-plot(separations, channels, '*-')
+plot(spacingAmount, channels, '*-')
 xlabel('Spacing between modules');
 ylabel('Number of channels');
-title('Number of channels per combination');
+title('Number of channels per configuration');
 
 % Inter-module Channels
 figure
-plot(separations, interchannels, '*-')
+plot(spacingAmount, interchannels, '*-')
 xlabel('Spacing between modules');
 ylabel('Number of channels');
-title('Number of inter-module channels per combination');
+title('Number of inter-module channels per configuration');
 
 % Brain Sensitivity
 figure
-plot(separations, brainsensitivity, '*-')
+plot(spacingAmount, brainsensitivity, '*-')
 xlabel('Spacing between modules');
 ylabel('Average Brain Sensitivity');
-title('Average Brain Sensitivity per combination');
+title('Average Brain Sensitivity per configuration');
 maxBSval = max(brainsensitivity);
 maxBSidx = find(brainsensitivity == maxBSval);
+hold on
+plot(maxBSidx, maxBSval, 'r*');
 
 % Number of SMGs
 figure
-plot(separations, ngroups, '*-')
+plot(spacingAmount, ngroups, '*-')
 xlabel('Spacing between modules');
 ylabel('Number of Spatial Multiplexing Groups');
-title('Number of SMGs per combination');
+title('Number of SMGs per configuration');
