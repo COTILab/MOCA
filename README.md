@@ -9,8 +9,8 @@ MOCA is a matlab-based workflow to design new and analyze existing fNIRS modules
 # Automation Examples
 ## Determining spacing between modules
 Refer to ```demo_auto_spacing.m``` for details. Below is an example probe layout using hexagonal modules. The function ```exhaustSpacing()``` varies the spacing between modules by a user specified amount.
-<img src="images/demo_auto_spacing_layout.png" width="400" >
-<img src="images/exhaustSpacing.gif" width="400" >
+
+<img src="images/demo_auto_spacing_layout.png" width="400" > <img src="images/exhaustSpacing.gif" width="400" >
 
 The number of channels, the average brain sensititivy, and the number of spatial multiplexing groups for each resulting probe with varying spacing can then be displayed to determine the best spacing for a particular application. 
 <img src="images/demo_auto_spacing_results.png" width="600" >
