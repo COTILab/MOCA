@@ -36,10 +36,16 @@ for row = 1:ngroups
         end
 end
 
+
 % pop away the colums of OFF sources
+incorrectSizeOfPatterns = size(patterns,2);
 offmodules = find(probe.modules(:,4)==0);
 for om = size(offmodules,1):-1:1
-    patterns(:,offmodules(om)+1) = []; % remove a columm
+    if (offmodules(om) == incorrectSizeOfPatterns)
+        %patterns(:,offmodules(om)) = [];  Do Nothing
+    else
+        patterns(:,offmodules(om)+1) = []; % remove a columm
+    end
 end
 
 % row defining SS channels
