@@ -6,6 +6,35 @@ Modular Optode Configuration Analyzer
 MOCA is a matlab-based workflow to design new and analyze existing fNIRS modules and their associated probes. It provides researchers with a command-line-based approach to define modules, contains functions to assist in tessellating modules over a region of interest, and produces quantitative metrics of the final probe to interative improvements or to compare probes composed of vastly different modules designs and layouts. 
 
 
+# Automation Examples
+## Determining spacing between modules
+Refer to ```demo_auto_spacing.m``` for details. Below is an example probe layout using hexagonal modules. The function ```exhaustSpacing()``` varies the spacing between modules by a user specified amount.
+
+<img src="images/demo_auto_spacing_layout.png" width="400" > <img src="images/exhaustSpacing.gif" width="400" >
+
+The number of channels, the average brain sensititivy, and the number of spatial multiplexing groups for each resulting probe with varying spacing can then be displayed to determine the best spacing for a particular application. 
+
+<img src="images/demo_auto_spacing_results.png" width="600" >
+
+## Determining best orientation for each module
+Refer to ```demo_auto_orientation.m``` for details. Below is an example probe layout using square modules. The function ```exhaustOrientation()``` exhaustively changes the orientation of each individual module until all combinations are explored. Each of the four modules can be placed in four different orientations for a total of 4^4=256 combinations. A gif of all the combinations is seen below. 
+
+<img src="images/demo_auto_orientation_layout.png" width="400" ><img src="images/exhaustOrientation.gif" width="400" >
+
+The number of channels, the average brain sensititivy, and the number of spatial multiplexing groups for each resulting probe with different module orientations can then be displayed to determine the best spacing for a particular application. In this case, the number of channels (and thus the channel density) does not change as the orientation varies. The number of spatial multiplexing groups (and thus the sampling rate of the probe) is also constant. However, there is a configuration of module orientations that leads to the highest brain sensitivity for this type of square module.
+
+<img src="images/demo_auto_orientation_results.png" width="600" >
+
+## Staggering modules to improve performance
+Refer to ```demo_auto_staggering.m``` for details. Below is an example probe layout using square modules. The function ```exhaustStaggering()``` moves user-defined modules along a defined distance to determine the effect of inter-module channels on a probe's performance. A gif of modules being staggered in a probe is below.
+
+<img src="images/demo_auto_staggering_layout.png" width="400" > <img src="images/exhaustStaggering.gif" width="400" >
+
+The number of channels, the average brain sensititivy, and the number of spatial multiplexing groups for each resulting probe can then be displayed to determine the best staggering for a particular application. In this case, although the number of spatial multiplexing groups (sampling rate) decreases, brain sensitivity and the number of inter-module channels increase as the module is shifted half of its width.
+
+<img src="images/demo_auto_staggering_results.png" width="600" >
+
+
 # Example Usage
 ## Design Parameters (Inputs)
 Defining the module and regions of interest
@@ -116,6 +145,17 @@ figure; plotProbe(probe); plotROI(probe); plotSpatialMultiplexingGroups(probe, [
 We can also generate a gif of all the groups
 
 <img src="images/loopinggroups.gif" width="400" >
+
+
+## Export Optodes Locations for 3D Use in AtlasViewer
+The function ```exportOptodes()``` exports an structure in .SD format for use of the probe with 3D position software AtlasViewer. MOCA places a fixed (non-elongating) spring between all optodes within a module (including source-source and detector-detector pairs). This constraint prevents the module shape from altering when the probe is registered to the scalp. Inter-module channels are also saved as fixed springs. Inter-module channels outside of the defined SD range are saved as loose springs, allowing AtlasViewer some slack to move modules slightly to fit the curvature of the scalp. Three dummy variables are used as anchors to place the probe in different locations on the scalp. An example 2x2 probe made of square modules is below. The intra- and inter-module channels are also shown in blue and orange, respectively.
+
+<img src="images/demo_SD_layout.png" width="400" > <img src="images/demo_SD_channels.png" width="400" >
+
+After exporting the optodes in MOCA, they can be loaded in AtlasViewer. The gif below shows the fixed (solid green) and loose (dashed green) springs between optodes. The gif on the right shows the same probe registered onto the occipital lobe of an atlas. As you can see, the yellow lines (inter and intra module channels) remain fixed relative to each other.
+
+<img src="images/demo_SD_atlasviewer.gif" width="600" >
+<img src="images/demo_SD_register.gif" width="600" >
 
 
 ## Expandable architecture
