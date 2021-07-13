@@ -13,14 +13,17 @@ Refer to ```demo_auto_spacing.m``` for details. Below is an example probe layout
 <img src="images/demo_auto_spacing_layout.png" width="400" > <img src="images/exhaustSpacing.gif" width="400" >
 
 The number of channels, the average brain sensititivy, and the number of spatial multiplexing groups for each resulting probe with varying spacing can then be displayed to determine the best spacing for a particular application. 
+
 <img src="images/demo_auto_spacing_results.png" width="600" >
 
 ## Determining best orientation for each module
 Refer to ```demo_auto_orientation.m``` for details. Below is an example probe layout using square modules. The function ```exhaustOrientation()``` exhaustively changes the orientation of each individual module until all combinations are explored. Each of the four modules can be placed in four different orientations for a total of 4^4=256 combinations. A gif of all the combinations is seen below. 
+
 <img src="images/demo_auto_orientation_layout.png" width="400" >
 <img src="images/exhaustOrientation.gif" width="400" >
 
 The number of channels, the average brain sensititivy, and the number of spatial multiplexing groups for each resulting probe with different module orientations can then be displayed to determine the best spacing for a particular application. In this case, the number of channels (and thus the channel density) does not change as the orientation varies. The number of spatial multiplexing groups (and thus the sampling rate of the probe) is also constant. However, there is a configuration of module orientations that leads to the highest brain sensitivity for this type of square module.
+
 <img src="images/demo_auto_orientation_results.png" width="600" >
 
 ## Staggering modules to improve performance
