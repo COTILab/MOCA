@@ -42,34 +42,60 @@ for i=1:size(spacingAmount,2)
     ngroups(i) = cfgs(i).results.ngroups;
 end
 
-% Channels
-figure
-plot(spacingAmount, channels, '*-')
-xlabel('Spacing between modules');
-ylabel('Number of channels');
-title('Number of channels per configuration');
 
-% Inter-module Channels
+%% plot on single figure
 figure
-plot(spacingAmount, interchannels, '*-')
-xlabel('Spacing between modules');
-ylabel('Number of channels');
-title('Number of inter-module channels per configuration');
-
-% Brain Sensitivity
-figure
-plot(spacingAmount, brainsensitivity, '*-')
-xlabel('Spacing between modules');
-ylabel('Average Brain Sensitivity');
-title('Average Brain Sensitivity per configuration');
-maxBSval = max(brainsensitivity);
-maxBSidx = find(brainsensitivity == maxBSval);
+set(gca,'FontSize',20)
 hold on
-plot(maxBSidx, maxBSval, 'r*');
 
-% Number of SMGs
-figure
-plot(spacingAmount, ngroups, '*-')
-xlabel('Spacing between modules');
-ylabel('Number of Spatial Multiplexing Groups');
-title('Number of SMGs per configuration');
+% left side
+yyaxis left
+plot(spacingAmount, 100*brainsensitivity, 'b*-', 'LineWidth',2, 'MarkerSize',10)
+maxBSval = max(brainsensitivity); maxBSidx = find(brainsensitivity == maxBSval);
+plot(maxBSidx, 100*maxBSval, 'r*', 'LineWidth',2, 'MarkerSize',10);
+
+plot(spacingAmount, ngroups, 'c+-', 'LineWidth',2, 'MarkerSize',10);
+
+ylabel({'Average Brain Sensitivity [%]';'Number of SMGs [N]'})
+xlabel('Offset staggering [mm]');
+
+% right side
+yyaxis right
+plot(spacingAmount, channels, 'x-', 'LineWidth',2, 'MarkerSize',10)
+ylabel('Number of channels [N]');
+
+legend('Average Brain Sensitivity', 'Max Brain Sensitivity', 'Number of SMGs', 'Number of Channels', 'Location', 'NorthWest')
+title('Number of channels, Average Brain Sensitivity, and Spatial Multiplexing Groups')
+
+
+%% Channels
+% figure
+% plot(spacingAmount, channels, '*-')
+% xlabel('Spacing between modules');
+% ylabel('Number of channels');
+% title('Number of channels per configuration');
+% 
+% % Inter-module Channels
+% figure
+% plot(spacingAmount, interchannels, '*-')
+% xlabel('Spacing between modules');
+% ylabel('Number of channels');
+% title('Number of inter-module channels per configuration');
+% 
+% % Brain Sensitivity
+% figure
+% plot(spacingAmount, brainsensitivity, '*-')
+% xlabel('Spacing between modules');
+% ylabel('Average Brain Sensitivity');
+% title('Average Brain Sensitivity per configuration');
+% maxBSval = max(brainsensitivity);
+% maxBSidx = find(brainsensitivity == maxBSval);
+% hold on
+% plot(maxBSidx, maxBSval, 'r*');
+% 
+% % Number of SMGs
+% figure
+% plot(spacingAmount, ngroups, '*-')
+% xlabel('Spacing between modules');
+% ylabel('Number of Spatial Multiplexing Groups');
+% title('Number of SMGs per configuration');
