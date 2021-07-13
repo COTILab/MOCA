@@ -23,6 +23,14 @@ Refer to ```demo_auto_orientation.m``` for details. Below is an example probe la
 The number of channels, the average brain sensititivy, and the number of spatial multiplexing groups for each resulting probe with different module orientations can then be displayed to determine the best spacing for a particular application. In this case, the number of channels (and thus the channel density) does not change as the orientation varies. The number of spatial multiplexing groups (and thus the sampling rate of the probe) is also constant. However, there is a configuration of module orientations that leads to the highest brain sensitivity for this type of square module.
 <img src="images/demo_auto_orientation_results.png" width="600" >
 
+## Staggering modules to improve performance
+Refer to ```demo_auto_staggering.m``` for details. Below is an example probe layout using square modules. The function ```exhaustStaggering()``` moves user-defined modules along a defined distance to determine the effect of inter-module channels on a probe's performance. A gif of modules being staggered in a probe is below.
+
+<img src="images/demo_auto_staggering_layout.png" width="400" > <img src="images/exhaustStaggering.gif" width="400" >
+
+The number of channels, the average brain sensititivy, and the number of spatial multiplexing groups for each resulting probe can then be displayed to determine the best staggering for a particular application. In this case, although the number of spatial multiplexing groups (sampling rate) decreases, brain sensitivity and the number of inter-module channels increase as the module is shifted half of its width.
+
+<img src="images/demo_auto_staggering_results.png" width="600" >
 
 
 # Example Usage
