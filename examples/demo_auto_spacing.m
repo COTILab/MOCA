@@ -9,10 +9,9 @@ probe.module = createModule(6, 18);
 y1 = 10; 
 probe.module.srcposns = [0,               y1;...
                         y1*cosd(30),    -y1*sind(30);...
+                        y1*sind(30),    0;...
                         -y1*cosd(30),   -y1*sind(30);];
 probe.module.detposns = [y1*cosd(30),    y1*sind(30);...
-                        0,              -y1;
-                        -y1*cosd(30),   y1*sind(30);...
                         0,              0]; 
 probe.sdrange = [10 40];
 
@@ -22,7 +21,7 @@ probe.spacing = 0;
 probe = createLayout(probe); 
 probe = toggleModules(probe, [10 11 15], 'off');
 
-figure; plotProbe(probe); plotROI(probe)
+figure; plotProbe(probe); %plotROI(probe)
 
 %% Analyze the spacing
 spacingAmount = 1:30;
@@ -64,7 +63,7 @@ yyaxis right
 plot(spacingAmount, channels, 'x-', 'LineWidth',2, 'MarkerSize',10)
 ylabel('Number of channels [N]');
 
-legend('Average Brain Sensitivity', 'Max Brain Sensitivity', 'Number of SMGs', 'Number of Channels', 'Location', 'NorthWest')
+legend('Average Brain Sensitivity', 'Max Brain Sensitivity', 'Number of SMGs', 'Number of Channels', 'Location', 'NorthEast')
 title('Number of channels, Average Brain Sensitivity, and Spatial Multiplexing Groups')
 
 

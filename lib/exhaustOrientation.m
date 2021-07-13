@@ -42,7 +42,7 @@ combinations = reshape(combinations,[],nVectors); % reshape to obtain desired ma
 
 % Run through all combinations
 fig = figure;    
-giftitle = 'examples/exhaustOrientation.gif';
+giftitle = 'images/exhaustOrientation.gif';
     
 for c=1:size(combinations,1) %permutations
     % clear and reset probe

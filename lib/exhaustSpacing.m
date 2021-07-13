@@ -32,7 +32,9 @@ roiHeightAdj = probeheight-probe.maxroiheight;
 % determine if any modules are off. Keep them off. 
 offModules = find(probe.modules(:,4)==0)';
 
-fig = figure;    
+
+fig = figure;  
+giftitle = 'images/exhaustSpacing.gif';
 
 for s=1:size(spacingAmount,2)
     % clear and reset probe
@@ -53,9 +55,19 @@ for s=1:size(spacingAmount,2)
     cfgs(s).results = probe.results;
     
     % visual display
-    plotProbe(probe); plotROI(probe)
+    plotProbe(probe); %plotROI(probe)
     title(strcat('Spacing: ',num2str(spacingAmount(s)),'mm'))
     pause(.01)
+    
+    % save gif
+    frame = getframe(gcf);
+    img =  frame2im(frame);
+    [img,cmap] = rgb2ind(img,256);
+    if s == 1
+        imwrite(img,cmap,giftitle,'gif','LoopCount',Inf,'DelayTime',.1);
+    else
+        imwrite(img,cmap,giftitle,'gif','WriteMode','append','DelayTime',.1);
+    end
     
 end
 
