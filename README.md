@@ -9,8 +9,8 @@ CONTENTS
 - [Automation Examples](#automation-examples)
 - [Basic Example Usage](#example-usage)
 - [Output Definitions](#outputs---probe-characterizations)
-- [3D Export](#3d-export)
-- [Basic Example Usage](#structure-details)
+- [Exporting Probe for 3D Atlas](#3d-export)
+- [Structure Details](#structure-details)
 
 # Automation Examples
 ## Determining spacing between modules
@@ -36,7 +36,7 @@ Refer to ```demo_auto_staggering.m``` for details. Below is an example probe lay
 
 <img src="images/demo_auto_staggering_layout.png" width="400" > <img src="images/exhaustStaggering.gif" width="400" >
 
-The number of channels, the average brain sensititivy, and the number of spatial multiplexing groups for each resulting probe can then be displayed to determine the best staggering for a particular application. In this case, although the number of spatial multiplexing groups (sampling rate) decreases, brain sensitivity and the number of inter-module channels increase as the module is shifted half of its width.
+The number of channels, the average brain sensitivity, and the number of spatial multiplexing groups for each resulting probe can then be displayed to determine the best staggering for a particular application. In this case, although the number of spatial multiplexing groups (sampling rate) decreases, brain sensitivity and the number of inter-module channels increase as the module is shifted half of its width.
 
 <img src="images/demo_auto_staggering_results.png" width="600" >
 
