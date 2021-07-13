@@ -42,6 +42,7 @@ combinations = reshape(combinations,[],nVectors); % reshape to obtain desired ma
 
 % Run through all combinations
 fig = figure;    
+giftitle = 'examples/exhaustOrientation.gif';
     
 for c=1:size(combinations,1) %permutations
     % clear and reset probe
@@ -57,19 +58,21 @@ for c=1:size(combinations,1) %permutations
     probe = characterizeProbe(probe);
     cfgs(c).results = probe.results;
     
-    % save individual metrics
-%     channels(c) = size(cfgs(c).results.channels,1);
-%     intrachannels(c) = size(cfgs(c).results.intrachannels,1);
-%     interchannels(c) = size(cfgs(c).results.interchannels,1);
-%     brainsensitivity(c) = mean( cfgs(c).results.brainsensitivity(:,1) );
-%     intrabrainsensitivity(c) = mean( cfgs(c).results.intrabrainsensitivity(:,1) );
-%     interbrainsensitivity(c) = mean( cfgs(c).results.interbrainsensitivity(:,1) );
-%     ngroups(c) = cfgs(c).results.ngroups;
     
     % visual display
     plotProbe(probe); plotROI(probe)
     title(strcat('Config: ',num2str(c),'/',num2str(nConfigurations)))
     pause(.01)
+    
+%     % save gif
+%     frame = getframe(gcf);
+%     img =  frame2im(frame);
+%     [img,cmap] = rgb2ind(img,256);
+%     if c == 1
+%         imwrite(img,cmap,giftitle,'gif','LoopCount',Inf,'DelayTime',.01);
+%     else
+%         imwrite(img,cmap,giftitle,'gif','WriteMode','append','DelayTime',.01);
+%     end
 end
 
 

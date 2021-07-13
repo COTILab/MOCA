@@ -7,8 +7,8 @@ clear all
 % Design Parameters (module, roi, SD sep range)
 probe.module = createModule(4, 35); % nsides, mdimension
 probe.roi = createROI(70,70);     % width and height
-probe.module.srcposns = [-12.5,12.5];
-probe.module.detposns = [-12.5,4];
+probe.module.srcposns = [-12.5,12.5; 0,5; 12.5,-12.5];
+probe.module.detposns = [-12.5,4; 12.5,12.5];
 %probe.sdrange = 40;
 
 % Assembly Processes
@@ -60,35 +60,3 @@ ylabel('Number of channels [N]');
 legend('Average Brain Sensitivity', 'Max Brain Sensitivity', 'Number of SMGs', 'Number of Channels', 'Location', 'NorthWest')
 title('Number of channels, Average Brain Sensitivity, and Spatial Multiplexing Groups')
 
-%%
-% % Channels
-% figure
-% plot(1:size(cfgs,2), channels, '*-')
-% xlabel('Configuration number');
-% ylabel('Number of channels');
-% title('Number of channels per combination');
-% 
-% % Inter-module Channels
-% figure
-% plot(1:size(cfgs,2), interchannels, '*-')
-% xlabel('Configuration number');
-% ylabel('Number of channels');
-% title('Number of inter-module channels per combination');
-% 
-% % Brain Sensitivity
-% figure
-% plot(1:size(cfgs,2), brainsensitivity, '*-')
-% xlabel('Configuration number');
-% ylabel('Average Brain Sensitivity');
-% title('Average Brain Sensitivity per combination');
-% maxBSval = max(brainsensitivity);
-% maxBSidx = find(brainsensitivity == maxBSval);
-% hold on
-% plot(maxBSidx, maxBSval, 'r*');
-% 
-% % Number of SMGs
-% figure
-% plot(1:size(cfgs,2), ngroups, '*-')
-% xlabel('Configuration number');
-% ylabel('Number of Spatial Multiplexing Groups');
-% title('Number of SMGs per combination');
