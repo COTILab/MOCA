@@ -56,7 +56,7 @@ plot(maxBSidx, 100*maxBSval, 'r*', 'LineWidth',2, 'MarkerSize',10);
 plot(spacingAmount, ngroups, 'c+-', 'LineWidth',2, 'MarkerSize',10);
 
 ylabel({'Average Brain Sensitivity [%]';'Number of SMGs [N]'})
-xlabel('Offset staggering [mm]');
+xlabel('Space between adjacent modules [mm]');
 
 % right side
 yyaxis right
