@@ -35,6 +35,7 @@ if (moduleexists && roiexists)
     if (optodesexists)
         probe = getTotalOptodeCount(probe);
         probe = getChannelData(probe);
+        probe.results.SD = exportOptodes(probe);
         if (sdrangeexists)
             probe = getBrainSensitivity(probe);
             probe = getSpatialMultiplexingGroups(probe);
