@@ -111,7 +111,11 @@ SD.nSrcs = nSrcs;
 SD.nDets = nDets;
 SD.nDummys = nDummys;
 SD.MeasList = MeasList;
-SD.SpringList = [IntraSpringList; InterSpringList];
+if (exist('InterSpringList','var'))
+    SD.SpringList = [IntraSpringList; InterSpringList];
+else
+    SD.SpringList = [IntraSpringList];
+end
 SD.AnchorList = AnchorList;
 %SD.MeasListAct
 %SD.SrcMap
