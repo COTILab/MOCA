@@ -98,9 +98,9 @@ nDummys = size(DummyPos,1);
 AnchorList{1,1} = nSrcs+nDets+1;
 AnchorList{2,1} = nSrcs+nDets+2;
 AnchorList{3,1} = nSrcs+nDets+3;
-AnchorList{1,2} = 'Oz'; %Fpz=forehead. Cz=top of head, C5=left of head, C6=right of head, Oz=back of head
-AnchorList{2,2} = 'POz';
-AnchorList{3,2} = 'Pz';
+AnchorList{1,2} = 'Fpz'; %Fpz=forehead. Cz=top of head, C5=left of head, C6=right of head, Oz=back of head
+AnchorList{2,2} = 'Cz';
+AnchorList{3,2} = 'Oz';
 
 % create the SD structure
 SD.Lambda = Lambda;
