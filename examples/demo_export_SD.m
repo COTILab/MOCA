@@ -5,11 +5,11 @@ clear all
 
 % Create a layout
 % Design Parameters (module, roi, SD sep range)
-probe.module = createModule(4, 35); % nsides, mdimension
-probe.roi = createROI(70,70);     % width and height
-probe.module.srcposns = [-12.5,12.5; -12.5,-12.5; 12.5,0];
-probe.module.detposns = [-10.5,4; 0,2];
-probe.sdrange = 30;
+probe.module = createModule(4, 50); % nsides, mdimension
+probe.roi = createROI(100,100);     % width and height
+probe.module.srcposns = [-20.5,20.5; -20.5,-20.5; 20.5,0];
+probe.module.detposns = [-17.5,6; 0,5];
+probe.sdrange = 40;
 
 % Assembly Processes
 probe = createLayout(probe); 
@@ -18,7 +18,6 @@ probe = createLayout(probe);
 probe = characterizeProbe(probe);
 
 figure; plotProbe(probe); plotROI(probe)
-figure; plotProbe(probe); plotROI(probe); 
 plotChannels(probe, 'spat', 'sd', 'int');
 title('SD separations by intra vs inter')
 
