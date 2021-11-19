@@ -40,14 +40,3 @@ figure; plotProbe(probe); plotROI(probe);
 title('Manually manipulated probe')
 
 
-%%
-% % Probe Characterization
-% probe = characterizeProbe(probe);
-% 
-% % Use a digraph to orient the modules within a probe
-% probe = reorientModules(probe);
-% 
-% % Visualize the changes to the probe
-% figure; plotProbe(probe); plotROI(probe); plotDiGraph(probe);
-% title('Modules follow digraph path')
-
