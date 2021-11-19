@@ -23,5 +23,5 @@ title('SD separations by intra vs inter')
 
 
 % Create SD structure and export
-SD = exportOptodes(probe, 'examples/mocaexport2.SD');
+SD = exportOptodes(probe, 'examples/mocaexport.SD');
 
