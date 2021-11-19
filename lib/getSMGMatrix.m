@@ -44,7 +44,11 @@ for om = size(offmodules,1):-1:1
     if (offmodules(om) == incorrectSizeOfPatterns)
         %patterns(:,offmodules(om)) = [];  Do Nothing
     else
-        patterns(:,offmodules(om)+1) = []; % remove a columm
+        try
+            patterns(:,offmodules(om)+1) = []; % remove a columm
+        catch
+            % do nothing
+        end
     end
 end
 
