@@ -67,7 +67,7 @@ end
 for i=1:size(probe.results.interchannels,1)
     plotSingleChannel(probe, probe.results.interchannels(i,2),...
         probe.results.interchannels(i,3),...
-        'none',[0.5 0.5 0.5]); % LineStyle, Color
+        ':',[0.5 0.5 0.5]); % LineStyle, Color
 end
 
 axis equal
