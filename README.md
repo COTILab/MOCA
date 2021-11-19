@@ -312,3 +312,8 @@ moca - Modular Optode Configuration Analyzer
                           sourceY, moduleID, sourceID,
                           SpatialMultiplexingGroupID]
 ```
+
+# Required Matlab Add-ins
+
+- Statistics and Machine Learning Toolbox -> To use range() in MOCA/lib/plotBrainSensitivity() for plotting channels as different colors
+- Image Processing Toolbox -> To use viscircles() in MOCA/lib/plotSpatialMultiplexingGroups() for plotting active sources in groups
