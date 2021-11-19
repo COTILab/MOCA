@@ -5,6 +5,9 @@ function [] = plotSpatialMultiplexingGroups(probe, groups)
 %   vector of group numbers. When multiple groups are plotted, each group
 %   is plotted in a different color.
 
+% for plotting a fixed size
+%probe.sdrange(2) = 30;
+
 % 13 different colors
 colors = {'r','g','b','c','m','y',[0 0.4470 0.7410],...
     [0.8500 0.3250 0.0980],[0.9290 0.6940 0.1250],...
