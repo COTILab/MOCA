@@ -18,7 +18,7 @@ probe.sdrange = 40;
 probe.spacing = 5;
 probe = createLayout(probe); 
 
-figure; plotProbe(probe); plotROI(probe)
+figure; moca_plotProbe(probe); plotROI(probe)
 
 %% Probe Characterization
 probe = characterizeProbe(probe);
@@ -26,21 +26,21 @@ probe = characterizeProbe(probe);
 %% Visualize Characterization
 % Plot spatial brain sensitivity of all channels within sdrange
 figure; 
-plotProbe(probe); 
+moca_plotProbe(probe); 
 plotROI(probe); 
 plotBrainSensitivity(probe);
 title('All Channel Brain Sensitivity')
 
 % Plot spatial brain sensitivity of INTER channels within sdrange
 figure; 
-plotProbe(probe); 
+moca_plotProbe(probe); 
 plotROI(probe); 
 plotBrainSensitivity(probe, 'inter');
 title('Inter Channel Brain Sensitivity')
 
 % Plot spatial brain sensitivity of INTRA channels within sdrange
 figure; 
-plotProbe(probe); 
+moca_plotProbe(probe); 
 plotROI(probe); 
 plotBrainSensitivity(probe, 'intra');
 title('Intra Channel Brain Sensitivity')

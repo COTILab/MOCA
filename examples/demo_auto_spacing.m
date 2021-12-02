@@ -21,7 +21,7 @@ probe.spacing = 0;
 probe = createLayout(probe); 
 probe = toggleModules(probe, [10 11 15], 'off');
 
-figure; plotProbe(probe); %plotROI(probe)
+figure; moca_plotProbe(probe); %plotROI(probe)
 
 %% Analyze the spacing
 spacingAmount = 1:30;

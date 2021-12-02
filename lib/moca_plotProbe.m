@@ -1,4 +1,4 @@
-function [] = plotProbe(probe, experiment)
+function [] = moca_plotProbe(probe, experiment)
 %PLOTPROBE Summary of this function goes here
 %   Detailed explanation goes here
 

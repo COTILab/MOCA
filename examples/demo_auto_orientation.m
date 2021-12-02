@@ -16,7 +16,7 @@ probe = createLayout(probe);
 
 % Probe Characterization
 probe = characterizeProbe(probe);
-figure; plotProbe(probe); plotROI(probe)
+figure; moca_plotProbe(probe); plotROI(probe)
 
 
 %% Study all permutations

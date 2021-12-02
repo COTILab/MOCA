@@ -18,7 +18,7 @@ probe.spacing = 10;
 probe = createLayout(probe); 
 
 % Visualize the current probe
-figure; plotProbe(probe); plotROI(probe)
+figure; moca_plotProbe(probe); plotROI(probe)
 title('Probe prior to manipulation')
 
 
@@ -36,7 +36,7 @@ probe = rotateModules(probe, [1 6], -15);
 probe = translateModules(probe, [9:12], [0 30]);
 
 % Visualize the changes to the probe
-figure; plotProbe(probe); plotROI(probe);
+figure; moca_plotProbe(probe); plotROI(probe);
 title('Manually manipulated probe')
 
 

@@ -17,7 +17,7 @@ probe = createLayout(probe);
 probe = characterizeProbe(probe);
 
 figure
-plotProbe(probe);
+moca_plotProbe(probe);
 
 %% Analyze staggering
 modulesToStagger = [3,4];

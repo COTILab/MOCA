@@ -15,5 +15,5 @@ probe = characterizeProbe(probe);
 probe.results.modulecount
 
 % Visualize probe
-figure; plotProbe(probe); plotROI(probe)
+figure; moca_plotProbe(probe); plotROI(probe)
 

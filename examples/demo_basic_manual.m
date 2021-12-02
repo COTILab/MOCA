@@ -48,7 +48,7 @@ probe.detposns =     [5.0000   21.5000    1.0000    1.0000;
 probe = characterizeProbe(probe);
 
 % Visualize probe
-figure; plotProbe(probe); plotROI(probe)
+figure; moca_plotProbe(probe); plotROI(probe)
 figure; plotChannels(probe, 'hist', 'sd'); 
 
 %% Alternatively, use the automated processes and remove excess modules
@@ -70,5 +70,5 @@ probe = toggleModules(probe, [7:15], 'off');
 probe = characterizeProbe(probe);
 
 % Visualize probe
-figure; plotProbe(probe); plotROI(probe)
+figure; moca_plotProbe(probe); plotROI(probe)
 figure; plotChannels(probe, 'hist', 'sd'); 

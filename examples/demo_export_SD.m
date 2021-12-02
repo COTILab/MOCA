@@ -17,7 +17,7 @@ probe = createLayout(probe);
 % Probe Characterization
 probe = characterizeProbe(probe);
 
-figure; plotProbe(probe); plotROI(probe)
+figure; moca_plotProbe(probe); plotROI(probe)
 plotChannels(probe, 'spat', 'sd', 'int');
 title('SD separations by intra vs inter')
 

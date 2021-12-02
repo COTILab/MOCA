@@ -20,7 +20,7 @@ probe.spacing = 10;
 probe = createLayout(probe); 
 % Visualize the current probe
 probe = translateProbe(probe, 'center');
-figure; plotProbe(probe); plotROI(probe)
+figure; moca_plotProbe(probe); plotROI(probe)
 title('Probe prior to manipulation')
 
 % Manually manipulate probe
@@ -30,7 +30,7 @@ probe = translateProbe(probe, 'center'); % centered probe to ROI
 probe = rotateModules(probe, [1 6], -15);
 probe = translateModules(probe, [9:12], [0 15]);
 % Visualize the changes to the probe
-figure; plotProbe(probe); plotROI(probe);
+figure; moca_plotProbe(probe); plotROI(probe);
 title('Manually manipulated probe')
 
 
@@ -43,18 +43,18 @@ title('Histogram of channels limited by SDrange')
 
 % Brain Sensitivity Results
 figure; 
-plotProbe(probe); plotROI(probe); plotBrainSensitivity(probe);
+moca_plotProbe(probe); plotROI(probe); plotBrainSensitivity(probe);
 title('All Channel Brain Sensitivity')
 figure; 
-plotProbe(probe); plotROI(probe); plotBrainSensitivity(probe, 'inter');
+moca_plotProbe(probe); plotROI(probe); plotBrainSensitivity(probe, 'inter');
 title('Inter Channel Brain Sensitivity')
 figure; 
-plotProbe(probe); plotROI(probe); plotBrainSensitivity(probe, 'intra');
+moca_plotProbe(probe); plotROI(probe); plotBrainSensitivity(probe, 'intra');
 title('Intra Channel Brain Sensitivity')
 
 % Spatial multiplexing groups
 ngroups = size(unique(probe.results.groups(:,5)), 1);
-figure; plotProbe(probe); plotROI(probe); 
+figure; moca_plotProbe(probe); plotROI(probe); 
 plotSpatialMultiplexingGroups(probe, [2]);
 
 %% Gif of groupings
@@ -63,7 +63,7 @@ giftitle = 'examples/loopinggroups.gif';
 for i=1:ngroups
     clf(fig)
     
-    plotProbe(probe);
+    moca_plotProbe(probe);
     plotROI(probe);
     plotSpatialMultiplexingGroups(probe, [i]);
     

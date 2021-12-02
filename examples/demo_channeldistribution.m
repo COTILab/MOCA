@@ -13,7 +13,7 @@ probe.sdrange = 40;
 % Assembly Processes
 probe.spacing = 5;
 probe = createLayout(probe); 
-figure; plotProbe(probe); plotROI(probe)
+figure; moca_plotProbe(probe); plotROI(probe)
 
 
 % Probe Characterization
@@ -33,11 +33,11 @@ probe = characterizeProbe(probe);
 %                 | 'full'    | 'col'*
 %                 |           | 'int'
 
-figure; plotProbe(probe); plotROI(probe); 
+figure; moca_plotProbe(probe); plotROI(probe); 
 plotChannels(probe, 'spat', 'sd', 'col');
 title('SD separations by color and line length')
 
-figure; plotProbe(probe); plotROI(probe); 
+figure; moca_plotProbe(probe); plotROI(probe); 
 plotChannels(probe, 'spat', 'sd', 'int');
 title('SD separations by intra vs inter')
 
@@ -51,11 +51,11 @@ title('Histogram of channels, all (not limited)')
 % useful for embedding MOCA into visualization software
 figure; 
 
-plotProbe(probe, 'outline'); % plots the module outlines, dashed in gray
-plotProbe(probe, 'srcs'); % plots only the srcs
-plotProbe(probe, 'dets'); % plots only the dets
-plotProbe(probe, 'srcnumbers'); % plots text numbers over optodes
-plotProbe(probe, 'detnumbers'); % plots text numbers over optodes
+moca_plotProbe(probe, 'outline'); % plots the module outlines, dashed in gray
+moca_plotProbe(probe, 'srcs'); % plots only the srcs
+moca_plotProbe(probe, 'dets'); % plots only the dets
+moca_plotProbe(probe, 'srcnumbers'); % plots text numbers over optodes
+moca_plotProbe(probe, 'detnumbers'); % plots text numbers over optodes
 
 % Plot all intra channels
 for i=1:size(probe.results.intrachannels,1)

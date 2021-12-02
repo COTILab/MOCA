@@ -24,7 +24,7 @@ probe = createLayout(probe);
 
 probe = translateProbe(probe, 'center');
 
-figure; plotProbe(probe); plotROI(probe)
+figure; moca_plotProbe(probe); plotROI(probe)
 
 %% Probe Characterization
 probe = characterizeProbe(probe);
@@ -34,7 +34,7 @@ probe = characterizeProbe(probe);
 patterns = getSMGMatrix(probe, 'num');
 
 figure; 
-plotProbe(probe); 
+moca_plotProbe(probe); 
 plotROI(probe); 
 plotSpatialMultiplexingGroups(probe, [4]);
 
@@ -46,7 +46,7 @@ ngroups = probe.results.ngroups;
 for i=1:ngroups
     clf(fig)
     
-    plotProbe(probe);
+    moca_plotProbe(probe);
     plotROI(probe);
     plotSpatialMultiplexingGroups(probe, [i]);
     
