@@ -40,7 +40,8 @@ while (group_flag == 0)
             (srcs_in_this_group(:,2) - all_srcs(srcn,2)) .^ 2);
         % If the candidate src is far away enough AND isn't current
         % assigned a group, assign it to this group
-        if (min(distances)>2*probe.sdrange(2) && assigned_srcs(srcn,5)==0)
+        radial_limit = 2*(probe.sdrange(2) + probe.smg_addl_radius);
+        if (min(distances)>radial_limit && assigned_srcs(srcn,5)==0)
             assigned_srcs(srcn,5) = groupn;
         end
     end

@@ -28,6 +28,11 @@ if (isfield(probe, 'sdrange'))
     end
     sdrangeexists = true;
 end
+if (isfield(probe, 'smg_addl_radius'))  % if it extra radius for SMGs exists
+    % do nothing
+else                                    % it doesn't exist
+    probe.smg_addl_radius = 0;
+end
 
 % Run the characterizations based on defined inputs
 if (moduleexists && roiexists)

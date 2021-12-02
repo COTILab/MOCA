@@ -18,6 +18,8 @@ probe.module.detposns = [-10.5,4; 10.5,10.5];
 
 probe.sdrange = 40;
 
+probe.smg_addl_radius = 90;  % distance in mm added to sdrange for creating spatial multiplexing groups
+
 %% Assembly Processes
 probe.spacing = 20;
 probe = createLayout(probe); 
@@ -36,7 +38,7 @@ patterns = getSMGMatrix(probe, 'num');
 figure; 
 moca_plotProbe(probe); 
 plotROI(probe); 
-plotSpatialMultiplexingGroups(probe, [4]);
+plotSpatialMultiplexingGroups(probe, [1]);
 
 
 %% Visualize Characterization - cycle through groupings. Save a .gif
