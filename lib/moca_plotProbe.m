@@ -18,10 +18,10 @@ modules = probe.modules;
 if (nargin==1)
     for i = 1:size(modules,1)
         % plot the centroids of each module in the probe
-        plot(modules(i,1), modules(i,2), 'g*');
+        %plot(modules(i,1), modules(i,2), 'g*');
 
         % plot the module index number
-        text(modules(i,1), modules(i,2), num2str(i));
+        %text(modules(i,1), modules(i,2), num2str(i));
 
         if (modules(i,4) == 1)  % If the module is active
             % plot the shape/perimeter over each centroid
@@ -41,12 +41,12 @@ if (nargin==1)
                 % Find sources on this module and plot them
                 actmodsrcsidx = probe.srcposns(:,3) == i;   % idx of srcs on this module
                 actmodsrcs = probe.srcposns(actmodsrcsidx,:);   % srcs on this module
-                plot(actmodsrcs(:,1), actmodsrcs(:,2), 'ro', 'MarkerSize', 10);
+                plot(actmodsrcs(:,1), actmodsrcs(:,2), 'r.', 'MarkerSize', 30, 'LineWidth', 4);
 
                 % Find detectors on this module and plot them
                 actmoddetsidx = probe.detposns(:,3) == i;   % idx of dets on this module
                 actmoddets = probe.detposns(actmoddetsidx,:);   % dets on this module
-                plot(actmoddets(:,1), actmoddets(:,2), 'bx', 'MarkerSize', 10);
+                plot(actmoddets(:,1), actmoddets(:,2), 'bx', 'MarkerSize', 10, 'LineWidth', 4);
             end
 
         end

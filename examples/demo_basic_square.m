@@ -4,7 +4,7 @@
 % that can be outputed in the number of modules. 
 
 % Design Parameters (module, roi, SD sep range)
-probe.module = createModule(4, 35); % nsides, mdimension
+probe.module = createModule('MOBI', 35); % nsides, mdimension
 probe.roi = createROI(180,140);     % width and height
 
 % Assembly Processes

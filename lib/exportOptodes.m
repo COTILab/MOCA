@@ -27,7 +27,10 @@ MeasList = [probe.results.channels(:,2:3), ones(nChannels,1), ones(nChannels,1);
 % pairs) should be fixed. This prevents the module from changing shape when
 % registered to the scalp
 idxIntra = 1;
-for m=1:probe.results.modulecount
+
+activeModules = find(probe.modules(:,4) == 1);
+
+for m=1:activeModules %probe.results.modulecount
     srcs = find(probe.results.srcposns(:,3)==m); %srcs in module m
     dets = find(probe.results.detposns(:,3)==m); %dets in module m
     dets_global = dets + nSrcs;
@@ -95,20 +98,22 @@ DummyPos(3,:) = [mean([xmin,xmax]), ymax             , 0];
 nDummys = size(DummyPos,1);
 
 % Anchor list. Begins counting after sources and detectors
-AnchorList{1,1} = nSrcs+nDets+1;
-AnchorList{2,1} = nSrcs+nDets+2;
-AnchorList{3,1} = nSrcs+nDets+3;
+nActiveSrcs = size(activeModules,1) * size(probe.module.srcposns,1);  % active modules * n_srcs_one_one_module
+nActiveDets = size(activeModules,1) * size(probe.module.detposns,1);
+AnchorList{1,1} = nActiveSrcs+nActiveDets+1;
+AnchorList{2,1} = nActiveSrcs+nActiveDets+2;
+AnchorList{3,1} = nActiveSrcs+nActiveDets+3;
 AnchorList{1,2} = 'Fpz'; %Fpz=forehead. Cz=top of head, C5=left of head, C6=right of head, Oz=back of head
 AnchorList{2,2} = 'Cz';
 AnchorList{3,2} = 'Oz';
 
 % create the SD structure
 SD.Lambda = Lambda;
-SD.SrcPos = [probe.results.srcposns(:,1:2), zeros(nSrcs,1)];
-SD.DetPos = [probe.results.detposns(:,1:2), zeros(nDets,1)];
+SD.SrcPos = [probe.results.srcposns(:,1:2), zeros(nActiveSrcs,1)];
+SD.DetPos = [probe.results.detposns(:,1:2), zeros(nActiveDets,1)];
 SD.DummyPos = DummyPos;
-SD.nSrcs = nSrcs;
-SD.nDets = nDets;
+SD.nSrcs = nActiveSrcs;
+SD.nDets = nActiveDets;
 SD.nDummys = nDummys;
 SD.MeasList = MeasList;
 if (exist('InterSpringList','var'))
