@@ -5,6 +5,8 @@ Modular Optode Configuration Analyzer
 
 MOCA is a matlab-based workflow to design new and analyze existing fNIRS modules and their associated probes. It provides researchers with a command-line-based approach to define modules, contains functions to assist in tessellating modules over a region of interest, and produces quantitative metrics of the final probe to interative improvements or to compare probes composed of vastly different modules designs and layouts. 
 
+For further details, see our published manuscript in Neurophotonics: [doi:10.1117/1.NPh.9.1.017801](https://doi.org/10.1117/1.NPh.9.1.017801)
+
 CONTENTS
 - [Automation Examples](#automation-examples)
 - [Basic Example Usage](#example-usage)
